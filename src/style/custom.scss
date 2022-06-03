@@ -70,16 +70,20 @@ $theme-colors: (
 	'dark': $dark,
 ) !default;
 
-$grey: #7b7878;
-$nobel: #969595;
-$silver: #c4c4c4;
-$whisper: #e5e5e5;
+$skSmoke: #f2f2f2;
+$skMidnight: #242831;
+$skBlack: #10141d;
+$skYellow: #fec901;
+$skWhite: #ffffff;
+$skMischka: #9ea1ac;
 
 $custom-color: (
-	'grey': $grey,
-	'nobel': $nobel,
-	'silver': $silver,
-	'whisper': $whisper,
+	'skSmoke': $skSmoke,
+	'skMidnight': $skMidnight,
+	'skBlack': $skBlack,
+	'skYellow': $skYellow,
+	'skWhite': $skWhite,
+	'skMischka': $skMischka,
 );
 $theme-colors: map-merge($theme-colors, $custom-color);
 
