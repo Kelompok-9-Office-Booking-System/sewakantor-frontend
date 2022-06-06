@@ -23,22 +23,22 @@ const navigation = [
 	{
 		name: <BsTelephoneFill size={20} />,
 		link: '/contact',
-		class: 'd-md-none d-lg-block',
+		class: 'd-none d-lg-block',
 	},
 	{
 		name: <BsPersonCircle size={20} />,
 		link: '/profile',
-		class: 'd-md-none d-lg-block',
+		class: 'd-none d-lg-block',
 	},
 	{
 		name: 'Contact',
 		link: '/contact',
-		class: 'd-none d-md-block d-lg-none',
+		class: 'd-block d-lg-none',
 	},
 	{
 		name: 'Profile',
 		link: '/profile',
-		class: 'd-none d-md-block d-lg-none',
+		class: 'd-block d-lg-none',
 	},
 ];
 
