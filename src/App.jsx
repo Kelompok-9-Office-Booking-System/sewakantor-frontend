@@ -1,10 +1,8 @@
 import './App.css';
-import UserNavbar from './components/UserNavbar';
 
 function App() {
 	return (
 		<div className='App'>
-			<UserNavbar />
 			<header className='App-header'>
 				<h1 className='my-5'>Color</h1>
 				<div className='d-grid gap-3'>
