@@ -76,6 +76,10 @@ $skBlack: #10141d;
 $skYellow: #fec901;
 $skWhite: #ffffff;
 $skMischka: #9ea1ac;
+$skGrey: #7b7878;
+$skNobel: #969595;
+$skSilver: #c4c4c4;
+$skWhisper: #e5e5e5;
 
 $custom-color: (
 	'skSmoke': $skSmoke,
@@ -84,8 +88,13 @@ $custom-color: (
 	'skYellow': $skYellow,
 	'skWhite': $skWhite,
 	'skMischka': $skMischka,
+	'skGrey': $skGrey,
+	'skNobel': $skNobel,
+	'skSilver': $skSilver,
+	'skWhisper': $skWhisper,
 );
 $theme-colors: map-merge($theme-colors, $custom-color);
+$font-family-base: 'Poppins', sans-serif;
 
 // Import remain required bootstrap
 @import '../../node_modules/bootstrap/scss/variables';
@@ -101,3 +110,16 @@ $theme-colors: map-merge($theme-colors, $custom-color);
 @import '../../node_modules/bootstrap/scss/helpers';
 
 @import '../../node_modules/bootstrap/scss/utilities/api';
+
+$font-sizes: (
+	'xs': 0.75rem,
+	'sm': 0.875rem,
+	'md': 1rem,
+	'lg': 1.125rem,
+	'xl': 1.25rem,
+	'2xl': 1.5rem,
+	'3xl': 1.875rem,
+	'4xl': 2.25rem,
+	'5xl': 3rem,
+	'6xl': 4rem,
+) !default;
