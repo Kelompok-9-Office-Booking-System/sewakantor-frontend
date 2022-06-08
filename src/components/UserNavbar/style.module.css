@@ -1,3 +1,19 @@
 .navmenuContainer {
 	flex-grow: 0 !important;
 }
+.logoContainer {
+	height: 100%;
+	max-height: 4rem;
+}
+.logoContainer img {
+	width: 100%;
+	max-height: 3rem !important;
+	object-fit: contain;
+}
+
+.divider {
+	width: 2px;
+	height: 2rem;
+	max-height: 3rem;
+	background-color: rgba(109, 109, 109, 0.75);
+}
