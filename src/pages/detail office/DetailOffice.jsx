@@ -13,13 +13,13 @@ export default function DetailOffice() {
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="..." class="d-block w-100" alt="..."/>
+      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80" class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="..."/>
+      <img src="https://images.unsplash.com/photo-1592677818395-72868c4b3c03?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="..."/>
+      <img src="https://images.unsplash.com/photo-1534943770885-dacb3dfa9d27?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=846&q=80" class="d-block w-100" alt="..."/>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
