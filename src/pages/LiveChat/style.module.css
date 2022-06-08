@@ -1,0 +1,30 @@
+.msg {
+	width: fit-content;
+	max-width: 75%;
+	height: fit-content;
+	padding: 0.5rem;
+	color: #000;
+	border-radius: 0.5rem;
+}
+
+.msgReceived {
+	background: #9ea1ac;
+	margin-right: auto;
+}
+
+.msgSent {
+	background: #e5e5e5;
+	margin-left: auto;
+}
+
+.time {
+	font-size: 0.8rem;
+}
+.timeReceived {
+	margin-left: 0.5rem;
+	margin-right: auto;
+}
+.timeSent {
+	margin-left: auto;
+	margin-right: 0.5rem;
+}
