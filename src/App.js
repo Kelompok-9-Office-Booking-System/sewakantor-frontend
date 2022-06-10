@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import DetailOffice from './pages/detail office/DetailOffice';
+import DetailOffice from './pages/DetailOffice';
 
 function App() {
 	return (
