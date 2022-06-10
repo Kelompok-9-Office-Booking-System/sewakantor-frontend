@@ -1,38 +1,41 @@
 import React from 'react'
 import '../DetailOffice/DetailOffice.css'
+import { BsFillStarFill} from "react-icons/bs";
 
 export default function DetailOffice() {
+
+  // Make a stars
+  const totalStar = [];
+  for (let index = 0; index < 4 ; index++) {
+    totalStar.push( <BsFillStarFill className="mx-1" style={{color: '#FEC901'}}/>);        
+  }
+
   return (
     <div className="container">
     <div className="row">
       <div className="col-7 me-5">
       <div>
-      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
+      <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80" class="d-block w-100" alt="..."/>
+      <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img src="https://images.unsplash.com/photo-1592677818395-72868c4b3c03?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" class="d-block w-100" alt="..."/>
+      <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img src="https://images.unsplash.com/photo-1534943770885-dacb3dfa9d27?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=846&q=80" class="d-block w-100" alt="..."/>
+      <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
-  </div>
+</div>
   <div className="mt-4">
   <table class="table table-dark table-striped" style={{borderRadius:15}}>
   <thead>
@@ -87,6 +90,56 @@ export default function DetailOffice() {
   </div>
   <div>
   <h2>They Said</h2>
+  <div className="row">
+  <div className="card mb-3 col-4" style={{maxWidth: 540}}>
+  <div className="row g-0">
+    <div className="col-md-4">
+      <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" className="img-fluid rounded-start" alt="..."/>
+    </div>
+    <div className="col-md-8">
+      <div className="card-body">
+        <div className="flex">
+                      {totalStar}
+        </div>
+        <h5 className="card-title">Cameron Steve</h5>
+        <p class="card-text">Nice Spaces</p>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div className="card mb-3 col-4" style={{maxWidth: 540}}>
+  <div className="row g-0">
+    <div className="col-md-4">
+      <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" className="img-fluid rounded-start" alt="..."/>
+    </div>
+    <div className="col-md-8">
+      <div className="card-body">
+        <div className="flex">
+                      {totalStar}
+        </div>
+        <h5 className="card-title">Cameron Steve</h5>
+        <p class="card-text">Nice Spaces</p>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div className="card mb-3 col-4" style={{maxWidth: 540}}>
+  <div className="row g-0">
+    <div className="col-md-4">
+      <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" className="img-fluid rounded-start" alt="..."/>
+    </div>
+    <div className="col-md-8">
+      <div className="card-body">
+        <div className="flex">
+                      {totalStar}
+        </div>
+        <h5 className="card-title">Cameron Steve</h5>
+        <p class="card-text">Nice Spaces</p>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
   </div>
 </div>
       </div>
