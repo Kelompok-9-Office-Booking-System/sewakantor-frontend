@@ -77,7 +77,7 @@ export default function DetailOffice() {
       <a href="#">Office Room</a>
       <a href='#'>Meeting Room</a>
       <a href='#'>Virtual Office</a>
-      <a href=''>Coworking</a>
+      <a href='#'>Coworking</a>
     </nav>
   </div>
   <div>
