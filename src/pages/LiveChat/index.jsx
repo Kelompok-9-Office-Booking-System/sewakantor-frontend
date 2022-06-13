@@ -41,13 +41,6 @@ const LiveChat = () => {
       unread: 0,
       img: "https://via.placeholder.com/64",
     },
-    {
-      id: 6,
-      from: "Tower F",
-      content: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.",
-      unread: 4,
-      img: "https://via.placeholder.com/64",
-    },
   ]);
   const [liveChat, setLiveChat] = useState([
     {
@@ -107,7 +100,7 @@ const LiveChat = () => {
 
   return (
     <Container
-      className={`d-flex align-items-center justify-content-center p-0`}
+      className={`d-flex align-items-center justify-content-center p-0 ${style.pageContainer}`}
       fluid
     >
       <Container

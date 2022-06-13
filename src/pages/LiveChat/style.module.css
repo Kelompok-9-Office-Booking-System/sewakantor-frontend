@@ -65,7 +65,9 @@
 	align-items: center;
 }
 
-
+.pageContainer {
+	min-height: 95vh;
+}
 .container25 {
 	width: 25%;
 	max-width: 25% !important;
@@ -99,7 +101,7 @@
 	aspect-ratio: 1/1;
 }
 .chatContainer {
-	max-height: 100vh !important;
+	max-height: 85vh !important;
 }
 .chatMessageContainer {
 	min-height: auto;
