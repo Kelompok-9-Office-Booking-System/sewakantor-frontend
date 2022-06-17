@@ -2,3 +2,12 @@
 	height: 48px;
 	object-fit: cover;
 }
+
+a {
+	text-decoration: none;
+	opacity: 0.9;
+	transition: opacity 0.2s ease-in-out;
+}
+a:hover {
+	opacity: 1;
+}
