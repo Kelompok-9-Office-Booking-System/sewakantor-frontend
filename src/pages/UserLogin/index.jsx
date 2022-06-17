@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState} from "react";
 import { Form, Button, Col } from "react-bootstrap";
+import style from "./style.module.css"
 
-const Login = () => {
+function UserLogin () {
+  const email = useFormInput('');
+  const password = useFormInput('');
+
+function handleSubmit(){
+  console.log("jalan", email.value, password.value); 
+}
+
   return (
-    <div className="row">
+    <Row className="row">
       <Col md={6}>
         <img src='google.com' alt='test' />
       </Col>
@@ -16,34 +24,40 @@ const Login = () => {
               Don't have any account?
             </Form.Text>
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Control type="email" {...email}  placeholder="Enter email" />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+            <Form.Control type="password" {...password} placeholder="Password" />
           </Form.Group>
           <Form.Text className="text-muted" textAlign='left'>
             Forget your password?
           </Form.Text>
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
           </Form.Group>
-          <Button variant="primary" type="submit" className="d-inline" >
+          <Button variant="primary" className="d-inline" >
             Login wih google
           </Button>
-          <div
-            style={{
-              borderLeft: '3px solid rgba(0, 0, 0, 0.2)',
-              height: '60px',
-              display: 'inline'
-            }}
+          <div className={style.line}
           />
-          <Button variant="primary" type="submit" className="d-inline" >
+          <Button variant="primary" className="d-inline" onClick={handleSubmit}>
             Login
           </Button>
         </Form>
       </Col>
-    </div>
+    </Row>
   );
 }
+const useFormInput = initialValue => {
+  const [value, setValue] = useState(initialValue);
 
-export default Login;
+  const handleChange = e => {
+    setValue(e.target.value);
+  }
+  return {
+    value,
+    onChange: handleChange
+  }
+}
+
+export default UserLogin;
