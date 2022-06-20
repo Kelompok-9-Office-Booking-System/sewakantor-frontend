@@ -6,7 +6,6 @@
 }
 
 
-
 .heroContainer {
     width: 1440px;
     height: 75vh;
@@ -105,10 +104,11 @@ h2 {
     z-index: 2;
 }
 
+
 select {
     background: #F2F2F2;
     padding: 0.5rem;
-    width: 30%;
+    width: 20rem;
     height: 4rem;
     border-radius: 10px;
 
@@ -118,7 +118,7 @@ select {
     line-height: 2rem;
 }
 .findButtonContainer {
-    width: 30%;
+    width: 25%;
 }
 button[disabled]{
     background: #7B7878;
@@ -126,7 +126,7 @@ button[disabled]{
 }
 button {
     padding: 0.5rem;
-    width: 100%;
+    width: 15rem;
     height: 4rem;
     border-radius: 10px;
     background: #10141D;
@@ -137,6 +137,17 @@ button {
     font-size: 1.25rem;
     line-height: 2rem;
 }
+
+
+.affContainer {
+    width: 100%;
+    height: 5rem;
+}
+.affImg {
+    height: 5rem;
+    object-fit: cover;
+}
+
 
 .trustContainer {
     width: 100%;

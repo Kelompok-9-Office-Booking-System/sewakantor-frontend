@@ -3,8 +3,13 @@ import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import AffBCA from "../../assets/img/landing-aff-bca.png";
-import ExploreCoworking from "../../assets/img/landing-coworking.png";
+import AffUber from "../../assets/img/landing-aff-uber.png";
+import AffSlack from "../../assets/img/landing-aff-slack.png";
+import AffHSBC from "../../assets/img/landing-aff-hsbc.png";
+import AffSelina from "../../assets/img/landing-aff-selina.png";
+import AffAirbnb from "../../assets/img/landing-aff-airbnb.png";
 
+import ExploreCoworking from "../../assets/img/landing-coworking.png";
 import HeroImage from "../../assets/img/landing-hero.png";
 import ExploreMeeting from "../../assets/img/landing-meeting.png";
 import ExploreOffice from "../../assets/img/landing-office.png";
@@ -70,6 +75,14 @@ const UserLanding = () => {
     { name: "Meeting rooms", value: "meeting" },
     { name: "Coworking", value: "coworking" },
     { name: "Virtual office", value: "virtual" },
+  ];
+  const listAffiliates = [
+    { name: "Bank BCA", image: AffBCA },
+    { name: "Uber", image: AffUber },
+    { name: "Slack", image: AffSlack },
+    { name: "HSBC", image: AffHSBC },
+    { name: "Selina", image: AffSelina },
+    { name: "Airbnb", image: AffAirbnb },
   ];
 
   return (
@@ -187,29 +200,17 @@ const UserLanding = () => {
           className={`d-flex flex-column align-items-center justify-content-center`}
         >
           <h2>Who’s Talking About Us</h2>
-          <div className={`d-flex flex-column gap-5`}>
-            <Row className={`gap-3 d-flex justify-content-center mx-auto`}>
-              <Col className={`p-0 d-flex justify-content-center`}>
-                <img src={AffBCA} alt={`Bank BCA`} className={`w-75`} />
-              </Col>
-              <Col className={`p-0 d-flex justify-content-center`}>
-                <img src={AffBCA} alt={`Bank BCA`} className={`w-75`} />
-              </Col>
-              <Col className={`p-0 d-flex justify-content-center`}>
-                <img src={AffBCA} alt={`Bank BCA`} className={`w-75`} />
-              </Col>
-            </Row>
-            <Row className={`gap-3 d-flex justify-content-center mx-auto`}>
-              <Col className={`p-0 d-flex justify-content-center`}>
-                <img src={AffBCA} alt={`Bank BCA`} className={`w-75`} />
-              </Col>
-              <Col className={`p-0 d-flex justify-content-center`}>
-                <img src={AffBCA} alt={`Bank BCA`} className={`w-75`} />
-              </Col>
-              <Col className={`p-0 d-flex justify-content-center`}>
-                <img src={AffBCA} alt={`Bank BCA`} className={`w-75`} />
-              </Col>
-            </Row>
+          <div
+            className={`d-flex gap-5 flex-wrap flex-grow-1 justify-content-center`}
+          >
+            {listAffiliates.map((affiliate) => (
+              <img
+                key={affiliate.name}
+                src={affiliate.image}
+                alt={affiliate.name}
+                className={styles.affImg}
+              />
+            ))}
           </div>
         </div>
 
