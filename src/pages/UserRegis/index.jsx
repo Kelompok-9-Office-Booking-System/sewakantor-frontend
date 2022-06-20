@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 //Hook
 import useForm from "../../hooks/useForm";
 
-//Function
-import validate from "./validateInfo"
+//Validate
+import validate from "./validateInfo";
 
 //style
 import { Container, Col, Row, Form, Image, Button } from "react-bootstrap";
@@ -13,8 +13,8 @@ import logo from "../../assets/img/logo/LogoIcon.svg";
 import { FcGoogle } from "react-icons/fc";
 
 const UserRegis = () => {
-  const { handleChange, values, handleSubmit,errors } = useForm(validate);
-  
+  const { handleChange, values, handleSubmit, errors } = useForm(validate);
+
   return (
     <Container>
       <Row>
@@ -26,18 +26,15 @@ const UserRegis = () => {
         <Col className={style.right_login}>
           <div>
             <Form>
-              <Form.Group className={style.login_form} onSubmit={handleSubmit}>
+              <Col className={style.login_form}>
                 <h4>Start For Free</h4>
                 <h1>Create New Account</h1>
                 <h6>
                   Already have any account? <span>Login</span>
                 </h6>
                 <Row style={{ marginBottom: "20px" }}>
-                  <Col>
-                    <Form.Label
-                      style={{ fontWeight: "bold" }}
-                      htmlFor="firstname"
-                    >
+                  <Col className={style.form_section}>
+                    <Form.Label style={{ fontWeight: "bold" }}>
                       First Name
                     </Form.Label>
                     <Form.Control
@@ -49,13 +46,10 @@ const UserRegis = () => {
                       value={values.firstname}
                       onChange={handleChange}
                     />
+                    {errors.firstname && <p>{errors.firstname}</p>}
                   </Col>
-                  {errors.firstname && <p>{errors.firstname}</p>}
-                  <Col>
-                    <Form.Label
-                      style={{ fontWeight: "bold" }}
-                      htmlFor="lastname"
-                    >
+                  <Col className={style.form_section}>
+                    <Form.Label style={{ fontWeight: "bold" }}>
                       Last Name
                     </Form.Label>
                     <Form.Control
@@ -66,70 +60,71 @@ const UserRegis = () => {
                       value={values.lastname}
                       onChange={handleChange}
                     />
+                    {errors.firstname && <p>{errors.lastname}</p>}
                   </Col>
                 </Row>
-              </Form.Group>
-              <Form.Group style={{ marginBottom: "20px" }}>
-                <Form.Label style={{ fontWeight: "bold" }} htmlFor="email">
-                  Email
-                </Form.Label>
-                <Form.Control
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={values.email}
-                  onChange={handleChange}
-                />
-                {errors.email && <p>{errors.email}</p>}
-              </Form.Group>
-              <Form.Group>
-                <Row style={{ marginBottom: "20px" }}>
+                <Col
+                  style={{ marginBottom: "20px" }}
+                  className={style.form_section}
+                >
+                  <Form.Label style={{ fontWeight: "bold" }}>Email</Form.Label>
+                  <Form.Control
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={values.email}
+                    onChange={handleChange}
+                  />
+                  {errors.email && <p>{errors.email}</p>}
+                </Col>
+
+                <Col className={style.form_section}>
+                  <Row style={{ marginBottom: "20px" }}>
+                    <Col>
+                      <Form.Label style={{ fontWeight: "bold" }}>
+                        Password
+                      </Form.Label>
+                      <Form.Control
+                        id="password"
+                        name="password"
+                        type="password"
+                        placeholder="Enter your password"
+                        value={values.password}
+                        onChange={handleChange}
+                      />
+                      {errors.password && <p>{errors.password}</p>}
+                    </Col>
+                    <Col className={style.form_section}>
+                      <Form.Label style={{ fontWeight: "bold" }}>
+                        Confirm Password
+                      </Form.Label>
+                      <Form.Control
+                        id="password2"
+                        name="password2"
+                        type="password"
+                        placeholder="Retype your password"
+                        value={values.password2}
+                        onChange={handleChange}
+                      />
+                      {errors.password2 && <p>{errors.password2}</p>}
+                    </Col>
+                  </Row>
+                </Col>
+                <Row>
                   <Col>
-                    <Form.Label
-                      style={{ fontWeight: "bold" }}
-                      htmlFor="password"
-                    >
-                      Password
-                    </Form.Label>
-                    <Form.Control
-                      id="password"
-                      name="password"
-                      type="password"
-                      placeholder="Enter your password"
-                      value={values.password}
-                      onChange={handleChange}
-                    />
+                    <Button className={style.google_signup}>
+                      <FcGoogle className={style.google_btn} />
+                      Sign Up With Google
+                    </Button>
                   </Col>
                   <Col>
-                    <Form.Label
-                      style={{ fontWeight: "bold" }}
-                      htmlFor="password2"
-                    >
-                      Confirm Password
-                    </Form.Label>
-                    <Form.Control
-                      id="password2"
-                      name="password2"
-                      type="password"
-                      placeholder="Retype your password"
-                      value={values.password2}
-                      onChange={handleChange}
-                    />
+                    <Button className={style.signup} onClick={handleSubmit}>
+                      Sign Up
+                    </Button>
                   </Col>
                 </Row>
-              </Form.Group>
-              <Row>
-                <Col>
-                  <Button className={style.google_signup}>
-                    <FcGoogle className={style.google_btn} />
-                    Sign Up With Google
-                  </Button>
-                </Col>
-                <Col>
-                  <Button className={style.signup}>Sign Up </Button>
-                </Col>
-              </Row>
+              </Col>
             </Form>
           </div>
         </Col>

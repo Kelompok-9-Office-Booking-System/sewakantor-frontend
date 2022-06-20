@@ -11,9 +11,6 @@
     width: 30%;
 }
 
-.login_form h6 {
-    margin-bottom: 20px;
-}
 
 .login_form h6 span {
     font-weight: bold;
@@ -38,5 +35,9 @@
     background-color: black;
     border-color: black;
     width: 100%;
+}
+
+.form_section p {
+    color: red;
 }
 

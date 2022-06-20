@@ -1,27 +1,29 @@
 export default function validateInfo(values) {
-    let errors = {};
+    let errors = {}
 
     if (!values.firstname.trim()) {
-        errors.firstname = "First name is required";
+        errors.firstname = "First Name is required"
     }
-    if (!values.lastname.trim()) {
-        errors.lastname = "Last name is required";
+
+    if (!values.lastname) {
+        errors.lastname = "Last Name is required"
     }
+
     if (!values.email) {
-        errors.email = "Email required";
+        errors.email = 'Email required';
     } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-        errors.email = "Email address is invalid";
+        errors.email = 'Email address is invalid';
     }
     if (!values.password) {
-        errors.password = "Password is required";
+        errors.password = 'Password is required';
     } else if (values.password.length < 6) {
-        errors.password = "Password needs to be 6 characters or more";
+        errors.password = 'Password needs to be 6 characters or more';
     }
 
     if (!values.password2) {
-        errors.password2 = "Password is required";
+        errors.password2 = 'Password is required';
     } else if (values.password2 !== values.password) {
-        errors.password2 = "Passwords do not match";
+        errors.password2 = 'Passwords do not match';
     }
     return errors;
 }
