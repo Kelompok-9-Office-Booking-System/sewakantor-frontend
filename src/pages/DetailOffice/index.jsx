@@ -3,6 +3,7 @@ import '../DetailOffice/DetailOffice.css'
 import { BsFillStarFill} from "react-icons/bs";
 
 export default function DetailOffice() {
+  const [harga, setHarga] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [monthly, setMonthly] = useState(0);
   // Make a stars
@@ -82,15 +83,6 @@ const kurang = (tipe)=>{
         Closed
       </td>
     </tr>
-    <tr>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
   </tbody>
 </table>
   </div>
@@ -123,7 +115,27 @@ const kurang = (tipe)=>{
         <button type="button" className="bg-yellow-400 px-1.5 " onClick={() => tambah("quantity")}>+</button>
       </div>
     </div>
-    
+    <div>
+      <label>No of Monthly</label><br/>
+      <div className="d-flex flex-row">
+        <button className="bg-yellow-400 px-1.5" onClick={() => kurang("monthly")}>-</button>
+          <h2>{monthly}</h2>
+        <button type="button" className="bg-yellow-400 px-1.5 " onClick={() => tambah("monthly")}>+</button>
+      </div>
+    </div>
+    <div>
+      <label>Select Duration</label><br/>
+      <input type="date" name="date" />
+    </div>
+  </div>
+  <div className="d-flex flex-row">
+    <p style={{fontWeight:'bold'}}>1 Month Selected</p>
+    <button type="button" class="btn btn-dark">
+      Check Avabililty
+    </button>
+  </div>
+  <div>
+    <h3>Rp {harga}</h3>
   </div>
   </div>
   <div>
@@ -195,6 +207,43 @@ With its state-of-the-art design and first-class facilities, including swimming 
         </div>
         <div>
         <h2>Location</h2>
+        {/* Maps */}
+        <img style={{width: '100%', height: '100%'}} src="https://images.unsplash.com/photo-1567004314453-ed46f03527fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=709&q=80"/>
+        {/* Nearby Location */}
+        <div>
+          <h3>Nearby Places</h3>
+          <div>
+            <div className="d-flex">
+              <div>
+              <p>Gelora Bung Karno</p>
+              </div>
+              <p>0,1 km</p>
+            </div>
+            <div className="d-flex">
+              <div>
+              <p>Gelora Bung Karno</p>
+              </div>
+              <p>0,1 km</p>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div>
+        <h2>Facilities</h2>
+        <div className="row">
+          <div className="col-6">
+          <h3>Meeting Room</h3>
+          </div>
+          <div className="col-6">
+            <h3>Free Area</h3>
+          </div>
+          <div className="col-6">
+          <h3>Meeting Room</h3>
+          </div>
+          <div className="col-6">
+            <h3>Free Area</h3>
+          </div>
+        </div>
         </div>
       </div>
     </div>
