@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-
-// Library
-import { Container, Nav, Navbar } from "react-bootstrap";
-import { BsPersonCircle, BsTelephoneFill } from "react-icons/bs";
-import { Link, useLocation } from "react-router-dom";
-import LogoIcon from "../../assets/img/logo/LogoIcon.svg";
+import { useLocation } from "react-router-dom";
+import routes from "../../routes";
+import useLocalstorage from "../../hooks/useLocalstorage";
 
 // Assets
 import LogoLong from "../../assets/img/logo/LogoLong.svg";
-import useLocalstorage from "../../hooks/useLocalstorage";
-import routes from "../../routes";
+import LogoIcon from "../../assets/img/logo/LogoIcon.svg";
+
+// Library
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { BsPersonCircle, BsTelephoneFill } from "react-icons/bs";
 
 // Style
 import style from "./style.module.css";
+import React, { useEffect, useState } from "react";
 
 const Logo = () => {
   return (
@@ -83,117 +83,45 @@ const UserNavbar = () => {
               <BsTelephoneFill className="mr-2" size={24} />
             </Nav.Link>
             <div className={`${style.divider} mx-2`} />
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNavDarkDropdown"
-              aria-controls="navbarNavDarkDropdown"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div
-              className="collapse navbar-collapse"
-              id="navbarNavDarkDropdown"
-            >
-              <ul className="navbar-nav">
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDarkDropdownMenuLink"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
+            <NavDropdown title={<BsPersonCircle size={24} />}>
+              {user ? (
+                <>
+                  <NavDropdown.Item href={routes.profile}>
+                    Profile
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href={routes.booking}>
+                    Active bookings
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item
+                    href={routes.logout}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      removeLSValue("user");
+                      setUser(getLSValue("user"));
+                    }}
                   >
-                    <BsPersonCircle size={24} />
-                  </a>
-
-                  <ul
-                    className="dropdown-menu dropdown-menu-end"
-                    aria-labelledby="navbarDarkDropdownMenuLink"
+                    Logout
+                  </NavDropdown.Item>
+                </>
+              ) : (
+                <>
+                  <NavDropdown.Item
+                    href={routes.login}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setLSValue("user", { id: 1, name: "John Doe" });
+                      setUser(getLSValue("user"));
+                    }}
                   >
-                    {user ? (
-                      <>
-                        <li>
-                          <div
-                            className={`dropdown-header`}
-                            role={`heading`}
-                            aria-level={2}
-                          >
-                            {user.name}
-                          </div>
-                        </li>
-                        <li>
-                          <hr className={`dropdown-divider`} />
-                        </li>
-                        <li>
-                          <Link to={routes.profile} className={`dropdown-item`}>
-                            Profile
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to={routes.booking} className={`dropdown-item`}>
-                            Active booking
-                          </Link>
-                        </li>
-                        <li>
-                          <Link to={routes.chat} className={`dropdown-item`}>
-                            Chat
-                          </Link>
-                        </li>
-
-                        <li>
-                          <hr className={`dropdown-divider`} />
-                        </li>
-                        <li>
-                          <Link
-                            to={routes.logout}
-                            className={`dropdown-item`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              removeLSValue(`user`);
-                              setUser(null);
-                            }}
-                          >
-                            Logout
-                          </Link>
-                        </li>
-                      </>
-                    ) : (
-                      <>
-                        <li>
-                          <Link
-                            to={routes.login}
-                            className={`dropdown-item`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setLSValue(`user`, {
-                                id: 1,
-                                name: "John Doe",
-                              });
-                              setUser(getLSValue("user"));
-                            }}
-                          >
-                            Login
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to={routes.register}
-                            className={`dropdown-item`}
-                          >
-                            Register
-                          </Link>
-                        </li>
-                      </>
-                    )}
-                  </ul>
-                </li>
-              </ul>
-            </div>
+                    Login
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href={routes.register}>
+                    Register
+                  </NavDropdown.Item>
+                </>
+              )}
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
