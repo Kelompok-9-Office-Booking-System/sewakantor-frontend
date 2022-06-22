@@ -3,10 +3,10 @@ const useLocalstorage = () => {
     return;
   }
   const getLSValue = (key) => {
-    return localStorage.getItem(key);
+    return JSON.parse(localStorage.getItem(key));
   };
   const setLSValue = (key, value) => {
-    localStorage.setItem(key, value);
+    localStorage.setItem(key, JSON.stringify(value));
   };
   const removeLSValue = (key) => {
     localStorage.removeItem(key);
