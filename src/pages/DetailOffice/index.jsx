@@ -1,15 +1,39 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import '../DetailOffice/DetailOffice.css'
 import { BsFillStarFill} from "react-icons/bs";
 
 export default function DetailOffice() {
-
+  const [quantity, setQuantity] = useState(0);
+  const [monthly, setMonthly] = useState(0);
   // Make a stars
   const totalStar = [];
   for (let index = 0; index < 4 ; index++) {
     totalStar.push( <BsFillStarFill className="mx-1" style={{color: '#FEC901'}}/>);        
   }
+  //fungsi tambah dan kurang
+  const tambah = (tipe)=>{
+    if(tipe === "quantity")
+        setQuantity(quantity + 1);
+    else if(tipe === "monthly"){
+        setMonthly(monthly + 1);
+    }
+}
 
+const kurang = (tipe)=>{
+    if(tipe === "quantity")
+        if(quantity !== 0){
+            setQuantity(quantity - 1);
+        }else{
+            alert("data harus diisi")
+        }
+    else if(tipe === "monthly"){
+        if(monthly !== 0){
+            setMonthly(monthly - 1);
+        }else{
+            alert("data harus diisi")
+        }
+    }
+} 
   return (
     <div className="container">
     <div className="row">
@@ -18,13 +42,13 @@ export default function DetailOffice() {
       <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
+      <img style={{height:400}} src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
+      <img style={{height:400}} src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
+      <img style={{height:400}} src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
@@ -83,9 +107,23 @@ export default function DetailOffice() {
       <a href='#'>Coworking</a>
     </nav>
   </div>
-  <div>
-    <label>Select Duration</label>
-    <input type="text" />
+  <div className="d-flex flex-row">
+    <div>
+      <label>Select Duration</label><br/>
+      <select>
+        <option value="month">Month</option>
+        <option value="day">Day</option>
+      </select>
+    </div>
+    <div>
+      <label>Select Quantity</label><br/>
+      <div className="d-flex flex-row">
+        <button className="bg-yellow-400 px-1.5" onClick={() => kurang("quantity")}>-</button>
+          <h2>{quantity}</h2>
+        <button type="button" className="bg-yellow-400 px-1.5 " onClick={() => tambah("quantity")}>+</button>
+      </div>
+    </div>
+    
   </div>
   </div>
   <div>
