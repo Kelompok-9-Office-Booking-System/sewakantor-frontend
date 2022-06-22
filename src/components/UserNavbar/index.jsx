@@ -83,9 +83,14 @@ const UserNavbar = () => {
               <BsTelephoneFill className="mr-2" size={24} />
             </Nav.Link>
             <div className={`${style.divider} mx-2`} />
-            <NavDropdown title={<BsPersonCircle size={24} />}>
+            <NavDropdown
+              title={<BsPersonCircle size={24} />}
+              className={`dropdown`}
+            >
               {user ? (
                 <>
+                  <NavDropdown.Header>{user.name}</NavDropdown.Header>
+                  <NavDropdown.Divider />
                   <NavDropdown.Item href={routes.profile}>
                     Profile
                   </NavDropdown.Item>
@@ -110,7 +115,10 @@ const UserNavbar = () => {
                     href={routes.login}
                     onClick={(e) => {
                       e.preventDefault();
-                      setLSValue("user", { id: 1, name: "John Doe" });
+                      setLSValue("user", {
+                        id: 1,
+                        name: "John Doe",
+                      });
                       setUser(getLSValue("user"));
                     }}
                   >
