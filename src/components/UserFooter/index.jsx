@@ -1,6 +1,8 @@
 // Library
 import { Col, Container, Row } from "react-bootstrap";
 import { BsFacebook, BsInstagram, BsTwitter, BsWhatsapp } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import routes from "src/routes";
 
 // Assets
 import GooglePlayBadge from "../../assets/img/google-play-badge.png";
@@ -19,58 +21,58 @@ const UserFooter = () => {
               <Row>
                 <Col className="d-flex flex-column align-items-start">
                   <h3>About</h3>
-                  <a href="/" className="link-light">
-                    Our story
-                  </a>
+                  <Link to={routes.about}>
+                    <a className="link-light">Our story</a>
+                  </Link>
                 </Col>
                 <Col className="d-flex flex-column align-items-start">
                   <h3>Spaces</h3>
-                  <a href="/" className="link-light">
+                  <a href="#" className="link-light">
                     Add your spaces
                   </a>
                 </Col>
                 <Col className="d-flex flex-column align-items-start">
                   <h3>Member</h3>
-                  <a href="/login" className="link-light">
-                    Login
-                  </a>
-                  <a href="/register" className="link-light">
-                    Register
-                  </a>
+                  <Link to={routes.login}>
+                    <a className="link-light">Login</a>
+                  </Link>
+                  <Link to={routes.register}>
+                    <a className="link-light">Register</a>
+                  </Link>
                 </Col>
               </Row>
               <Row>
                 <Col className="d-flex flex-column align-items-start">
                   <h3>Review</h3>
-                  <a href="/review" className="link-light">
-                    View all review
-                  </a>
-                  <a href="/" className="link-light">
+                  <Link to={routes.reviews}>
+                    <a className="link-light">View all review</a>
+                  </Link>
+                  <a href="#" className="link-light">
                     Most reviewed review
                   </a>
                 </Col>
                 <Col className="d-flex flex-column align-items-start">
                   <h3>Connect</h3>
                   <a
-                    href="/"
+                    href="#"
                     className="d-flex gap-2 align-items-center link-light"
                   >
                     <BsFacebook size={16} /> Facebook
                   </a>
                   <a
-                    href="/"
+                    href="#"
                     className="d-flex gap-2 align-items-center link-light"
                   >
                     <BsInstagram size={16} /> Instagram
                   </a>
                   <a
-                    href={`/`}
+                    href={`#`}
                     className="d-flex gap-2 align-items-center link-light"
                   >
                     <BsTwitter size={16} /> Twitter
                   </a>
                   <a
-                    href="/"
+                    href="#"
                     className="d-flex gap-2 align-items-center link-light"
                   >
                     <BsWhatsapp size={16} /> Whatsapp
@@ -82,9 +84,9 @@ const UserFooter = () => {
             <Col className="d-flex flex-column align-items-start">
               <h3>Download</h3>
               <p>Download our apps here:</p>
-              <div className="d-flex gap-2 flex-column">
+              <div className="d-flex gap-2">
                 <a
-                  href="/"
+                  href="#"
                   className={`d-flex gap-2 align-items-center link-light ${style.downloadContainer}`}
                 >
                   <img
@@ -94,7 +96,7 @@ const UserFooter = () => {
                   />
                 </a>
                 <a
-                  href="/"
+                  href="#"
                   className={`d-flex gap-2 align-items-center link-light ${style.downloadContainer}`}
                 >
                   <img
