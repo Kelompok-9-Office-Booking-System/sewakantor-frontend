@@ -142,8 +142,8 @@ const kurang = (tipe)=>{
   <div className="row">
   <div className="card mb-3 col-4 " style={{maxWidth: 540, backgroundColor:"#E5E5E5"}}>
   <div className="row g-0">
-    <div className="col-md-4">
-      <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" className="img-fluid rounded-start" alt="..."/>
+    <div className="col-md-4 align-self-center">
+      <img style={{height: 90, width: 90}} src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" className="img-fluid rounded-start" alt="..."/>
     </div>
     <div className="col-md-8">
       <div style={{backgroundColor:"#E5E5E5"}} className="card-body">
@@ -151,7 +151,7 @@ const kurang = (tipe)=>{
         <BsFillStarFill className="mx-1 mt-2" style={{color: '#FEC901'}}/>
         <p>4.6</p>
         </div>
-        <h5 className="card-title">Cameron Steve</h5>
+        <p className="card-title">Cameron Steve</p>
         <p class="card-text">Nice Spaces</p>
       </div>
     </div>
