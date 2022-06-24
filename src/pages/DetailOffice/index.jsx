@@ -64,29 +64,23 @@ const kurang = (tipe)=>{
   </button>
 </div>
   <div className="mt-4">
-  <table class="table table-dark table-striped" style={{borderRadius:15}}>
-  <thead>
-    <tr>
-      <th colspan="4">Member Access Hours</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <span style={{fontWeight: 'bold'}}>Monday - Friday</span><br/>
+    <div className='row bg-dark text-light p-0 rounded mx-1'>
+      <div className="col-12 border-bottom border-1">
+      <p style={{fontWeight: 'bold'}}>Member Access Hours</p>
+      </div>
+      <div className="col-4">
+      <span style={{fontWeight: 'bold'}}>Monday - Friday</span><br/>
         08.00 am - 06.00 pm
-      </td>
-      <td>
-        <span style={{fontWeight: 'bold'}}>Saturday</span><br/>
+      </div>
+      <div className="col-4">
+      <span style={{fontWeight: 'bold'}}>Saturday</span><br/>
         Closed
-      </td>
-      <td>
-        <span style={{fontWeight: 'bold'}}>Sunday</span><br/>
+      </div>
+      <div className="col-4">
+      <span style={{fontWeight: 'bold'}}>Sunday</span><br/>
         Closed
-      </td>
-    </tr>
-  </tbody>
-</table>
+      </div>
+    </div>
   </div>
   {/* Room Plan */}
   <div className="mb-4">
@@ -106,7 +100,7 @@ const kurang = (tipe)=>{
   <div className="d-flex justify-content-between mt-4">
     <div>
       <label>Select Duration</label><br/>
-      <select>
+      <select className=" px-3" style={{fontSize:18}}>
         <option value="month">Month</option>
         <option value="day">Day</option>
       </select>
@@ -114,27 +108,27 @@ const kurang = (tipe)=>{
     <div>
       <label>Select Quantity</label><br/>
       <div className="d-flex justify-content-between">
-        <button className="bg-yellow-400 px-1.5" onClick={() => kurang("quantity")}>-</button>
+        <button className="btn btn-dark px-2 py-0" onClick={() => kurang("quantity")}>-</button>
           <h2>{quantity}</h2>
-        <button type="button" className="bg-yellow-400 px-1.5 " onClick={() => tambah("quantity")}>+</button>
+        <button type="button" className="btn btn-dark px-2 py-0 " onClick={() => tambah("quantity")}>+</button>
       </div>
     </div>
     <div>
       <label>No of Monthly</label><br/>
       <div className="d-flex justify-content-between">
-        <button className="bg-yellow-400 px-1.5" onClick={() => kurang("monthly")}>-</button>
+        <button className="btn btn-dark px-2 py-0" onClick={() => kurang("monthly")}>-</button>
           <h2>{monthly}</h2>
-        <button type="button" className="bg-yellow-400 px-1.5 " onClick={() => tambah("monthly")}>+</button>
+        <button type="button" className="btn btn-dark px-2 py-0 " onClick={() => tambah("monthly")}>+</button>
       </div>
     </div>
     <div>
-      <label>Select Duration</label><br/>
-      <input type="date" name="date" />
+      <label>Pick a Date</label><br/>
+      <input type="date" name="date" style={{fontSize:18}}/>
     </div>
   </div>
-  <div className="d-flex justify-content-between mt-3">
-    <p style={{fontWeight:'bold'}}>1 Month Selected</p>
-    <button type="button" class="btn btn-dark">
+  <div className="d-flex justify-content-between align-items-center mt-3 border border-dark rounded p-1">
+    <p style={{fontWeight:'bold', margin:0}}>1 Month Selected</p>
+    <button type="button" class="btn btn-dark rounded">
       Check Avabililty
     </button>
   </div>
@@ -142,50 +136,20 @@ const kurang = (tipe)=>{
     <h3>Rp 2.600.000</h3>
   </div>
   </div>
+  {/* Review */}
   <div>
   <h2 className="mb-4">They Said</h2>
   <div className="row">
-  <div className="card mb-3 col-4" style={{maxWidth: 540}}>
+  <div className="card mb-3 col-4 " style={{maxWidth: 540, backgroundColor:"#E5E5E5"}}>
   <div className="row g-0">
     <div className="col-md-4">
       <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" className="img-fluid rounded-start" alt="..."/>
     </div>
     <div className="col-md-8">
-      <div className="card-body">
-        <div className="flex">
-                      {totalStar}
-        </div>
-        <h5 className="card-title">Cameron Steve</h5>
-        <p class="card-text">Nice Spaces</p>
-      </div>
-    </div>
-  </div>
-  </div>
-  <div className="card mb-3 col-4" style={{maxWidth: 540}}>
-  <div className="row g-0">
-    <div className="col-md-4">
-      <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" className="img-fluid rounded-start" alt="..."/>
-    </div>
-    <div className="col-md-8">
-      <div className="card-body">
-        <div className="flex">
-                      {totalStar}
-        </div>
-        <h5 className="card-title">Cameron Steve</h5>
-        <p class="card-text">Nice Spaces</p>
-      </div>
-    </div>
-  </div>
-  </div>
-  <div className="card mb-3 col-4" style={{maxWidth: 540}}>
-  <div className="row g-0">
-    <div className="col-md-4">
-      <img src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" className="img-fluid rounded-start" alt="..."/>
-    </div>
-    <div className="col-md-8">
-      <div className="card-body">
-        <div className="flex">
-                      {totalStar}
+      <div style={{backgroundColor:"#E5E5E5"}} className="card-body">
+        <div className="d-flex">
+        <BsFillStarFill className="mx-1 mt-2" style={{color: '#FEC901'}}/>
+        <p>4.6</p>
         </div>
         <h5 className="card-title">Cameron Steve</h5>
         <p class="card-text">Nice Spaces</p>
