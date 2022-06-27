@@ -126,14 +126,20 @@ const kurang = (tipe)=>{
       <input type="date" name="date" style={{fontSize:18}}/>
     </div>
   </div>
-  <div className="d-flex justify-content-between align-items-center mt-3 border border-dark rounded p-1">
-    <p style={{fontWeight:'bold', margin:0}}>1 Month Selected</p>
-    <button type="button" class="btn btn-dark rounded">
-      Check Avabililty
-    </button>
+  <div>
+    <div className="d-flex justify-content-between align-items-center mt-3 border border-dark rounded p-1">
+      <p style={{fontWeight:'bold', margin:0}}>1 Month Selected</p>
+      <button type="button" class="btn btn-dark rounded">
+        Check Avabililty
+      </button>
+    </div>
+    <span className='rounded bg-success bg-opacity-25 px-2'>Congratulations! Room is available</span>
   </div>
-  <div className="mb-4">
+  <div className="mb-4 d-flex justify-content-between">
     <h3>Rp 2.600.000</h3>
+    <button type="button" class="btn btn-dark rounded">
+      Booking
+    </button>
   </div>
   </div>
   {/* Review */}
