@@ -1,14 +1,11 @@
-// Library
 import { Col, Container, Row } from "react-bootstrap";
 import { BsFacebook, BsInstagram, BsTwitter, BsWhatsapp } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import routes from "src/routes";
-
-// Assets
-import GooglePlayBadge from "../../assets/img/google-play-badge.png";
+import routes from "../../routes";
 import AppStoreBadge from "../../assets/img/app-store-badge.png";
 
-// Style
+import GooglePlayBadge from "../../assets/img/google-play-badge.png";
+
 import style from "./style.module.css";
 
 const UserFooter = () => {

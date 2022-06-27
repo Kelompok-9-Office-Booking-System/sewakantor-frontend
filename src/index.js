@@ -1,24 +1,16 @@
-// React
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap";
+import React from "react";
+import ReactDOM from "react-dom/client";
 
-// Style
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './style/custom.css';
-import 'bootstrap/dist/js/bootstrap';
+import App from "./App";
 
-// Pages
-import App from './App';
+import "./index.css";
+import "./style/custom.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-	<React.StrictMode>
-		<BrowserRouter>
-			<Routes>
-				<Route path='/' element={<App />} />
-			</Routes>
-		</BrowserRouter>
-	</React.StrictMode>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
