@@ -48,10 +48,10 @@ const kurang = (tipe)=>{
       <img style={{height:400}} src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img style={{height:400}} src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
+      <img style={{height:400}} src="https://images.unsplash.com/photo-1656231944351-1bdcbef1bc21?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=762&q=80" class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img style={{height:400}} src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
+      <img style={{height:400}} src="https://images.unsplash.com/photo-1655879359474-ec9ec356450b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" class="d-block w-100" alt="..."/>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
@@ -133,7 +133,9 @@ const kurang = (tipe)=>{
         Check Avabililty
       </button>
     </div>
-    <span className='rounded bg-success bg-opacity-25 px-2'>Congratulations! Room is available</span>
+    <div className='mt-1'>
+      <span className='rounded bg-success bg-opacity-25 px-2 '>Congratulations! Room is available</span>
+    </div>
   </div>
   <div className="mb-4 d-flex justify-content-between">
     <h3>Rp 2.600.000</h3>
