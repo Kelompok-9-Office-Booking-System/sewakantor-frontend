@@ -1,14 +1,31 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { BsFacebook, BsInstagram, BsTwitter, BsWhatsapp } from "react-icons/bs";
+import { BsFacebook, BsInstagram, BsWhatsapp } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import routes from "../../routes";
 import AppStoreBadge from "../../assets/img/app-store-badge.png";
 
 import GooglePlayBadge from "../../assets/img/google-play-badge.png";
+import routes from "../../routes";
 
 import style from "./style.module.css";
 
 const UserFooter = () => {
+  const socials = [
+    {
+      href: "https://www.facebook.com/",
+      icon: <BsFacebook size={16} />,
+      name: "Facebook",
+    },
+    {
+      href: "https://www.instagram.com/",
+      icon: <BsInstagram size={16} />,
+      name: "Instagram",
+    },
+    {
+      href: "https://www.whatsapp.com/",
+      icon: <BsWhatsapp size={16} />,
+      name: "Whatsapp",
+    },
+  ];
   return (
     <>
       <Container fluid className="bg-skMidnight text-skWhite">
@@ -18,72 +35,62 @@ const UserFooter = () => {
               <Row>
                 <Col className="d-flex flex-column align-items-start">
                   <h3>About</h3>
-                  <Link to={routes.about}>
-                    <a className="link-light">Our story</a>
+                  <Link to={routes.about} className={"link-light"}>
+                    Our Story
                   </Link>
                 </Col>
                 <Col className="d-flex flex-column align-items-start">
                   <h3>Spaces</h3>
-                  <a href="#" className="link-light">
+                  <Link to={`#`} className={"link-light"}>
                     Add your spaces
-                  </a>
+                  </Link>
                 </Col>
                 <Col className="d-flex flex-column align-items-start">
                   <h3>Member</h3>
-                  <Link to={routes.login}>
-                    <a className="link-light">Login</a>
+                  <Link to={routes.login} className={"link-light"}>
+                    Login
                   </Link>
-                  <Link to={routes.register}>
-                    <a className="link-light">Register</a>
+                  <Link to={routes.register} className={"link-light"}>
+                    Register
                   </Link>
                 </Col>
               </Row>
+
               <Row>
                 <Col className="d-flex flex-column align-items-start">
                   <h3>Review</h3>
-                  <Link to={routes.reviews}>
-                    <a className="link-light">View all review</a>
+                  <Link to={routes.reviews} className={"link-light"}>
+                    View all review
                   </Link>
-                  <a href="#" className="link-light">
+                  <Link to={`#`} className={"link-light"}>
                     Most reviewed review
-                  </a>
+                  </Link>
                 </Col>
                 <Col className="d-flex flex-column align-items-start">
                   <h3>Connect</h3>
-                  <a
-                    href="#"
-                    className="d-flex gap-2 align-items-center link-light"
-                  >
-                    <BsFacebook size={16} /> Facebook
-                  </a>
-                  <a
-                    href="#"
-                    className="d-flex gap-2 align-items-center link-light"
-                  >
-                    <BsInstagram size={16} /> Instagram
-                  </a>
-                  <a
-                    href={`#`}
-                    className="d-flex gap-2 align-items-center link-light"
-                  >
-                    <BsTwitter size={16} /> Twitter
-                  </a>
-                  <a
-                    href="#"
-                    className="d-flex gap-2 align-items-center link-light"
-                  >
-                    <BsWhatsapp size={16} /> Whatsapp
-                  </a>
+                  {socials.map((social) => (
+                    <a
+                      href={social.href}
+                      target={`_blank`}
+                      rel={"noopener noreferrer"}
+                      className={`d-flex gap-2 align-items-center link-light`}
+                    >
+                      {social.icon} {social.name}
+                    </a>
+                  ))}
                 </Col>
-                <Col></Col>
+                <Col />
               </Row>
             </Col>
+
             <Col className="d-flex flex-column align-items-start">
               <h3>Download</h3>
               <p>Download our apps here:</p>
               <div className="d-flex gap-2">
                 <a
-                  href="#"
+                  href="https://play.google.com"
+                  target={`_blank`}
+                  rel="noopener noreferrer"
                   className={`d-flex gap-2 align-items-center link-light ${style.downloadContainer}`}
                 >
                   <img
@@ -93,8 +100,10 @@ const UserFooter = () => {
                   />
                 </a>
                 <a
-                  href="#"
+                  href="https://apps.apple.com"
+                  target={`_blank`}
                   className={`d-flex gap-2 align-items-center link-light ${style.downloadContainer}`}
+                  rel="noopener noreferrer"
                 >
                   <img
                     src={AppStoreBadge}
@@ -107,6 +116,7 @@ const UserFooter = () => {
           </Row>
         </Container>
       </Container>
+
       <Container fluid className="bg-skSmoke">
         <Row>
           <Col className="text-skBlack d-flex justify-content-center align-items-center">
