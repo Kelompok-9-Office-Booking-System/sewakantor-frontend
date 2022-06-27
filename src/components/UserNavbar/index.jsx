@@ -59,9 +59,9 @@ const UserNavbar = () => {
   return (
     <Navbar bg="skSmoke" expand="lg" color="skBlack" sticky="top">
       <Container>
-        <Navbar.Brand href="#home" className="">
+        <Link to={routes.home} className="navbar-brand">
           <Logo />
-        </Navbar.Brand>
+        </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse
           id="basic-navbar-nav"
@@ -69,19 +69,23 @@ const UserNavbar = () => {
         >
           <Nav className="d-flex align-items-center">
             {navigation.map((nav, index) => (
-              <Nav.Link
+              <Link
                 key={index}
-                href={nav.link}
+                to={nav.link}
                 className={`${nav?.class && nav.class} ${
                   pathname.includes(nav.link) && "active"
-                } fs-5`}
+                } fs-5 nav-link`}
               >
                 {nav.name}
-              </Nav.Link>
+              </Link>
             ))}
-            <Nav.Link href={routes.contact} className="fs-5" title={`Contact`}>
+            <Link
+              to={routes.contact}
+              className="fs-5 nav-link"
+              title={`Contact`}
+            >
               <BsTelephoneFill className="mr-2" size={24} />
-            </Nav.Link>
+            </Link>
             <div className={`${style.divider} mx-2`} />
             <button
               className="navbar-toggler"
