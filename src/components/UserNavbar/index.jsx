@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 
-// Library
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { BsPersonCircle, BsTelephoneFill } from "react-icons/bs";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LogoIcon from "../../assets/img/logo/LogoIcon.svg";
 
-// Assets
 import LogoLong from "../../assets/img/logo/LogoLong.svg";
 import useLocalstorage from "../../hooks/useLocalstorage";
 import routes from "../../routes";
 
-// Style
 import style from "./style.module.css";
+
+// TODO: Implement Login and Logout
 
 const Logo = () => {
   return (
@@ -28,7 +27,6 @@ const Logo = () => {
 };
 
 const UserNavbar = () => {
-  const { pathname } = useLocation();
   const { getLSValue, setLSValue, removeLSValue } = useLocalstorage();
 
   const [user, setUser] = useState("");
@@ -36,7 +34,7 @@ const UserNavbar = () => {
   useEffect(() => {
     const user = getLSValue("user");
     setUser(user);
-  }, []);
+  }, [getLSValue]);
   useEffect(() => {
     return () => {};
   }, [user]);
@@ -59,26 +57,38 @@ const UserNavbar = () => {
   return (
     <Navbar bg="skSmoke" expand="lg" color="skBlack" sticky="top">
       <Container>
+        {/*
+        Sewa kantor Logo
+        */}
         <Link to={routes.home} className="navbar-brand">
           <Logo />
         </Link>
+
+        {/*
+        Responsive Toggle
+        */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+        {/*
+        Nav Menu
+        */}
         <Navbar.Collapse
           id="basic-navbar-nav"
           className={`${style.navmenuContainer} fw-bold`}
         >
           <Nav className="d-flex align-items-center">
-            {navigation.map((nav, index) => (
-              <Link
-                key={index}
-                to={nav.link}
-                className={`${nav?.class && nav.class} ${
-                  pathname.includes(nav.link) && "active"
-                } fs-5 nav-link`}
-              >
-                {nav.name}
+            {/*
+            NAV MENU ITEM
+            */}
+            {navigation.map((item, index) => (
+              <Link key={index} to={item.link} className={`fs-5 nav-link`}>
+                {item.name}
               </Link>
             ))}
+
+            {/*
+            NAV CONTACT
+            */}
             <Link
               to={routes.contact}
               className="fs-5 nav-link"
@@ -86,18 +96,26 @@ const UserNavbar = () => {
             >
               <BsTelephoneFill className="mr-2" size={24} />
             </Link>
+
             <div className={`${style.divider} mx-2`} />
+
+            {/*
+            Responsive Toggler
+            */}
             <button
               className="navbar-toggler"
-              type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarNavDarkDropdown"
               aria-controls="navbarNavDarkDropdown"
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span className="navbar-toggler-icon"></span>
+              <span className="navbar-toggler-icon" />
             </button>
+
+            {/*
+            USER MENU
+            */}
             <div
               className="collapse navbar-collapse"
               id="navbarNavDarkDropdown"
@@ -119,6 +137,7 @@ const UserNavbar = () => {
                     className="dropdown-menu dropdown-menu-end"
                     aria-labelledby="navbarDarkDropdownMenuLink"
                   >
+                    {/* Is user logged in? */}
                     {user ? (
                       <>
                         <li>
@@ -152,6 +171,7 @@ const UserNavbar = () => {
                         <li>
                           <hr className={`dropdown-divider`} />
                         </li>
+
                         <li>
                           <Link
                             to={routes.logout}
@@ -181,6 +201,16 @@ const UserNavbar = () => {
                               setUser(getLSValue("user"));
                             }}
                           >
+                            Mock Login
+                          </Link>
+                        </li>
+
+                        <li>
+                          <hr className={`dropdown-divider`} />
+                        </li>
+
+                        <li>
+                          <Link to={routes.login} className={`dropdown-item`}>
                             Login
                           </Link>
                         </li>
