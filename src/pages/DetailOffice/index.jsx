@@ -7,27 +7,20 @@ import axios from 'axios';
 
 const URL = 'http://54.211.120.43/api';
 
-// Make a request for a user with a given ID
-axios.get(URL)
-  .then(function (response) {
-    // handle success
-    console.log(response);
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  .then(function () {
-    // always executed
-  });
-
 export default function DetailOffice() {
   const [conditionMessagges, setConditionMessagges] = useState("");
   const [hidden, setHidden] = useState("visually-hidden");
   const [harga, setHarga] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [monthly, setMonthly] = useState(0);
-
+  const [data, setData] = useState([]);
+  
+  useEffect(() => {
+      axios.get(URL).then((res) => {
+          console.log(res);
+      })
+  });
+  
   //fungsi tambah dan kurang quantity dan monthly
   const tambah = (tipe)=>{
     if(tipe === "quantity")
