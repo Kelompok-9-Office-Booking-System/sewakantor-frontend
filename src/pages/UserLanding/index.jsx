@@ -14,7 +14,7 @@ import HeroImage from "../../assets/img/landing-hero.png";
 import ExploreMeeting from "../../assets/img/landing-meeting.png";
 import ExploreOffice from "../../assets/img/landing-office.png";
 import TrustIllust from "../../assets/img/landing-trust.png";
-import ExploreVirtual from "../../assets/img/landing-virtualoffice.png";
+import ExploreVirtual from "../../assets/img/landing-virtual.png";
 
 import styles from "./style.module.css";
 
@@ -80,9 +80,9 @@ const UserLanding = () => {
     { name: "Bank BCA", image: AffBCA },
     { name: "Uber", image: AffUber },
     { name: "Slack", image: AffSlack },
-    { name: "HSBC", image: AffHSBC },
     { name: "Selina", image: AffSelina },
     { name: "Airbnb", image: AffAirbnb },
+    { name: "HSBC", image: AffHSBC },
   ];
 
   return (
@@ -116,7 +116,7 @@ const UserLanding = () => {
         <div
           className={`d-flex flex-column align-items-center justify-content-center ${styles.exploreContainer}`}
         >
-          <h2>Explore Product</h2>
+          <h2 className={`${styles.header}`}>Explore Product</h2>
           <Row
             className={`${styles.exploreTypes} d-flex justify-content-between gap-3`}
           >
@@ -143,11 +143,12 @@ const UserLanding = () => {
         <div
           className={`d-flex flex-column align-items-center justify-content-center`}
         >
-          <h2>Find your space</h2>
+          <h2 className={`${styles.header}`}>Find your space</h2>
           <div
             className={`d-flex gap-3 w-100 flex-grow-1 align-items-center justify-content-center w-100 my-3`}
           >
             <select
+              className={`${styles.findSelect}`}
               onChange={(e) => {
                 setSelectedCity(e.target.value);
               }}
@@ -162,6 +163,7 @@ const UserLanding = () => {
               ))}
             </select>
             <select
+              className={`${styles.findSelect}`}
               onChange={(e) => {
                 setSelectedType(e.target.value);
               }}
@@ -179,7 +181,7 @@ const UserLanding = () => {
               to={
                 selectedCity === "" || selectedType === ""
                   ? "#"
-                  : `${routes.search}?city=${selectedCity}&type=${selectedType}`
+                  : `${routes.search}?q=${selectedCity}&type=${selectedType}`
               }
               className={`${styles.findButtonContainer}`}
               onClick={(e) => {
@@ -188,7 +190,10 @@ const UserLanding = () => {
                 }
               }}
             >
-              <button disabled={selectedCity === "" || selectedType === ""}>
+              <button
+                className={`${styles.findButton}`}
+                disabled={selectedCity === "" || selectedType === ""}
+              >
                 Search
               </button>
             </Link>
@@ -199,7 +204,7 @@ const UserLanding = () => {
         <div
           className={`d-flex flex-column align-items-center justify-content-center`}
         >
-          <h2>Who’s Talking About Us</h2>
+          <h2 className={`${styles.header}`}>Who’s Talking About Us</h2>
           <div
             className={`d-flex gap-5 flex-wrap flex-grow-1 justify-content-center`}
           >
@@ -218,7 +223,7 @@ const UserLanding = () => {
         <div
           className={`d-flex flex-column align-items-center justify-content-center mb-5`}
         >
-          <h2>Why you should trust us</h2>
+          <h2 className={`${styles.header}`}>Why you should trust us</h2>
           <div className={`d-flex ${styles.trustContainer}`}>
             <img
               src={TrustIllust}
