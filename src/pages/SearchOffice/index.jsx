@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { BsSearch, BsStarFill } from "react-icons/bs";
 import { MdMapsHomeWork } from "react-icons/md";
-import { Link, useSearchParams } from "react-router-dom";
+import { createSearchParams, Link, useSearchParams } from "react-router-dom";
 import style from "./style.module.css";
 
 const BuildingCard = ({ data }) => {
@@ -38,89 +38,6 @@ const BuildingCard = ({ data }) => {
 };
 
 const SearchOffice = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const [inputSearch, setInputSearch] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [urlQuery, setUrlQuery] = useState({});
-  const [priceFilter, setPriceFilter] = useState({ from: 0, to: 0 });
-  const [isPriceButtonEnable, setIsPriceButtonEnable] = useState(false);
-  const [priceButtonText, setPriceButtonText] = useState("Filter");
-  const [capFilter, setCapFilter] = useState({ from: 0, to: 0 });
-  const [isCapacityButtonEnable, setIsCapacityButtonEnable] = useState(false);
-  const [capacityButtonText, setCapacityButtonText] = useState("");
-
-  const addToQueryParameter = useCallback(
-    (key, value) => {
-      setSearchParams({ ...urlQuery, [key]: value });
-    },
-    [urlQuery, setSearchParams]
-  );
-  const removeFromQueryParameter = useCallback(
-    (key) => {
-      delete urlQuery[key];
-      setSearchParams({ ...urlQuery });
-    },
-    [urlQuery, setSearchParams]
-  );
-
-  useEffect(() => {
-    if (!searchParams) return;
-    const tempUrlQuery = {};
-    searchParams.forEach((value, key) => {
-      tempUrlQuery[key] = value;
-    });
-    setUrlQuery(tempUrlQuery);
-    if (tempUrlQuery.q) {
-      setInputSearch(tempUrlQuery.q);
-    }
-  }, [searchParams]);
-  useEffect(() => {
-    if (!inputSearch) {
-      return setSearchQuery("");
-    }
-    const debounceSearch = setTimeout(() => {
-      setSearchQuery(inputSearch);
-    }, 500);
-
-    return () => clearTimeout(debounceSearch);
-  }, [inputSearch]);
-  useEffect(() => {
-    if (searchQuery) {
-      addToQueryParameter("q", searchQuery);
-    } else {
-      removeFromQueryParameter("q");
-    }
-  }, [addToQueryParameter, removeFromQueryParameter, searchQuery]);
-  // Check price filter
-  useEffect(() => {
-    if (priceFilter.from <= priceFilter.to) {
-      setIsPriceButtonEnable(true);
-    } else {
-      setIsPriceButtonEnable(false);
-    }
-
-    if (priceFilter.from === 0 && priceFilter.to === 0) {
-      setPriceButtonText("Reset");
-    } else {
-      setPriceButtonText("Filter");
-    }
-  }, [priceFilter]);
-  // Check capacity filter
-  useEffect(() => {
-    if (capFilter.from <= capFilter.to) {
-      setIsCapacityButtonEnable(true);
-    } else {
-      setIsCapacityButtonEnable(false);
-    }
-
-    if (capFilter.from === 0 && capFilter.to === 0) {
-      setCapacityButtonText("Reset");
-    } else {
-      setCapacityButtonText("Filter");
-    }
-  }, [capFilter]);
-
   const listCategory = [
     { name: "Office Rooms", value: "office" },
     { name: "Meeting Rooms", value: "meeting" },
@@ -131,58 +48,255 @@ const SearchOffice = () => {
     {
       id: 1,
       thumbnail: "https://placeholder.pics/svg/280x175",
-      towerName: "BCA Tower",
+      towerName: "BCA Tower Lorem",
       units: (Math.random() * 1000).toFixed(0),
       ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
       address: "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
-      price: 2700000,
+      price: 1700000,
     },
     {
       id: 2,
       thumbnail: "https://placeholder.pics/svg/280x175",
-      towerName: "BCA Tower",
+      towerName: "BCA Tower Ipsum",
       units: (Math.random() * 1000).toFixed(0),
       ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-      address: "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
+      address: "50/F, Menara BCA Grand Indonesia, Bandung, 10310",
       price: 2700000,
     },
     {
       id: 3,
       thumbnail: "https://placeholder.pics/svg/280x175",
-      towerName: "BCA Tower",
+      towerName: "BCA Tower Dolor",
       units: (Math.random() * 1000).toFixed(0),
       ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-      address: "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
-      price: 2700000,
+      address: "50/F, Menara BCA Grand Indonesia, Tangerang, 10310",
+      price: 3700000,
     },
     {
       id: 4,
       thumbnail: "https://placeholder.pics/svg/280x175",
-      towerName: "BCA Tower",
+      towerName: "BCA Tower Sit",
       units: (Math.random() * 1000).toFixed(0),
       ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-      address: "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
-      price: 2700000,
+      address: "50/F, Menara BCA Grand Indonesia, Bekasi, 10310",
+      price: 4000000,
     },
     {
       id: 5,
       thumbnail: "https://placeholder.pics/svg/280x175",
-      towerName: "BCA Tower",
+      towerName: "BCA Tower Amet",
       units: (Math.random() * 1000).toFixed(0),
       ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
       address: "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
-      price: 2700000,
-    },
-    {
-      id: 6,
-      thumbnail: "https://placeholder.pics/svg/280x175",
-      towerName: "BCA Tower",
-      units: (Math.random() * 1000).toFixed(0),
-      ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-      address: "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
-      price: 2700000,
+      price: 5000000,
     },
   ];
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  /**
+   * State
+   */
+  // Filtering
+  const [type, setType] = useState(searchParams.get("type") || "");
+
+  const [priceFrom, setPriceFrom] = useState(
+    Number(searchParams.get("priceFrom")) || 0
+  );
+  const [priceTo, setPriceTo] = useState(
+    Number(searchParams.get("priceTo")) || 0
+  );
+  const [validatePrice, setValidatePrice] = useState(true);
+  const [resetPrice, setResetPrice] = useState(true);
+
+  const [capacityFrom, setCapacityFrom] = useState(
+    Number(searchParams.get("capacityFrom")) || 0
+  );
+  const [capacityTo, setCapacityTo] = useState(
+    Number(searchParams.get("capacityTo")) || 0
+  );
+  const [validateCapacity, setValidateCapacity] = useState(true);
+  const [resetCapacity, setResetCapacity] = useState(true);
+
+  // Search
+  const [inputSearch, setInputSearch] = useState(searchParams.get("q") || "");
+  const [debounceSearch, setDebounceSearch] = useState(inputSearch);
+  const [duration, setDuration] = useState("");
+
+  // Tower list
+  const [defaultTower, setDefaultTower] = useState([]);
+  const [listTower, setListTower] = useState([]);
+
+  /**
+   * Use Effect
+   */
+  //Fetch tower data
+  useEffect(() => {
+    const fetchData = async () => {
+      const spaceEndpoint = "";
+      // const dataResponse = await axios.get(spaceEndpoint);
+      setDefaultTower(placeholderBuilding);
+      setListTower(placeholderBuilding);
+    };
+    fetchData();
+  }, []);
+  //Fetch everytime search params change
+  useEffect(() => {
+    let list = placeholderBuilding;
+    if (searchParams.get("q")) {
+      let tempArray = [];
+      list.forEach((item) => {
+        if (
+          item.towerName
+            .toLowerCase()
+            .includes(searchParams.get("q").toLowerCase()) ||
+          item.address
+            .toLowerCase()
+            .includes(searchParams.get("q").toLowerCase())
+        ) {
+          tempArray.push(item);
+        }
+      });
+      list = tempArray;
+    }
+    if (searchParams.get("priceFrom") && searchParams.get("priceTo")) {
+      let tempArray = [];
+      list.forEach((item) => {
+        if (
+          item.price >= searchParams.get("priceFrom") &&
+          item.price <= searchParams.get("priceTo")
+        ) {
+          tempArray.push(item);
+        }
+      });
+      list = tempArray;
+    }
+    if (searchParams.get("capacityFrom") && searchParams.get("capacityTo")) {
+      let tempArray = [];
+      list.forEach((item) => {
+        if (
+          item.units >= searchParams.get("capacityFrom") &&
+          item.units <= searchParams.get("capacityTo")
+        ) {
+          tempArray.push(item);
+        }
+      });
+      list = tempArray;
+    }
+
+    setListTower(list);
+  }, [searchParams]);
+
+  //Filter tower data
+  useEffect(() => {
+    if (priceFrom === 0 && priceTo === 0) {
+      setResetPrice(false);
+      return;
+    }
+    if (priceFrom > priceTo) {
+      setValidatePrice(false);
+      setResetPrice(true);
+      return;
+    }
+    setValidatePrice(true);
+    setResetPrice(true);
+  }, [priceFrom, priceTo]);
+  useEffect(() => {
+    if (capacityFrom === 0 && capacityTo === 0) {
+      setResetCapacity(false);
+      return;
+    }
+    if (capacityFrom > capacityTo) {
+      setValidateCapacity(false);
+      setResetCapacity(true);
+      return;
+    }
+    setValidateCapacity(true);
+    setResetCapacity(true);
+  }, [capacityFrom, capacityTo]);
+
+  //Search bar
+  useEffect(() => {
+    if (inputSearch === "") {
+      setSearchParams(appendSearchParams({ q: "" }));
+      return;
+    }
+    setDebounceSearch(inputSearch);
+  }, [inputSearch]);
+  //Debounce search
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      if (debounceSearch !== "") {
+        setSearchParams(appendSearchParams({ q: debounceSearch }));
+        return;
+      }
+      setDebounceSearch("");
+    }, 250);
+
+    return () => {
+      clearTimeout(debounce);
+    };
+  }, [debounceSearch]);
+
+  /**
+   * Callback
+   */
+  const appendSearchParams = (obj) => {
+    const sp = createSearchParams(searchParams);
+    Object.entries(obj).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        sp.delete(key);
+        value.forEach((v) => sp.append(key, v));
+      } else if (value === undefined || value === null || value === "") {
+        sp.delete(key);
+      } else {
+        sp.set(key, value);
+      }
+    });
+    return sp;
+  };
+
+  const handleFilterType = useCallback(
+    (checkedType) => {
+      setType(checkedType);
+      setSearchParams(appendSearchParams({ type: checkedType }));
+    },
+    [type]
+  );
+  const handleFilterPrice = useCallback(() => {
+    setSearchParams(
+      appendSearchParams({ priceFrom: priceFrom, priceTo: priceTo })
+    );
+  }, [priceFrom, priceTo]);
+  const handleResetPrice = useCallback(() => {
+    setPriceFrom(0);
+    setPriceTo(0);
+    setSearchParams(appendSearchParams({ priceFrom: null, priceTo: null }));
+  }, [priceFrom, priceTo]);
+
+  const handleFilterCapacity = useCallback(() => {
+    setSearchParams(
+      appendSearchParams({ capacityFrom: capacityFrom, capacityTo: capacityTo })
+    );
+  }, [capacityFrom, capacityTo]);
+  const handleResetCapacity = useCallback(() => {
+    setCapacityFrom(0);
+    setCapacityTo(0);
+    setSearchParams(
+      appendSearchParams({ capacityFrom: null, capacityTo: null })
+    );
+  }, [capacityFrom, capacityTo]);
+
+  const handleFilterDuration = useCallback(
+    (e) => {
+      setDuration(e);
+      if (e === "") {
+        setSearchParams(appendSearchParams({ duration: null }));
+      } else {
+        setSearchParams(appendSearchParams({ duration: e }));
+      }
+    },
+    [duration]
+  );
 
   return (
     <div
@@ -202,14 +316,19 @@ const SearchOffice = () => {
                 key={category.name}
               >
                 <input
-                  type={`checkbox`}
+                  type={`radio`}
                   className={`${style.filterCheckbox}`}
-                  name={`cb-${category.value}`}
+                  name={`cb-type`}
                   id={`cb-${category.value}`}
+                  checked={category.value === type}
                   value={`${category.value}`}
                   onChange={(e) => {
-                    if (e.target.checked) {
-                      console.log(e.target.value);
+                    handleFilterType(e.currentTarget.value);
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (e.currentTarget.checked) {
+                      handleFilterType("");
                     }
                   }}
                 />
@@ -231,12 +350,10 @@ const SearchOffice = () => {
                 name={`price-from`}
                 id={`price-from`}
                 min={0}
-                value={priceFilter.from}
+                step={100000}
+                value={priceFrom}
                 onChange={(e) => {
-                  setPriceFilter({
-                    ...priceFilter,
-                    from: Number(e.target.value),
-                  });
+                  setPriceFrom(Number(e.target.value));
                 }}
               />
             </div>
@@ -250,33 +367,24 @@ const SearchOffice = () => {
                 name={`price-to`}
                 id={`price-to`}
                 min={0}
-                value={priceFilter.to}
-                onChange={(e) =>
-                  setPriceFilter({
-                    ...priceFilter,
-                    to: Number(e.target.value),
-                  })
-                }
+                step={100000}
+                value={priceTo}
+                onChange={(e) => setPriceTo(Number(e.target.value))}
               />
             </div>
             <button
               className={`btn btn-dark`}
-              disabled={!isPriceButtonEnable}
-              onClick={async () => {
-                if (priceButtonText.toLowerCase() === "reset") {
-                  await removeFromQueryParameter("pricingFrom");
-                  await removeFromQueryParameter("pricingTo");
-                  return;
-                }
-
-                const q = {
-                  pricingFrom: priceFilter.from,
-                  pricingTo: priceFilter.to,
-                };
-                setSearchParams({ ...urlQuery, ...q });
-              }}
+              disabled={!validatePrice}
+              onClick={handleFilterPrice}
             >
-              {priceButtonText}
+              Filter
+            </button>
+            <button
+              className={`btn btn-danger`}
+              disabled={!resetPrice}
+              onClick={handleResetPrice}
+            >
+              Reset
             </button>
           </div>
 
@@ -293,12 +401,10 @@ const SearchOffice = () => {
                 name={`price-from`}
                 id={`price-from`}
                 min={0}
-                value={capFilter.from}
+                step={10}
+                value={capacityFrom}
                 onChange={(e) => {
-                  setCapFilter({
-                    ...capFilter,
-                    from: Number(e.target.value),
-                  });
+                  setCapacityFrom(Number(e.target.value));
                 }}
               />
             </div>
@@ -312,33 +418,26 @@ const SearchOffice = () => {
                 name={`price-to`}
                 id={`price-to`}
                 min={0}
-                value={capFilter.to}
+                step={10}
+                value={capacityTo}
                 onChange={(e) => {
-                  setCapFilter({
-                    ...capFilter,
-                    to: Number(e.target.value),
-                  });
+                  setCapacityTo(Number(e.target.value));
                 }}
               />
             </div>
             <button
               className={`btn btn-dark`}
-              disabled={!isCapacityButtonEnable}
-              onClick={async () => {
-                if (capacityButtonText.toLowerCase() === "reset") {
-                  await removeFromQueryParameter("capacityFrom");
-                  await removeFromQueryParameter("capacityTo");
-                  return;
-                }
-
-                const q = {
-                  capacityFrom: capFilter.from,
-                  capacityTo: capFilter.to,
-                };
-                setSearchParams({ ...urlQuery, ...q });
-              }}
+              disabled={!validateCapacity}
+              onClick={handleFilterCapacity}
             >
-              {capacityButtonText}
+              Filter
+            </button>
+            <button
+              className={`btn btn-danger`}
+              disabled={!resetCapacity}
+              onClick={handleResetCapacity}
+            >
+              Reset
             </button>
           </div>
         </div>
@@ -363,30 +462,28 @@ const SearchOffice = () => {
             />
           </div>
           {/* Search Result */}
-          {searchQuery && (
+          {inputSearch && (
             <div className={`fs-5 my-3`}>
-              Search result for "{searchQuery.trim()}"
+              Search result for "{debounceSearch.trim()}"
             </div>
           )}
 
           {/* Duration */}
           <div
             className={`d-flex align-items-center gap-3 ${
-              !searchQuery && "my-3"
+              !inputSearch && "my-3"
             }`}
           >
             <button
               className={`btn ${
-                urlQuery.duration === "monthly"
-                  ? "btn-dark"
-                  : "btn-outline-dark"
+                duration === "monthly" ? "btn-dark" : "btn-outline-dark"
               }`}
               onClick={(e) => {
                 e.preventDefault();
-                if (urlQuery.duration === "monthly") {
-                  removeFromQueryParameter("duration");
+                if (duration !== "monthly") {
+                  handleFilterDuration("monthly");
                 } else {
-                  addToQueryParameter("duration", "monthly");
+                  handleFilterDuration("");
                 }
               }}
             >
@@ -394,14 +491,14 @@ const SearchOffice = () => {
             </button>
             <button
               className={`btn ${
-                urlQuery.duration === "daily" ? "btn-dark" : "btn-outline-dark"
+                duration === "daily" ? "btn-dark" : "btn-outline-dark"
               }`}
               onClick={(e) => {
                 e.preventDefault();
-                if (urlQuery.duration === "daily") {
-                  removeFromQueryParameter("duration");
+                if (duration !== "daily") {
+                  handleFilterDuration("daily");
                 } else {
-                  addToQueryParameter("duration", "daily");
+                  handleFilterDuration("");
                 }
               }}
             >
@@ -411,7 +508,7 @@ const SearchOffice = () => {
 
           {/* List */}
           <div className={`${style.listCardContainer} my-3`}>
-            {placeholderBuilding.map((building, index) => (
+            {listTower?.map((building, index) => (
               <BuildingCard key={index} data={building} />
             ))}
           </div>
