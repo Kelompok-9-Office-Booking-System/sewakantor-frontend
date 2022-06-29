@@ -3,16 +3,31 @@ import '../DetailOffice/DetailOffice.css'
 // import icon react-icon
 import { BsFillStarFill} from "react-icons/bs";
 import { ImLocation } from "react-icons/im";
+import axios from 'axios';
+
+const URL = 'http://54.211.120.43/api';
+
+// Make a request for a user with a given ID
+axios.get(URL)
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
 
 export default function DetailOffice() {
+  const [conditionMessagges, setConditionMessagges] = useState("");
+  const [hidden, setHidden] = useState("visually-hidden");
   const [harga, setHarga] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [monthly, setMonthly] = useState(0);
-  // Make a stars
-  const totalStar = [];
-  for (let index = 0; index < 4 ; index++) {
-    totalStar.push( <BsFillStarFill className="mx-1" style={{color: '#FEC901'}}/>);         
-  }
+
   //fungsi tambah dan kurang quantity dan monthly
   const tambah = (tipe)=>{
     if(tipe === "quantity")
@@ -27,16 +42,21 @@ const kurang = (tipe)=>{
         if(quantity !== 0){
             setQuantity(quantity - 1);
         }else{
-            alert("data harus diisi")
+            alert("quantity tidak boleh 0")
         }
     else if(tipe === "monthly"){
         if(monthly !== 0){
             setMonthly(monthly - 1);
         }else{
-            alert("data harus diisi")
+            alert("monthly tidak boleh 0")
         }
     }
 } 
+
+const checkAvaibility = () => {
+  setHidden('');
+}
+
   return (
     <div className="container">
     <div className="row">
@@ -97,46 +117,46 @@ const kurang = (tipe)=>{
       <a href='#'>Coworking</a>
     </nav>
   </div>
-  <div className="d-flex justify-content-between mt-4">
-    <div>
-      <label>Select Duration</label><br/>
-      <select className=" px-3" style={{fontSize:18}}>
-        <option value="month">Month</option>
-        <option value="day">Day</option>
-      </select>
-    </div>
-    <div>
-      <label>Select Quantity</label><br/>
-      <div className="d-flex justify-content-between">
-        <button className="btn btn-dark px-2 py-0" onClick={() => kurang("quantity")}>-</button>
-          <h2>{quantity}</h2>
-        <button type="button" className="btn btn-dark px-2 py-0 " onClick={() => tambah("quantity")}>+</button>
+    <div className="d-flex justify-content-between mt-4">
+      <div>
+        <label>Select Duration</label><br/>
+        <select className=" px-3" style={{fontSize:18}}>
+          <option value="month">Month</option>
+          <option value="day">Day</option>
+        </select>
+      </div>
+      <div>
+        <label>Select Quantity</label><br/>
+        <div className="d-flex justify-content-between">
+          <button className="btn btn-dark px-2 py-0" onClick={() => kurang("quantity")}>-</button>
+            <h2>{quantity}</h2>
+          <button type="button" className="btn btn-dark px-2 py-0 " onClick={() => tambah("quantity")}>+</button>
+        </div>
+      </div>
+      <div>
+        <label>No of Monthly</label><br/>
+        <div className="d-flex justify-content-between">
+          <button className="btn btn-dark px-2 py-0" onClick={() => kurang("monthly")}>-</button>
+            <h2>{monthly}</h2>
+          <button type="button" className="btn btn-dark px-2 py-0 " onClick={() => tambah("monthly")}>+</button>
+        </div>
+      </div>
+      <div>
+        <label>Pick a Date</label><br/>
+        <input type="date" name="date" style={{fontSize:18}}/>
       </div>
     </div>
     <div>
-      <label>No of Monthly</label><br/>
-      <div className="d-flex justify-content-between">
-        <button className="btn btn-dark px-2 py-0" onClick={() => kurang("monthly")}>-</button>
-          <h2>{monthly}</h2>
-        <button type="button" className="btn btn-dark px-2 py-0 " onClick={() => tambah("monthly")}>+</button>
+      <div className="d-flex justify-content-between align-items-center mt-3 border border-dark rounded p-1">
+        <p style={{fontWeight:'bold', margin:0}}>1 Month Selected</p>
+        <button type="button" onClick={checkAvaibility} class="btn btn-dark rounded">
+          Check Avaibility
+        </button>
+      </div>
+      <div className='mt-1'>
+        <span className={`rounded bg-success bg-opacity-25 px-2 ${hidden}`}>Congratulations! Room is available</span>
       </div>
     </div>
-    <div>
-      <label>Pick a Date</label><br/>
-      <input type="date" name="date" style={{fontSize:18}}/>
-    </div>
-  </div>
-  <div>
-    <div className="d-flex justify-content-between align-items-center mt-3 border border-dark rounded p-1">
-      <p style={{fontWeight:'bold', margin:0}}>1 Month Selected</p>
-      <button type="button" class="btn btn-dark rounded">
-        Check Avabililty
-      </button>
-    </div>
-    <div className='mt-1'>
-      <span className='rounded bg-success bg-opacity-25 px-2 '>Congratulations! Room is available</span>
-    </div>
-  </div>
   <div className="mb-4 d-flex justify-content-between">
     <h3>Rp 2.600.000</h3>
     <button type="button" class="btn btn-dark rounded">
