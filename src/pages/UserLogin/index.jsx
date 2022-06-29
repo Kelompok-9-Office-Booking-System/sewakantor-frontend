@@ -1,17 +1,58 @@
-import React, { useState} from "react";
-import { Form, Button, Col } from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button, Col, Row } from "react-bootstrap";
 import style from "./style.module.css"
+import { Navigate } from "react-router-dom";
+import {  toast } from 'react-toastify';
 
-function UserLogin () {
+import apiCustomer from "../../api/apiCustomer";
+
+function UserLogin() {
   const email = useFormInput('');
   const password = useFormInput('');
+  const [data, setData] = useState("")
 
-function handleSubmit(){
-  console.log("jalan", email.value, password.value); 
-}
+  console.log(data)
+
+  const handleTest = async ()=> {
+    try {
+      // const resAllPost = await apiCustomer.getAllPosts()
+      // const resPost = await apiCustomer.getPostById(2)
+      // const resComment = await apiCustomer.getCommentPostById(1)
+      const resComment = await apiCustomer.getCommentByPostId(1)
+      setData(resComment)
+
+      
+    } catch (error) {
+      
+    }
+  }
+
+  const handleSubmit = async () =>  {
+    try {
+      const payload = {
+        email : email.value,
+        password: password.value
+      }
+      console.log("jalan", email.value, password.value);
+  
+      const responseLogin = await apiCustomer.login(payload)
+      if(responseLogin.code === 200) {
+        // teruskan ke halaman landing page
+        // <Navigate to="/" replace={true} />
+        console.log("login",responseLogin)
+        toast(responseLogin.message)
+      } else {
+        //  <Navigate to="/" replace={true} />
+
+      }
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
 
   return (
     <Row className="row">
+
       <Col md={6}>
         <img src='google.com' alt='test' />
       </Col>
@@ -24,7 +65,7 @@ function handleSubmit(){
               Don't have any account?
             </Form.Text>
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" {...email}  placeholder="Enter email" />
+            <Form.Control type="email" {...email} placeholder="Enter email" />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
@@ -40,8 +81,8 @@ function handleSubmit(){
           </Button>
           <div className={style.line}
           />
-          <Button variant="primary" className="d-inline" onClick={handleSubmit}>
-            Login
+          <Button variant="primary" className="d-inline" onClick={handleTest}>
+            Loginx
           </Button>
         </Form>
       </Col>
