@@ -34,7 +34,8 @@ const UserNavbar = () => {
   useEffect(() => {
     const user = getLSValue("user");
     setUser(user);
-  }, [getLSValue]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {
     return () => {};
   }, [user]);
