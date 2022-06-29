@@ -3,10 +3,14 @@ export default function validateInfo(values) {
 
     if (!values.firstname.trim()) {
         errors.firstname = "First Name is required"
+    } else if (!/^[A-Za-z\s]{1,}[.]{0,1}[A-Za-z\s]{0,}$/.test(values.firstname)) {
+        errors.firstname = 'First Name is Invalid';
     }
 
-    if (!values.lastname) {
-        errors.lastname = "Last Name is required"
+    if (!values.lastname.trim()) {
+        errors.lastname = "Last Name is required";
+    } else if (!/^[A-Za-z\s]{1,}[.]{0,1}[A-Za-z\s]{0,}$/.test(values.lastname)) {
+        errors.lastname = 'Last Name is Invalid';
     }
 
     if (!values.email) {
@@ -14,6 +18,7 @@ export default function validateInfo(values) {
     } else if (!/\S+@\S+\.\S+/.test(values.email)) {
         errors.email = 'Email address is invalid';
     }
+
     if (!values.password) {
         errors.password = 'Password is required';
     } else if (values.password.length < 6) {
