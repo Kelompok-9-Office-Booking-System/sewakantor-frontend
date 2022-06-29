@@ -58,7 +58,7 @@
     height: fit-content;
 }
 
-h2 {
+.header {
     font-style: normal;
     font-weight: 500;
     font-size: 32px;
@@ -105,7 +105,7 @@ h2 {
 }
 
 
-select {
+.findSelect {
     background: #F2F2F2;
     padding: 0.5rem;
     width: 20rem;
@@ -120,11 +120,11 @@ select {
 .findButtonContainer {
     width: 25%;
 }
-button[disabled]{
+button[disabled].findButton{
     background: #7B7878;
     color: #242831;
 }
-button {
+button.findButton {
     padding: 0.5rem;
     width: 15rem;
     height: 4rem;
