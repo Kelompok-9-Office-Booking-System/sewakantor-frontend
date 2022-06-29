@@ -34,7 +34,7 @@ const UserNavbar = () => {
   useEffect(() => {
     const user = getLSValue("user");
     setUser(user);
-  }, [getLSValue]);
+  }, []);
   useEffect(() => {
     return () => {};
   }, [user]);
