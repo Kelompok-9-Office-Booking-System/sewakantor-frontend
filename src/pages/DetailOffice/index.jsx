@@ -5,22 +5,25 @@ import { BsFillStarFill} from "react-icons/bs";
 import { ImLocation } from "react-icons/im";
 import axios from 'axios';
 
-const URL = 'http://54.211.120.43/api';
+const URL = 'https://62bd40c0c5ad14c110ba75d2.mockapi.io/buildings';
 
 export default function DetailOffice() {
-  const [conditionMessagges, setConditionMessagges] = useState("");
   const [hidden, setHidden] = useState("visually-hidden");
   const [harga, setHarga] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [monthly, setMonthly] = useState(0);
   const [data, setData] = useState([]);
-  
+
   useEffect(() => {
-      axios.get(URL).then((res) => {
-          console.log(res);
-      })
-  });
-  
+    const fetchData = async () => {
+      const data = await axios.get(URL);
+      const axiosData = data.data;
+      setData(axiosData)
+      console.info(data)
+      return;
+    }
+    fetchData();
+  },[]);  
   //fungsi tambah dan kurang quantity dan monthly
   const tambah = (tipe)=>{
     if(tipe === "quantity")
@@ -184,8 +187,8 @@ const checkAvaibility = () => {
       </div>
       <div className="col">
         <div className="mb-4">
-          <h1>BCA Tower</h1>
-          <p  style={{color: 'grey'}}>50/F, Menara BCA Grand Indonesia, Jakarta, 10310</p>
+          <h1>{data[0].building}</h1>
+          <p  style={{color: 'grey'}}>{data[0].address}</p>
           <button type="button" class="btn btn-dark px-5">Request Visit</button>
         </div>
         <div>
