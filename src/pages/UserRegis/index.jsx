@@ -7,7 +7,7 @@ import useForm from "../../hooks/useForm";
 import validate from "./validateInfo";
 
 //style
-import { Container, Col, Row, Form, Image, Button } from "react-bootstrap";
+import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import style from "./style.module.css";
 import logo from "../../assets/img/logo/LogoIcon.svg";
 import { FcGoogle } from "react-icons/fc";
@@ -16,11 +16,12 @@ const UserRegis = () => {
   const { handleChange, values, handleSubmit, errors } = useForm(validate);
 
   return (
+    <div className={`${style.registerContainer} bg-skSmoke`}>
     <Container>
       <Row>
         <Col>
           <div>
-            <Image src={logo} thumbnail className={style.logo_image} />
+            <img src={logo} thumbnail className={style.logo_image} alt="Logo" />
           </div>
         </Col>
         <Col className={style.right_login}>
@@ -130,6 +131,7 @@ const UserRegis = () => {
         </Col>
       </Row>
     </Container>
+    </div>
   );
 };
 
