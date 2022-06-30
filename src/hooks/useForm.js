@@ -9,6 +9,7 @@ const useForm = validate => {
     password2:''
   })
   const [errors, setErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = e => {
     setValues({
@@ -22,6 +23,14 @@ const useForm = validate => {
 
     setErrors(validate(values));
   }
+
+  useEffect(() => {
+    setErrors('');
+  }, [values])
+
+  // useEffect(() => {
+  //   if (Object.keys(errors).length === 0 )
+  // })
 
   return { handleChange, values, handleSubmit, errors};
 };
