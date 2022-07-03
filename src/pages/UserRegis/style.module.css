@@ -44,3 +44,18 @@
     color: red;
 }
 
+.input_password_wrapper {
+    display: flex;
+}
+
+.password_field {
+    padding-right: 1.6rem;
+}
+
+.password_btn {
+    margin-left: -1.5rem;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}

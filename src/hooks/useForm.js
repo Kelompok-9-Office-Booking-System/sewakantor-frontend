@@ -12,7 +12,11 @@ const useForm = validate => {
     password2:''
   })
   const [errors, setErrors] = useState({})
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showpassword, setShowpassword] = useState(false)
+
+  const handleToggle = () => {
+    setShowpassword(prevState => !prevState)
+  }
 
   const handleChange = e => {
     setValues({
@@ -59,7 +63,7 @@ const useForm = validate => {
 
   
 
-  return { handleChange, values, handleSubmit, errors};
+  return { handleChange, values, handleSubmit, errors, showpassword, handleToggle};
 };
 
 export default useForm
