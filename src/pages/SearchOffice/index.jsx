@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
+// import { Image } from "react-bootstrap";
 import { BsSearch, BsStarFill } from "react-icons/bs";
 import { MdMapsHomeWork } from "react-icons/md";
 import { createSearchParams, Link, useSearchParams } from "react-router-dom";
@@ -17,15 +19,21 @@ const BuildingCard = ({ data }) => {
       className={`d-flex flex-column flex-wrap justify-content-between align-items-start bg-skWhite text-black ${style.listCard}`}
     >
       <div className={`d-flex flex-column`}>
-        <img src={data.thumbnail} alt={data.towerName} />
-        <div className={`${style.listTower}`}>{data.towerName}</div>
+        <img
+          src={data.thumbnail}
+          alt={data.name}
+          className={`${style.listThumbnail}`}
+        />
+        <div className={`${style.listTower}`}>{data.name}</div>
         <div className={`d-flex gap-3 align-items-center`}>
           <div className={`d-flex align-items-center gap-2`}>
-            <MdMapsHomeWork size={20} /> {data.units}
+            <MdMapsHomeWork size={20} /> {data.unit}
           </div>
           <div className={`d-flex align-items-center gap-2`}>
-            <BsStarFill size={20} className={`text-skYellow`} />{" "}
-            {formatRatings(data.ratings)}
+            <BsStarFill size={20} className={`text-skYellow`} />
+            {typeof data.rating === "number"
+              ? data.rating
+              : formatRatings(data.ratings)}
           </div>
         </div>
         <div className={`text-muted`}>{data.address}</div>
@@ -130,23 +138,51 @@ const SearchOffice = () => {
    * Use Effect
    */
   //Fetch tower data
+  const fetchData = async () => {
+    const dataResponse = await axios.get(
+      `http://54.211.120.43/api/v1/customer/spaces`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_TOKEN}`,
+        },
+      }
+    );
+    const buildingData = dataResponse.data;
+
+    return buildingData;
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      const spaceEndpoint = "";
-      // const dataResponse = await axios.get(spaceEndpoint);
-      setDefaultTower(placeholderBuilding);
-      setListTower(placeholderBuilding);
+    const asyncFetch = async () => {
+      const building = await fetchData();
+      setDefaultTower(building.data);
+      setListTower(building.data);
     };
-    fetchData();
+    asyncFetch();
   }, []);
   //Fetch everytime search params change
   useEffect(() => {
-    let list = placeholderBuilding;
+    let list = defaultTower || [];
+
+    if (searchParams.get("type")) {
+      let tempArray = [];
+      const findName = listCategory.find(
+        (cat) => cat.value === searchParams.get("type")
+      );
+      list.forEach((item) => {
+        const checkIfIncludes = item.types.find((item) =>
+          item.name.toLowerCase().includes(findName.value.toLowerCase())
+        );
+        if (checkIfIncludes) {
+          tempArray.push(item);
+        }
+      });
+      list = tempArray;
+    }
     if (searchParams.get("q")) {
       let tempArray = [];
       list.forEach((item) => {
         if (
-          item.towerName
+          item.name
             .toLowerCase()
             .includes(searchParams.get("q").toLowerCase()) ||
           item.address
@@ -174,8 +210,8 @@ const SearchOffice = () => {
       let tempArray = [];
       list.forEach((item) => {
         if (
-          item.units >= searchParams.get("capacityFrom") &&
-          item.units <= searchParams.get("capacityTo")
+          item.unit >= searchParams.get("capacityFrom") &&
+          item.unit <= searchParams.get("capacityTo")
         ) {
           tempArray.push(item);
         }
@@ -508,9 +544,15 @@ const SearchOffice = () => {
 
           {/* List */}
           <div className={`${style.listCardContainer} my-3`}>
-            {listTower?.map((building, index) => (
-              <BuildingCard key={index} data={building} />
-            ))}
+            {listTower.length > 0 ? (
+              <>
+                {listTower?.map((building, index) => (
+                  <BuildingCard key={index} data={building} />
+                ))}
+              </>
+            ) : (
+              <div>No result</div>
+            )}
           </div>
         </div>
       </div>
