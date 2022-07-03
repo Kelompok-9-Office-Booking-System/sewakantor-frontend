@@ -98,3 +98,9 @@ input[type=number] {
     font-size: 1.5rem;
     line-height: 2.25rem;
 }
+.listThumbnail {
+    width: 100%;
+    height: 12.5rem;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
