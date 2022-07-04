@@ -1,19 +1,27 @@
-import React from "react";
-
-//style
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { FcGoogle } from "react-icons/fc";
-import logo from "../../assets/img/logo/LogoIcon.svg";
+import React, { useState } from "react";
 
 //Hook
 import useForm from "../../hooks/useForm";
-import style from "./style.module.css";
 
 //Validate
 import validate from "./validateInfo";
 
+//style
+import { Container, Col, Row, Form, Button } from "react-bootstrap";
+import style from "./style.module.css";
+import logo from "../../assets/img/logo/LogoIcon.svg";
+import { FcGoogle } from "react-icons/fc";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
 const UserRegis = () => {
-  const { handleChange, values, handleSubmit, errors } = useForm(validate);
+  const {
+    handleChange,
+    values,
+    handleSubmit,
+    errors,
+    showpassword,
+    handleToggle,
+  } = useForm(validate);
 
   return (
     <div className={`${style.registerContainer} bg-skSmoke`}>
@@ -21,7 +29,12 @@ const UserRegis = () => {
         <Row>
           <Col>
             <div>
-              <img src={logo} alt={`sewaKantor`} className={style.logo_image} />
+              <img
+                src={logo}
+                thumbnail
+                className={style.logo_image}
+                alt="Logo"
+              />
             </div>
           </Col>
           <Col className={style.right_login}>
@@ -61,7 +74,7 @@ const UserRegis = () => {
                         value={values.lastname}
                         onChange={handleChange}
                       />
-                      {errors.firstname && <p>{errors.lastname}</p>}
+                      {errors.lastname && <p>{errors.lastname}</p>}
                     </Col>
                   </Row>
                   <Col
@@ -88,14 +101,27 @@ const UserRegis = () => {
                         <Form.Label style={{ fontWeight: "bold" }}>
                           Password
                         </Form.Label>
-                        <Form.Control
-                          id="password"
-                          name="password"
-                          type="password"
-                          placeholder="Enter your password"
-                          value={values.password}
-                          onChange={handleChange}
-                        />
+                        <Col className={style.input_password_wrapper}>
+                          <Form.Control
+                            id="password"
+                            name="password"
+                            type={showpassword ? "text" : "password"}
+                            placeholder="Enter your password"
+                            value={values.password}
+                            onChange={handleChange}
+                            className={style.password_field}
+                          />
+                          <button
+                            className={style.password_btn}
+                            onClick={handleToggle}
+                          >
+                            {showpassword ? (
+                              <AiOutlineEyeInvisible />
+                            ) : (
+                              <AiOutlineEye />
+                            )}
+                          </button>
+                        </Col>
                         {errors.password && <p>{errors.password}</p>}
                       </Col>
                       <Col className={style.form_section}>
