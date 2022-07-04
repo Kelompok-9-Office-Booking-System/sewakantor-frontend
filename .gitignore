@@ -29,3 +29,4 @@ yarn-error.log*
 /src/index.js
 /src/logo.svg
 .env
+!/.env
