@@ -1,0 +1,74 @@
+.profile_outline {
+    margin: 50px 0px;
+    padding: 20px;
+    background: #10141D;
+    border-radius: 10px;
+}
+
+.profile_image{
+    border-radius: 50%;
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.profile_outline h4 {
+    color: white;
+    text-align: center;
+}
+
+.profile_button button {
+    display: block;
+    width: 100%;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    padding: 0.5rem;
+    border-radius: 20px;
+}
+
+.profile_main_content h2 {
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+.profile_main_content hr {
+    margin-left: 20px;
+}
+
+.profile_content {
+    margin-left: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #FFFFFF;
+}
+
+.form_input input {
+    width: 90%;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.form_input {
+    width: 50%;
+}
+
+.form_input label {
+    width: 100%;
+}
+
+.form_input_address input {
+    width: 95%;
+    border-radius: 5px;
+    border: 1px solid;
+    padding: 10px;
+}
+
+.profile_form_button button {
+    margin-top: 20px;
+    background: #10141D;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 10px;
+}
