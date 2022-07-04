@@ -1,63 +1,111 @@
-import React, { useState} from "react";
-import { Form, Button, Col } from "react-bootstrap";
-import style from "./style.module.css"
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-function UserLogin () {
-  const email = useFormInput('');
-  const password = useFormInput('');
+//Hook
+import useForm from "../../hooks/useForm";
+import routes from "../../routes";
 
-function handleSubmit(){
-  console.log("jalan", email.value, password.value); 
-}
+//Validate
+import validate from "./validateInfo";
+
+//style
+import { Container, Col, Row, Form, Button } from "react-bootstrap";
+import style from "./style.module.css";
+import logo from "../../assets/img/logo/LogoIcon.svg";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
+const UserRegis = () => {
+  const {
+    handleChange,
+    values,
+    handleLogin,
+    showpassword,
+    errors,
+    handleToggle,
+  } = useForm(validate);
 
   return (
-    <Row className="row">
-      <Col md={6}>
-        <img src='google.com' alt='test' />
-      </Col>
+    <div className={`${style.registerContainer} bg-skSmoke`}>
+      <Container>
+        <Row>
+          <Col>
+            <div>
+              <img src={logo} className={style.logo_image} alt="Logo" />
+            </div>
+          </Col>
+          <Col className={style.right_login}>
+            <div>
+              <Form>
+                <Col className={style.login_form}>
+                  <h1>Login</h1>
+                  <h6>
+                    Don't have any account?{" "}
+                    <Link to={routes.register}>Register</Link>
+                  </h6>
+                  <Col
+                    style={{ marginBottom: "20px" }}
+                    className={style.form_section}
+                  >
+                    <Form.Label style={{ fontWeight: "bold" }}>
+                      Email
+                    </Form.Label>
+                    <Form.Control
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={values.email}
+                      onChange={handleChange}
+                    />
+                    {errors.email && <p>{errors.email}</p>}
+                  </Col>
 
-      <Col md={6} className="mb-4">
-        <Form>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <h5>Login</h5>
-            <Form.Text className="text-muted d-block">
-              Don't have any account?
-            </Form.Text>
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" {...email}  placeholder="Enter email" />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" {...password} placeholder="Password" />
-          </Form.Group>
-          <Form.Text className="text-muted" textAlign='left'>
-            Forget your password?
-          </Form.Text>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          </Form.Group>
-          <Button variant="primary" className="d-inline" >
-            Login wih google
-          </Button>
-          <div className={style.line}
-          />
-          <Button variant="primary" className="d-inline" onClick={handleSubmit}>
-            Login
-          </Button>
-        </Form>
-      </Col>
-    </Row>
+                  <Col className={style.form_section}>
+                    <Row style={{ marginBottom: "20px" }}>
+                      <Col>
+                        <Form.Label style={{ fontWeight: "bold" }}>
+                          Password
+                        </Form.Label>
+                        <Col className={style.input_password_wrapper}>
+                          <Form.Control
+                            id="password"
+                            name="password"
+                            type={showpassword ? "text" : "password"}
+                            placeholder="Enter your password"
+                            value={values.password}
+                            onChange={handleChange}
+                            className={style.password_field}
+                          />
+                          <button
+                            className={style.password_btn}
+                            onClick={handleToggle}
+                          >
+                            {showpassword ? (
+                              <AiOutlineEyeInvisible />
+                            ) : (
+                              <AiOutlineEye />
+                            )}
+                          </button>
+                        </Col>
+                        {errors.password && <p>{errors.password}</p>}
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Row>
+                    <Col>
+                      <Button className={style.signup} onClick={handleLogin}>
+                        Login
+                      </Button>
+                    </Col>
+                  </Row>
+                </Col>
+              </Form>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
-}
-const useFormInput = initialValue => {
-  const [value, setValue] = useState(initialValue);
+};
 
-  const handleChange = e => {
-    setValue(e.target.value);
-  }
-  return {
-    value,
-    onChange: handleChange
-  }
-}
-
-export default UserLogin;
+export default UserRegis;

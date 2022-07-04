@@ -30,15 +30,22 @@ const UserNavbar = () => {
   const { getLSValue, setLSValue, removeLSValue } = useLocalstorage();
 
   const [user, setUser] = useState("");
+  const auth = getLSValue("auth");
 
   useEffect(() => {
-    const user = getLSValue("user");
-    setUser(user);
+    setUser(auth);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
+    if (!auth) {
+      return setUser(null);
+    }
+    if (auth && !user) {
+      return setUser(auth);
+    }
+
     return () => {};
-  }, [user]);
+  }, [auth]);
 
   const navigation = [
     {
@@ -50,8 +57,8 @@ const UserNavbar = () => {
       link: routes.discover,
     },
     {
-      name: "Our location",
-      link: routes.location,
+      name: "About us",
+      link: routes.about,
     },
   ];
 
@@ -92,7 +99,7 @@ const UserNavbar = () => {
             */}
             <Link
               to={routes.contact}
-              className="fs-5 nav-link"
+              className="fs-5 nav-link d-none"
               title={`Contact`}
             >
               <BsTelephoneFill className="mr-2" size={24} />
@@ -131,7 +138,7 @@ const UserNavbar = () => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    <BsPersonCircle size={24} />
+                    <BsPersonCircle size={24} /> {user && user.name}
                   </a>
 
                   <ul
@@ -179,7 +186,7 @@ const UserNavbar = () => {
                             className={`dropdown-item`}
                             onClick={(e) => {
                               e.preventDefault();
-                              removeLSValue(`user`);
+                              removeLSValue(`auth`);
                               setUser(null);
                             }}
                           >
@@ -192,7 +199,7 @@ const UserNavbar = () => {
                         <li>
                           <Link
                             to={routes.login}
-                            className={`dropdown-item`}
+                            className={`dropdown-item d-none`}
                             onClick={(e) => {
                               e.preventDefault();
                               setLSValue(`user`, {
@@ -207,7 +214,7 @@ const UserNavbar = () => {
                         </li>
 
                         <li>
-                          <hr className={`dropdown-divider`} />
+                          <hr className={`dropdown-divider d-none`} />
                         </li>
 
                         <li>

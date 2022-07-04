@@ -9,6 +9,7 @@ const routes = {
 
   search: "/search",
   discover: "/discover",
+  details: "/details/:id",
   location: "/location",
   contact: "/contact",
 

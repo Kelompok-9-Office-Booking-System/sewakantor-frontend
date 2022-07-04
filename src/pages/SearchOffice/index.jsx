@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { BsSearch, BsStarFill } from "react-icons/bs";
 import { MdMapsHomeWork } from "react-icons/md";
 import { createSearchParams, Link, useSearchParams } from "react-router-dom";
+import useLocalstorage from "../../hooks/useLocalstorage";
 import style from "./style.module.css";
 
 const BuildingCard = ({ data }) => {
@@ -15,7 +16,7 @@ const BuildingCard = ({ data }) => {
   };
   return (
     <Link
-      to={`/bangunan/${data.id}`}
+      to={`/details/${data.id}`}
       className={`d-flex flex-column flex-wrap justify-content-between align-items-start bg-skWhite text-black ${style.listCard}`}
     >
       <div className={`d-flex flex-column`}>
@@ -101,6 +102,7 @@ const SearchOffice = () => {
   ];
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const { getLSValue } = useLocalstorage();
   /**
    * State
    */
@@ -143,7 +145,9 @@ const SearchOffice = () => {
       `http://54.211.120.43/api/v1/customer/spaces`,
       {
         headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_TOKEN}`,
+          Authorization: `Bearer ${
+            getLSValue("auth").token || process.env.REACT_APP_TOKEN
+          }`,
         },
       }
     );

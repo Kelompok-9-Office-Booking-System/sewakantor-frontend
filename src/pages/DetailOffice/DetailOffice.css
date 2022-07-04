@@ -1,28 +1,35 @@
-h1{
+.detail-office {
+    margin: 2rem auto;
+}
+.carousel-item img {
+    object-fit: cover;
+}
+
+.detail-office h1{
     font-size: 32px
 }
 
-h2{
+.detail-office h2{
     font-size: 24px;
     font-weight:bold
 }
 
-p{
+.detail-office p{
     font-size: 20px
 }
 
-td {
+.detail-office td {
     text-align: center
 }
 
-nav{
+.detail-office nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: auto;
 }
 
-a{
+.detail-office a{
     font-weight:600;
     position: relative;
     text-decoration: none;
@@ -31,7 +38,7 @@ a{
     letter-spacing: 0.5px;
 }
 
-a:after {
+.detail-office a:after {
     content: "";
     position: absolute;
     background-color: #000000;
@@ -42,14 +49,14 @@ a:after {
     transition: 0.3s;
 }
 
-a:hover{
+.detail-office a:hover{
     color: #000000;
 }
 
-a:hover:after{
+.detail-office a:hover:after{
     width: 100%;
 }
 
-.card-body p{
+.detail-office .card-body p{
     font-size: 16px
 }

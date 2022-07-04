@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 //Hook
 import useForm from "../../hooks/useForm";
+import routes from "../../routes";
 
 //Validate
 import validate from "./validateInfo";
@@ -29,12 +31,7 @@ const UserRegis = () => {
         <Row>
           <Col>
             <div>
-              <img
-                src={logo}
-                thumbnail
-                className={style.logo_image}
-                alt="Logo"
-              />
+              <img src={logo} className={style.logo_image} alt="Logo" />
             </div>
           </Col>
           <Col className={style.right_login}>
@@ -44,7 +41,13 @@ const UserRegis = () => {
                   <h4>Start For Free</h4>
                   <h1>Create New Account</h1>
                   <h6>
-                    Already have any account? <span>Login</span>
+                    Already have any account?{" "}
+                    <Link
+                      to={routes.login}
+                      className={`fw-bold text-skMidnight`}
+                    >
+                      Login
+                    </Link>
                   </h6>
                   <Row style={{ marginBottom: "20px" }}>
                     <Col className={style.form_section}>
