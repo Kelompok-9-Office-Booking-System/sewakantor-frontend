@@ -197,12 +197,13 @@ const UserNavbar = () => {
                         <li>
                           <Link
                             to={routes.login}
-                            className={`dropdown-item d-none`}
+                            className={`dropdown-item`}
                             onClick={(e) => {
                               e.preventDefault();
                               setLSValue(`user`, {
-                                id: 1,
-                                name: "John Doe",
+                                name: "mock@login.com",
+                                role: "customer",
+                                token: "lorem",
                               });
                               setUser(getLSValue("user"));
                             }}
@@ -212,7 +213,7 @@ const UserNavbar = () => {
                         </li>
 
                         <li>
-                          <hr className={`dropdown-divider d-none`} />
+                          <hr className={`dropdown-divider`} />
                         </li>
 
                         <li>
