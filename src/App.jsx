@@ -6,6 +6,7 @@ import UserNavbar from "./components/UserNavbar";
 import DetailOffice from "./pages/DetailOffice";
 import NotFound from "./pages/NotFound";
 import SearchOffice from "./pages/SearchOffice";
+import UserAbout from "./pages/UserAbout";
 import UserLanding from "./pages/UserLanding";
 import UserLogin from "./pages/UserLogin";
 import UserRegis from "./pages/UserRegis";
@@ -21,6 +22,7 @@ function App() {
       <UserNavbar />
       <Routes>
         <Route path={routes.home} element={<UserLanding />} />
+        <Route path={routes.about} element={<UserAbout />} />
         <Route path={routes.register} element={<UserRegis />} />
         <Route path={routes.login} element={<UserLogin />} />
 
