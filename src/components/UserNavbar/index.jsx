@@ -11,8 +11,6 @@ import routes from "../../routes";
 
 import style from "./style.module.css";
 
-// TODO: Implement Login and Logout
-
 const Logo = () => {
   return (
     <>
