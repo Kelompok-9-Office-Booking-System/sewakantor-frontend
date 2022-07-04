@@ -103,6 +103,7 @@ const SearchOffice = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const { getLSValue } = useLocalstorage();
+  const auth = getLSValue("auth");
   /**
    * State
    */
@@ -146,7 +147,7 @@ const SearchOffice = () => {
       {
         headers: {
           Authorization: `Bearer ${
-            getLSValue("auth").token || process.env.REACT_APP_TOKEN
+            auth?.token ? auth.token : process.env.REACT_APP_TOKEN
           }`,
         },
       }

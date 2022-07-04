@@ -43,20 +43,12 @@ const useForm = (validate) => {
     }
 
     try {
-      const response = await axios.post(
-        REGISTER_URL,
-        {
-          email: values.email,
-          password: values.password,
-          firstName: values.firstname,
-          lastName: values.lastname,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_TOKEN}`,
-          },
-        }
-      );
+      const response = await axios.post(REGISTER_URL, {
+        email: values.email,
+        password: values.password,
+        firstName: values.firstname,
+        lastName: values.lastname,
+      });
 
       if (response.status === 400) {
         alert("Email already exists");
@@ -86,20 +78,13 @@ const useForm = (validate) => {
     }
 
     try {
-      const response = await axios.post(
-        LOGIN_URL,
-        {
-          email: values.email,
-          password: values.password,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_TOKEN}`,
-          },
-        }
-      );
+      const response = await axios.post(LOGIN_URL, {
+        email: values.email,
+        password: values.password,
+      });
 
       if (response.status === 400) {
+        console.log(response.data);
         alert(response.data.message);
         return;
       }
