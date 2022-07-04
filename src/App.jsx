@@ -4,6 +4,7 @@ import "./App.css";
 import UserFooter from "./components/UserFooter";
 import UserNavbar from "./components/UserNavbar";
 import DetailOffice from "./pages/DetailOffice";
+import LiveChat from "./pages/LiveChat";
 import NotFound from "./pages/NotFound";
 import SearchOffice from "./pages/SearchOffice";
 import UserAbout from "./pages/UserAbout";
@@ -23,12 +24,15 @@ function App() {
       <Routes>
         <Route path={routes.home} element={<UserLanding />} />
         <Route path={routes.about} element={<UserAbout />} />
+
         <Route path={routes.register} element={<UserRegis />} />
         <Route path={routes.login} element={<UserLogin />} />
 
         <Route path={routes.search} element={<SearchOffice />} />
         <Route path={routes.discover} element={<SearchOffice />} />
         <Route path={routes.details} element={<DetailOffice />} />
+
+        <Route path={routes.chat} element={<LiveChat />} />
 
         <Route path={"*"} element={<NotFound />} />
       </Routes>
