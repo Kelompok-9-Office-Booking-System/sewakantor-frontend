@@ -5,25 +5,38 @@ import { BsFillStarFill} from "react-icons/bs";
 import { ImLocation } from "react-icons/im";
 import axios from 'axios';
 
-const URL = 'https://62bd40c0c5ad14c110ba75d2.mockapi.io/buildings';
+// url API Spaces
+const URL = 'http://54.211.120.43/api/v1/customer/spaces';
+
 
 export default function DetailOffice() {
   const [hidden, setHidden] = useState("visually-hidden");
-  const [harga, setHarga] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [monthly, setMonthly] = useState(0);
-  const [data, setData] = useState([]);
+  const [dataSpaces, setDataSpaces] = useState([]);
+
+  // ID untuk filter data untuk detail office
+  const ID = 1;
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await axios.get(URL);
-      const axiosData = data.data;
-      setData(axiosData)
-      console.info(data)
+      const data = await axios.get(URL, { headers: {
+        "Authorization": `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqaG9uZG9lQG1haWwuY29tIiwiZXhwIjoxNjU2OTU4OTkxLCJpYXQiOjE2NTY5NDA5OTF9.9ckRDbTxxLety-T110MsO6E9yBVuBdn7NPvN5XJiUcCU7FvxtveqKrLd-DEWSlhec-WX64Ua52vsdpzOKtdxYA`
+      }});
+      const axiosData = data.data.data;
+      for (let index = 0; index < axiosData.length; index++) {
+        if(axiosData[index].id === ID){
+          console.info('ini index ke-' + index)
+          console.info('ini tipe data: ' + typeof axiosData[index])
+          console.info(axiosData[index])
+        }
+      }
       return;
     }
     fetchData();
   },[]);  
+  console.info(dataSpaces)
+  
   //fungsi tambah dan kurang quantity dan monthly
   const tambah = (tipe)=>{
     if(tipe === "quantity")
@@ -58,25 +71,25 @@ const checkAvaibility = () => {
     <div className="row">
       <div className="col-7 me-5">
       <div>
-      <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img style={{height:400}} src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" class="d-block w-100" alt="..."/>
+      <div id="carouselExampleControlsNoTouching" className="carousel slide" data-bs-touch="false" data-bs-interval="false">
+  <div className="carousel-inner">
+    <div className="carousel-item active">
+      <img style={{height:400}} src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" className="d-block w-100" alt="..."/>
     </div>
-    <div class="carousel-item">
-      <img style={{height:400}} src="https://images.unsplash.com/photo-1656231944351-1bdcbef1bc21?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=762&q=80" class="d-block w-100" alt="..."/>
+    <div className="carousel-item">
+      <img style={{height:400}} src="https://images.unsplash.com/photo-1656231944351-1bdcbef1bc21?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=762&q=80" className="d-block w-100" alt="..."/>
     </div>
-    <div class="carousel-item">
-      <img style={{height:400}} src="https://images.unsplash.com/photo-1655879359474-ec9ec356450b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" class="d-block w-100" alt="..."/>
+    <div className="carousel-item">
+      <img style={{height:400}} src="https://images.unsplash.com/photo-1655879359474-ec9ec356450b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" className="d-block w-100" alt="..."/>
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
+  <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span className="visually-hidden">Previous</span>
   </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
+  <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+    <span className="visually-hidden">Next</span>
   </button>
 </div>
   <div className="mt-4">
@@ -145,7 +158,7 @@ const checkAvaibility = () => {
     <div>
       <div className="d-flex justify-content-between align-items-center mt-3 border border-dark rounded p-1">
         <p style={{fontWeight:'bold', margin:0}}>1 Month Selected</p>
-        <button type="button" onClick={checkAvaibility} class="btn btn-dark rounded">
+        <button type="button" onClick={checkAvaibility} className="btn btn-dark rounded">
           Check Avaibility
         </button>
       </div>
@@ -155,7 +168,7 @@ const checkAvaibility = () => {
     </div>
   <div className="mb-4 d-flex justify-content-between">
     <h3>Rp 2.600.000</h3>
-    <button type="button" class="btn btn-dark rounded">
+    <button type="button" className="btn btn-dark rounded">
       Booking
     </button>
   </div>
@@ -176,7 +189,7 @@ const checkAvaibility = () => {
         <p>4.6</p>
         </div>
         <p className="card-title">Cameron Steve</p>
-        <p class="card-text">Nice Spaces</p>
+        <p className="card-text">Nice Spaces</p>
       </div>
     </div>
   </div>
@@ -187,9 +200,9 @@ const checkAvaibility = () => {
       </div>
       <div className="col">
         <div className="mb-4">
-          <h1>{data[0].building}</h1>
-          <p  style={{color: 'grey'}}>{data[0].address}</p>
-          <button type="button" class="btn btn-dark px-5">Request Visit</button>
+          <h1>{}</h1>
+          <p  style={{color: 'grey'}}>{}</p>
+          <button type="button" className="btn btn-dark px-5">Request Visit</button>
         </div>
         <div>
           <h2>Overview</h2>
