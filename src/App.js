@@ -7,7 +7,8 @@ function App() {
     <div className="App">
       <Routes>
         {/* <Route path="/" element={<UserLogin />} /> */}
-        <Route path="/" element={<UserLogin/>} />
+        <Route path="/" element={<h1>Landing Page</h1>} />
+        <Route path="/customer/login" element={<UserLogin/>} />
       </Routes>
     </div>
   );
