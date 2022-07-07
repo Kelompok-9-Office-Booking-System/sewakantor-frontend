@@ -4,7 +4,7 @@ import errorHandler from "./errorHandler"
 
 const instance = axios.create({
     // baseURL: `${process.env.BASE_URL}`,
-    baseURL: "http://54.211.120.43",
+    baseURL: "http://54.211.120.43/api",
     withCredentials: false,
     headers : {
         'Access-Control-Allow-Origin' : '*',

@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import {  toast } from 'react-toastify';
 
 import apiCustomer from "../../api/apiCustomer";
+import setAuthorHeader from "../../configs/axios/setAuthorHeader";
 
 function UserLogin() {
   const email = useFormInput('');
@@ -40,6 +41,7 @@ function UserLogin() {
         // teruskan ke halaman landing page
         // <Navigate to="/" replace={true} />
         console.log("login",responseLogin)
+        setAuthorHeader(responseLogin.data.token)
         toast(responseLogin.message)
       } else {
         //  <Navigate to="/" replace={true} />
@@ -81,8 +83,8 @@ function UserLogin() {
           </Button>
           <div className={style.line}
           />
-          <Button variant="primary" className="d-inline" onClick={handleTest}>
-            Loginx
+          <Button variant="primary" className="d-inline" onClick={handleSubmit}>
+            Login
           </Button>
         </Form>
       </Col>
