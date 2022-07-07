@@ -1,0 +1,265 @@
+.aboutContainer {
+	max-width : 1440px;
+	margin    : auto;
+	padding   : 1rem 0;
+}
+
+.container {
+	width      : 100%;
+	height     : fit-content;
+	min-height : 65vh;
+	position   : relative;
+	top        : 0;
+}
+
+.heroContainer {
+	width    : 100%;
+	height   : 60vh;
+	position : relative;
+	top      : 0;
+}
+
+.heroShape {
+	position : absolute;
+	top      : 5rem;
+}
+
+.heroText {
+	position    : absolute;
+	width       : 30rem;
+	height      : 27rem;
+	left        : 5.5rem;
+	top         : 5rem;
+
+	font-family : 'Poppins';
+	font-style  : normal;
+	font-weight : 500;
+	font-size   : 6rem;
+	line-height : 9rem;
+}
+
+.heroImage {
+	position : absolute;
+	width    : 40rem;
+	height   : 29rem;
+	right    : 5.5rem;
+	top      : 5rem;
+}
+
+
+.spaceContainer {
+	height      : fit-content;
+	min-height  : 75vh;
+	width       : 100%;
+	position    : relative;
+	top         : 0;
+	display     : flex;
+	align-items : center;
+}
+
+.spaceImage {
+	position : absolute;
+	width    : 40rem;
+	height   : 29rem;
+	left     : 5.5rem;
+}
+
+.spaceGrid {
+	position       : absolute;
+	width          : 32rem;
+	right          : 5.5rem;
+	display        : flex;
+	flex-direction : column;
+	gap            : 2.5rem;
+}
+
+.spaceDetail {
+	width          : 100%;
+	display        : flex;
+	flex-direction : column;
+}
+
+.spaceDetailValue {
+	font-family : 'Poppins';
+	font-style  : normal;
+	font-weight : 600;
+	font-size   : 2rem;
+	line-height : 3rem;
+}
+
+.spaceDetailTitle {
+	width       : 15rem;
+
+	font-family : 'Poppins';
+	font-style  : normal;
+	font-weight : 500;
+	font-size   : 1.5rem;
+	line-height : 2.25rem;
+}
+
+
+.whyContainer {
+	height      : fit-content;
+	min-height  : 75vh;
+	width       : 100%;
+	position    : relative;
+	top         : 0;
+	display     : flex;
+	align-items : center;
+}
+
+.whyShape {
+	position: absolute;
+	width: 28.5rem;
+	height: 28.5rem;
+	left: 0.5rem;
+	top: 0rem;
+}
+.whyText {
+	position : absolute;
+	width    : 35rem;
+	height   : 27rem;
+	left     : 5.5rem;
+	top      : 5rem;
+}
+
+.whyTitleMuted {
+	width       : 183px;
+	height      : 30px;
+
+	font-family : 'Poppins';
+	font-style  : normal;
+	font-weight : 500;
+	font-size   : 1.25rem;
+	line-height : 1.75rem;
+	color       : #242831;
+}
+
+.whyTitle {
+	font-family : 'Poppins';
+	font-style  : normal;
+	font-weight : 600;
+	font-size   : 2rem;
+	line-height : 3rem;
+}
+
+.whyParagraph {
+	font-family : 'Poppins';
+	font-style  : normal;
+	font-weight : 500;
+	font-size   : 1.5rem;
+	line-height : 2.25rem;
+}
+
+.whyImage {
+	position : absolute;
+	width    : 40rem;
+	height   : 29rem;
+	right    : 5.5rem;
+	top      : 5rem;
+}
+
+.contactContainer {
+	height      : fit-content;
+	min-height  : 75vh;
+	width       : 100%;
+	position    : relative;
+	top         : 0;
+	display     : flex;
+	align-items : center;
+}
+.leftPart {
+	background: #242831;
+	width: 36rem;
+	height: 41rem;
+	position: relative;
+}
+.contactShape {
+	position: absolute;
+	width: 34rem;
+	height: 34rem;
+	left: 3rem;
+	top: 3rem;
+}
+.contactImage {
+	position: absolute;
+	width: 30rem;
+	height: 30rem;
+	left: 5rem;
+	top: 5rem;
+}
+.rightPart {
+	background: #fff;
+	width: auto;
+	height: 41rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 2rem
+}
+.contactForm {
+	width: 100%;
+}
+.contactTitle {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 600;
+	font-size: 2rem;
+	line-height: 3rem;
+}
+.contactLabel {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 1.5rem;
+	line-height: 2.25rem;
+}
+.contactInput, .contactTextarea {
+	width: 100%;
+	height: 3rem;
+	border: 1px solid #242831;
+	border-radius: 10px;
+	padding: 0.5rem;
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 1.5rem;
+	line-height: 2.25rem;
+	resize: vertical;
+}
+.contactTextarea{
+	min-height: 10rem;
+}
+.contactButton {
+	width: 201px;
+	height: 47px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 34px;
+	gap: 10px;
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 600;
+	font-size: 1rem;
+	line-height: 27px;
+	margin: 2rem 0;
+	border-radius: 10px;
+}
+
+.contactDetailIcon {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+.contactDetailText {
+	display: flex;
+	flex-direction: column;
+}
+.contactDetailTextContent {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 27px;
+}
