@@ -16,27 +16,22 @@ export default function DetailOffice() {
   const [dataSpaces, setDataSpaces] = useState([]);
 
   // ID untuk filter data untuk detail office
-  const ID = 1;
+  const ID = 2;
 
   useEffect(() => {
     const fetchData = async () => {
+      console.info("jalan");
       const data = await axios.get(URL, { headers: {
-        "Authorization": `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqaG9uZG9lQG1haWwuY29tIiwiZXhwIjoxNjU2OTU4OTkxLCJpYXQiOjE2NTY5NDA5OTF9.9ckRDbTxxLety-T110MsO6E9yBVuBdn7NPvN5XJiUcCU7FvxtveqKrLd-DEWSlhec-WX64Ua52vsdpzOKtdxYA`
+        "Authorization": `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqaG9uZG9lQG1haWwuY29tIiwiZXhwIjoxNjU3MDY3OTkwLCJpYXQiOjE2NTcwNDk5OTB9.NV5vNMMbfInejYX5BWdbWaOfKcbA0cfFwKwVFUpQ9fQXEpeTCD9EwYq59KASaCVgP3j3fXqCE0DJxdQxTxNzow`
       }});
       const axiosData = data.data.data;
-      for (let index = 0; index < axiosData.length; index++) {
-        if(axiosData[index].id === ID){
-          console.info('ini index ke-' + index)
-          console.info('ini tipe data: ' + typeof axiosData[index])
-          console.info(axiosData[index])
-        }
-      }
-      return;
+      console.info(axiosData)
+      return setDataSpaces(axiosData.find((item) => item.id === ID));
     }
     fetchData();
   },[]);  
+
   console.info(dataSpaces)
-  
   //fungsi tambah dan kurang quantity dan monthly
   const tambah = (tipe)=>{
     if(tipe === "quantity")
@@ -74,13 +69,11 @@ const checkAvaibility = () => {
       <div id="carouselExampleControlsNoTouching" className="carousel slide" data-bs-touch="false" data-bs-interval="false">
   <div className="carousel-inner">
     <div className="carousel-item active">
-      <img style={{height:400}} src="https://images.unsplash.com/photo-1654795009861-c3fca8ccd055?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" className="d-block w-100" alt="..."/>
-    </div>
-    <div className="carousel-item">
-      <img style={{height:400}} src="https://images.unsplash.com/photo-1656231944351-1bdcbef1bc21?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=762&q=80" className="d-block w-100" alt="..."/>
-    </div>
-    <div className="carousel-item">
-      <img style={{height:400}} src="https://images.unsplash.com/photo-1655879359474-ec9ec356450b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" className="d-block w-100" alt="..."/>
+      <img 
+        style={{height:400}} 
+        src={dataSpaces.thumbnail} 
+        className="d-block w-100" 
+        alt="..."/>
     </div>
   </div>
   <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
@@ -118,12 +111,12 @@ const checkAvaibility = () => {
   </div>
   <div>
   <h2 className="">Pricing</h2>
+  {/* Types */}
   <div>
     <nav>
-      <a href="#">Office Room</a>
-      <a href='#'>Meeting Room</a>
-      <a href='#'>Virtual Office</a>
-      <a href='#'>Coworking</a>
+      {dataSpaces.types.map((tipe)=>
+        <a href="#">{tipe.name}</a>
+      )}
     </nav>
   </div>
     <div className="d-flex justify-content-between mt-4">
@@ -167,7 +160,7 @@ const checkAvaibility = () => {
       </div>
     </div>
   <div className="mb-4 d-flex justify-content-between">
-    <h3>Rp 2.600.000</h3>
+    <h3>Rp {dataSpaces.price}</h3>
     <button type="button" className="btn btn-dark rounded">
       Booking
     </button>
@@ -200,15 +193,19 @@ const checkAvaibility = () => {
       </div>
       <div className="col">
         <div className="mb-4">
-          <h1>{}</h1>
-          <p  style={{color: 'grey'}}>{}</p>
+          <h1>
+            {dataSpaces.name}          
+          </h1>
+          <p  style={{color: 'grey'}}>
+            {dataSpaces.address}
+          </p>
           <button type="button" className="btn btn-dark px-5">Request Visit</button>
         </div>
         <div>
           <h2>Overview</h2>
-          <p >Enjoy stunning views from the 50th floor of BCA Tower, located across the street from the famous Bundaran Hotel Indonesia (Bundaran HI). Widely regarded as the centre of Jakarta, the area offers excellent public transport and a supportive business environment.
-
-With its state-of-the-art design and first-class facilities, including swimming pool and penthouse restaurant, BCA Tower gives you all the benefits of the country’s rapid economic development. After a successful day, enjoy Jakarta’s numerous attractions, and take advantage of the building’s integrated shopping and entertainment complex.</p>
+          <p>
+            {dataSpaces.description}
+          </p>
         </div>
         <div>
         <div className="mb-4">
@@ -222,36 +219,26 @@ With its state-of-the-art design and first-class facilities, including swimming 
             <h3>Nearby Places</h3>
           </div>
           <div>
-            <div className="d-flex justify-content-between">
-              <div>
-              <p>Gelora Bung Karno</p>
+            {dataSpaces.nearbyPlaces.map((nearby)=>
+              <div className="d-flex justify-content-between">
+                <div>
+                <p>{nearby.name}</p>
+                </div>
+                <p>{nearby.distance}</p>
               </div>
-              <p>0,1 km</p>
-            </div>
-            <div className="d-flex justify-content-between">
-              <div>
-              <p>Gelora Bung Karno</p>
-              </div>
-              <p>0,1 km</p>
-            </div>
+            )}
           </div>
         </div>
         </div>
         <div>
         <h2>Facilities</h2>
         <div className="row">
-          <div className="col-6">
-          <p>Meeting Room</p>
-          </div>
-          <div className="col-6">
-            <p>Free Area</p>
-          </div>
-          <div className="col-6">
-          <p>Meeting Room</p>
-          </div>
-          <div className="col-6">
-            <p>Free Area</p>
-          </div>
+            {dataSpaces.facilities.map((facilities)=>
+              <div className="col-6 d-flex">
+              <img style={{width:20, height:20}} src={facilities.icon}/>
+              <p>{facilities.name}</p>
+              </div>
+            )}
         </div>
         </div>
       </div>
