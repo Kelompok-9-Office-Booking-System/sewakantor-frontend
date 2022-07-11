@@ -42,7 +42,6 @@ const AdminBreadcrumb = () => {
       extraRoute = { name: `Edit ${baseRoute.name}`, link: `#` };
     }
 
-    console.log(pathArray, pathArray.length);
     if (pathArray.length === 3) {
       if (pathArray[2].toLowerCase() === "dashboard") {
         setBreadcrumb([{ name: "Home", link: routes.adminDashboard }]);
@@ -61,9 +60,6 @@ const AdminBreadcrumb = () => {
       ]);
     }
   }, [location]);
-  useEffect(() => {
-    console.log(breadcrumb);
-  }, [breadcrumb]);
 
   return (
     <div

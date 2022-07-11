@@ -6,7 +6,7 @@ const AdminContentContainer = ({ title = "", breadcrumb = true, children }) => {
   return (
     <div className={`${style.contentContainer} d-flex flex-column`}>
       <AdminTopbar />
-      <div className={`${style.headerContent}`}>
+      <div className={`${style.headerContent} my-3`}>
         <h1 className={style.headerTitle}>{title}</h1>
         {breadcrumb && <AdminBreadcrumb />}
       </div>
