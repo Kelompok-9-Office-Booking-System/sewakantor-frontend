@@ -1,42 +1,85 @@
 import { useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "./App.css";
-import UserFooter from "./components/UserFooter";
-import UserNavbar from "./components/UserNavbar";
-import DetailOffice from "./pages/DetailOffice";
-import LiveChat from "./pages/LiveChat";
-import NotFound from "./pages/NotFound";
-import SearchOffice from "./pages/SearchOffice";
-import UserAbout from "./pages/UserAbout";
-import UserLanding from "./pages/UserLanding";
-import UserLogin from "./pages/UserLogin";
-import UserRegis from "./pages/UserRegis";
-import routes from "./routes";
+import AdminContentContainer from "./components/AdminContentContainer";
+import AdminDataContainer from "./components/AdminDataContainer";
+import AdminDataTable from "./components/AdminDataTable";
+import AdminFooter from "./components/AdminFooter";
+import AdminSidebar from "./components/AdminSidebar";
+
+const placeholderBuilding = [
+  {
+    id: 1,
+    thumbnail: "https://placeholder.pics/svg/280x175",
+    towerName: "BCA Tower Lorem",
+    units: (Math.random() * 1000).toFixed(0),
+    ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
+    address: "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
+    price: 1700000,
+  },
+  {
+    id: 2,
+    thumbnail: "https://placeholder.pics/svg/280x175",
+    towerName: "BCA Tower Ipsum",
+    units: (Math.random() * 1000).toFixed(0),
+    ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
+    address: "50/F, Menara BCA Grand Indonesia, Bandung, 10310",
+    price: 2700000,
+  },
+  {
+    id: 3,
+    thumbnail: "https://placeholder.pics/svg/280x175",
+    towerName: "BCA Tower Dolor",
+    units: (Math.random() * 1000).toFixed(0),
+    ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
+    address: "50/F, Menara BCA Grand Indonesia, Tangerang, 10310",
+    price: 3700000,
+  },
+  {
+    id: 4,
+    thumbnail: "https://placeholder.pics/svg/280x175",
+    towerName: "BCA Tower Sit",
+    units: (Math.random() * 1000).toFixed(0),
+    ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
+    address: "50/F, Menara BCA Grand Indonesia, Bekasi, 10310",
+    price: 4000000,
+  },
+  {
+    id: 5,
+    thumbnail: "https://placeholder.pics/svg/280x175",
+    towerName: "BCA Tower Amet",
+    units: (Math.random() * 1000).toFixed(0),
+    ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
+    address: "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
+    price: 5000000,
+  },
+];
 
 function App() {
   const location = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
+
   return (
-    <div className={`bg-skSmoke`}>
-      <UserNavbar />
-      <Routes>
-        <Route path={routes.home} element={<UserLanding />} />
-        <Route path={routes.about} element={<UserAbout />} />
-
-        <Route path={routes.register} element={<UserRegis />} />
-        <Route path={routes.login} element={<UserLogin />} />
-
-        <Route path={routes.search} element={<SearchOffice />} />
-        <Route path={routes.discover} element={<SearchOffice />} />
-        <Route path={routes.details} element={<DetailOffice />} />
-
-        <Route path={routes.chat} element={<LiveChat />} />
-
-        <Route path={"*"} element={<NotFound />} />
-      </Routes>
-      <UserFooter />
+    <div className={`bg-skSmoke position-relative`} style={{ height: "100%" }}>
+      <AdminSidebar />
+      <AdminContentContainer title={"Lorem ipsum"} breadcrumb={true}>
+        <AdminDataContainer
+          title={"Lorem ipsum"}
+          buttons={[
+            { label: "Lorem ipsum", link: "#", callback: () => {} },
+            { label: "Lorem ipsum", callback: () => {} },
+          ]}
+        >
+          <AdminDataTable
+            data={placeholderBuilding}
+            head={["name", "price", "units", "address"]}
+            dataKeys={["towerName", "price", "units", "address"]}
+          />
+        </AdminDataContainer>
+      </AdminContentContainer>
+      <AdminFooter />
     </div>
   );
 }
