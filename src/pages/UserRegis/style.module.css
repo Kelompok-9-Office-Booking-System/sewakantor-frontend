@@ -59,3 +59,11 @@
     background-color: transparent;
     cursor: pointer;
 }
+
+.confirmpassword_btn {
+    margin-left: -1.5rem;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
