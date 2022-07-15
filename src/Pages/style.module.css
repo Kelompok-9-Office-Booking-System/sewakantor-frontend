@@ -1,0 +1,14 @@
+.body {
+    margin-top: 10px;
+    display: grid;
+}
+
+.box {
+    display: grid;
+    grid-column-end: 4;
+}
+
+.card {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
