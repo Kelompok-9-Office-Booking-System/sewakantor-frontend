@@ -6,6 +6,7 @@ import AdminDataContainer from "../../components/AdminDataContainer";
 import AdminDataTable from "../../components/AdminDataTable";
 import AdminFooter from "../../components/AdminFooter";
 import AdminSidebar from "../../components/AdminSidebar";
+import routes from "../../routes";
 
 const placeholderBuilding = [
   {
@@ -14,7 +15,7 @@ const placeholderBuilding = [
     towerName: "BCA Tower Lorem",
     email : "BCA@tower.com",
     ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-    address: "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
+    address: "Jakarta, 10310",
     contactPerson: "(406) 555-0120",
   },
   {
@@ -32,7 +33,7 @@ const placeholderBuilding = [
     towerName: "BCA Tower Dolor",
     email : "BCA@tower.com",
     ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-    address: "50/F, Menara BCA Grand Indonesia, Tangerang, 10310",
+    address: "Tangerang, 10310",
     contactPerson: "(406) 555-0120",
   },
   {
@@ -41,7 +42,7 @@ const placeholderBuilding = [
     towerName: "BCA Tower Sit",
     email : "BCA@tower.com",
     ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-    address: "50/F, Menara BCA Grand Indonesia, Bekasi, 10310",
+    address: "Bekasi, 10310",
     contactPerson: "(406) 555-0120",
   },
   {
@@ -50,7 +51,7 @@ const placeholderBuilding = [
     towerName: "BCA Tower Amet",
     email : "BCA@tower.com",
     ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-    address: "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
+    address: "Jakarta, 10310",
     contactPerson: "(406) 555-0120",
   },
 ];
@@ -68,7 +69,7 @@ const AdminViewSpaces = () => {
         <AdminDataContainer
           title={"All Spaces"}
           buttons={[
-            { label: "Add New", link: "#", callback: () => {} },
+            { label: "Add New", link: routes.adminSpacesAdd, callback: () => {} },
             { label: "Export", callback: () => {} },
           ]}
         >
