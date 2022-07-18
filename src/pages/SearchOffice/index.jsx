@@ -1,23 +1,14 @@
-import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { BsSearch, BsStarFill } from "react-icons/bs";
 import { MdMapsHomeWork } from "react-icons/md";
 import ReactLoading from "react-loading";
-import {
-  createSearchParams,
-  Link,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import shallow from "zustand/shallow";
 import useStoreAuth from "../../hooks/store/useStoreAuth.js";
 import useStoreSearchQuery from "../../hooks/store/useStoreSearchQuery.js";
-import shallow from "zustand/shallow";
 import useFetch from "../../hooks/useFetch.js";
-import useLocalstorage from "../../hooks/useLocalstorage";
-import { decrypt, encrypt } from "../../utils/encryption.js";
+import { decrypt } from "../../utils/encryption.js";
 import style from "./style.module.css";
-
-import sampleResponse from "../sampleResponse.json";
 
 const BuildingCard = ({ data }) => {
   const formatRatings = (ratings) => {
@@ -497,43 +488,43 @@ const SearchOffice = () => {
 
           {/* Duration */}
           {/*}
-          <div
-            className={`d-flex align-items-center gap-3 ${
-              !searchQuery.search && "my-3"
-            }`}
-          >
-            <button
-              className={`btn ${
-                duration === "monthly" ? "btn-dark" : "btn-outline-dark"
-              }`}
-              onClick={(e) => {
-                e.preventDefault();
-                if (duration !== "monthly") {
-                  handleFilterDuration("monthly");
-                } else {
-                  handleFilterDuration("");
-                }
-              }}
-            >
-              Monthly
-            </button>
-            <button
-              className={`btn ${
-                duration === "daily" ? "btn-dark" : "btn-outline-dark"
-              }`}
-              onClick={(e) => {
-                e.preventDefault();
-                if (duration !== "daily") {
-                  handleFilterDuration("daily");
-                } else {
-                  handleFilterDuration("");
-                }
-              }}
-            >
-              Daily
-            </button>
-          </div>
-          {*/}
+						 <div
+						 className={`d-flex align-items-center gap-3 ${
+						 !searchQuery.search && "my-3"
+						 }`}
+						 >
+						 <button
+						 className={`btn ${
+						 duration === "monthly" ? "btn-dark" : "btn-outline-dark"
+						 }`}
+						 onClick={(e) => {
+						 e.preventDefault();
+						 if (duration !== "monthly") {
+						 handleFilterDuration("monthly");
+						 } else {
+						 handleFilterDuration("");
+						 }
+						 }}
+						 >
+						 Monthly
+						 </button>
+						 <button
+						 className={`btn ${
+						 duration === "daily" ? "btn-dark" : "btn-outline-dark"
+						 }`}
+						 onClick={(e) => {
+						 e.preventDefault();
+						 if (duration !== "daily") {
+						 handleFilterDuration("daily");
+						 } else {
+						 handleFilterDuration("");
+						 }
+						 }}
+						 >
+						 Daily
+						 </button>
+						 </div>
+						 {*/}
 
           {/* List */}
           <div className={`d-flex justify-content-center my-5 h-100`}>
