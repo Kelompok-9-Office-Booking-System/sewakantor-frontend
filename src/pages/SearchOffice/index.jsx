@@ -1,11 +1,23 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
-// import { Image } from "react-bootstrap";
 import { BsSearch, BsStarFill } from "react-icons/bs";
 import { MdMapsHomeWork } from "react-icons/md";
-import { createSearchParams, Link, useSearchParams } from "react-router-dom";
+import ReactLoading from "react-loading";
+import {
+  createSearchParams,
+  Link,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
+import useStoreAuth from "../../hooks/store/useStoreAuth.js";
+import useStoreSearchQuery from "../../hooks/store/useStoreSearchQuery.js";
+import shallow from "zustand/shallow";
+import useFetch from "../../hooks/useFetch.js";
 import useLocalstorage from "../../hooks/useLocalstorage";
+import { decrypt, encrypt } from "../../utils/encryption.js";
 import style from "./style.module.css";
+
+import sampleResponse from "../sampleResponse.json";
 
 const BuildingCard = ({ data }) => {
   const formatRatings = (ratings) => {
@@ -14,6 +26,7 @@ const BuildingCard = ({ data }) => {
 
     return (totalRating / ratings.length).toFixed(1);
   };
+
   return (
     <Link
       to={`/details/${data.id}`}
@@ -34,7 +47,7 @@ const BuildingCard = ({ data }) => {
             <BsStarFill size={20} className={`text-skYellow`} />
             {typeof data.rating === "number"
               ? data.rating
-              : formatRatings(data.ratings)}
+              : formatRatings(data.rating)}
           </div>
         </div>
         <div className={`text-muted`}>{data.address}</div>
@@ -47,297 +60,265 @@ const BuildingCard = ({ data }) => {
 };
 
 const SearchOffice = () => {
+  const navigate = useNavigate();
   const listCategory = [
     { name: "Office Rooms", value: "office" },
     { name: "Meeting Rooms", value: "meeting" },
     { name: "Coworking", value: "coworking" },
     { name: "Virtual Office", value: "virtual" },
   ];
-  const placeholderBuilding = [
-    {
-      id: 1,
-      thumbnail: "https://placeholder.pics/svg/280x175",
-      towerName: "BCA Tower Lorem",
-      units: (Math.random() * 1000).toFixed(0),
-      ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-      address: "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
-      price: 1700000,
-    },
-    {
-      id: 2,
-      thumbnail: "https://placeholder.pics/svg/280x175",
-      towerName: "BCA Tower Ipsum",
-      units: (Math.random() * 1000).toFixed(0),
-      ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-      address: "50/F, Menara BCA Grand Indonesia, Bandung, 10310",
-      price: 2700000,
-    },
-    {
-      id: 3,
-      thumbnail: "https://placeholder.pics/svg/280x175",
-      towerName: "BCA Tower Dolor",
-      units: (Math.random() * 1000).toFixed(0),
-      ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-      address: "50/F, Menara BCA Grand Indonesia, Tangerang, 10310",
-      price: 3700000,
-    },
-    {
-      id: 4,
-      thumbnail: "https://placeholder.pics/svg/280x175",
-      towerName: "BCA Tower Sit",
-      units: (Math.random() * 1000).toFixed(0),
-      ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-      address: "50/F, Menara BCA Grand Indonesia, Bekasi, 10310",
-      price: 4000000,
-    },
-    {
-      id: 5,
-      thumbnail: "https://placeholder.pics/svg/280x175",
-      towerName: "BCA Tower Amet",
-      units: (Math.random() * 1000).toFixed(0),
-      ratings: [5, 4, 4, 4, 1, 5, 5, 5, 4],
-      address: "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
-      price: 5000000,
-    },
-  ];
+  const [searchQuery, fnSetSearchQuery, fnResetSearchQuery] =
+    useStoreSearchQuery(
+      (state) => [
+        state.searchQuery,
+        state.fnSetSearchQuery,
+        state.fnRemoveSearchQuery,
+        state.fnResetSearchQuery,
+      ],
+      shallow
+    );
+  const [isSearching, setIsSearching] = useState(false);
+  const authToken = useStoreAuth((state) => state.authData);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { getLSValue } = useLocalstorage();
-  const auth = getLSValue("auth");
   /**
    * State
    */
-  // Filtering
-  const [type, setType] = useState(searchParams.get("type") || "");
+  const [debounceQuery, setDebounceQuery] = useState(searchQuery.query);
 
-  const [priceFrom, setPriceFrom] = useState(
-    Number(searchParams.get("priceFrom")) || 0
-  );
-  const [priceTo, setPriceTo] = useState(
-    Number(searchParams.get("priceTo")) || 0
-  );
-  const [validatePrice, setValidatePrice] = useState(true);
-  const [resetPrice, setResetPrice] = useState(true);
+  const [isButtonDisabled, setIsButtonDisabled] = useState({
+    type: false,
+    city: false,
+    price: false,
+    rating: false,
+  });
+  const [isResetDisabled, setIsResetDisabled] = useState({
+    price: true,
+    rating: true,
+  });
 
-  const [capacityFrom, setCapacityFrom] = useState(
-    Number(searchParams.get("capacityFrom")) || 0
-  );
-  const [capacityTo, setCapacityTo] = useState(
-    Number(searchParams.get("capacityTo")) || 0
-  );
-  const [validateCapacity, setValidateCapacity] = useState(true);
-  const [resetCapacity, setResetCapacity] = useState(true);
-
-  // Search
-  const [inputSearch, setInputSearch] = useState(searchParams.get("q") || "");
-  const [debounceSearch, setDebounceSearch] = useState(inputSearch);
-  const [duration, setDuration] = useState("");
-
-  // Tower list
-  const [defaultTower, setDefaultTower] = useState([]);
-  const [listTower, setListTower] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [buildingList, setBuildingList] = useState([]);
+  const [filteredBuildingList, setFilteredBuildingList] = useState([]);
   /**
    * Use Effect
    */
   //Fetch tower data
-  const fetchData = async () => {
-    const dataResponse = await axios.get(
-      `http://54.211.120.43/api/v1/customer/spaces`,
-      {
-        headers: {
-          Authorization: `Bearer ${
-            auth?.token ? auth.token : process.env.REACT_APP_TOKEN
-          }`,
-        },
-      }
-    );
-    const buildingData = dataResponse.data;
+  useEffect(() => {
+    if (!authToken) {
+      return navigate("/login");
+    }
+    const decryptedToken = decrypt(authToken);
+    //  TODO: Fetch building from API
+    fnResetSearchQuery();
+    setIsLoading(true);
+    useFetch("/customer/spaces", {
+      headers: {
+        Authorization: `Bearer ${decryptedToken.token}`,
+      },
+    }).then((data) => {
+      console.log(data);
+      setBuildingList(data.data);
+      setIsLoading(false);
+    });
+  }, []);
 
-    return buildingData;
+  // Filtering
+  const filterBuilding = () => {
+    if (
+      searchQuery.type.length > 0 ||
+      searchQuery.minPrice > 0 ||
+      searchQuery.maxPrice > 0 ||
+      searchQuery.minRating > 0 ||
+      searchQuery.query.length > 0
+    ) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+    }
+
+    let tempList = buildingList;
+    if (searchQuery.type.length > 0) {
+      const tempFiltered = [];
+      const typeArray = searchQuery.type.split(",");
+      tempList.forEach((item) => {
+        item.types.forEach((type) => {
+          if (typeArray.includes(type.name.split(" ")[0].toLowerCase())) {
+            tempFiltered.push(item);
+          }
+        });
+      });
+      tempList = [...new Set(tempFiltered)];
+    }
+    if (
+      searchQuery.minPrice > 0 &&
+      searchQuery.minPrice <= searchQuery.maxPrice
+    ) {
+      const tempFiltered = tempList.filter((item) => {
+        return (
+          item.price >= searchQuery.minPrice &&
+          item.price <= searchQuery.maxPrice
+        );
+      });
+      tempList = [...tempFiltered];
+    }
+    if (
+      searchQuery.minRating > 0 &&
+      searchQuery.minRating <= searchQuery.maxRating
+    ) {
+      const tempFiltered = tempList.filter((item) => {
+        return (
+          item.rating >= searchQuery.minRating &&
+          item.rating <= searchQuery.maxRating
+        );
+      });
+      tempList = [...tempFiltered];
+    }
+
+    if (searchQuery.query.length > 0) {
+      const tempFiltered = tempList.filter((building) => {
+        const { name, address } = building;
+        const isTowerName = name
+          .toLowerCase()
+          .includes(debounceQuery.toLowerCase());
+        const isAddress = address
+          .toLowerCase()
+          .includes(debounceQuery.toLowerCase());
+        return isTowerName || isAddress;
+      });
+      tempList = [...tempFiltered];
+    }
+    return tempList;
   };
   useEffect(() => {
-    const asyncFetch = async () => {
-      const building = await fetchData();
-      setDefaultTower(building.data);
-      setListTower(building.data);
-    };
-    asyncFetch();
-  }, []);
-  //Fetch everytime search params change
-  useEffect(() => {
-    let list = defaultTower || [];
+    setIsLoading(true);
 
-    if (searchParams.get("type")) {
-      let tempArray = [];
-      const findName = listCategory.find(
-        (cat) => cat.value === searchParams.get("type")
-      );
-      list.forEach((item) => {
-        const checkIfIncludes = item.types.find((item) =>
-          item.name.toLowerCase().includes(findName.value.toLowerCase())
-        );
-        if (checkIfIncludes) {
-          tempArray.push(item);
-        }
-      });
-      list = tempArray;
-    }
-    if (searchParams.get("q")) {
-      let tempArray = [];
-      list.forEach((item) => {
-        if (
-          item.name
-            .toLowerCase()
-            .includes(searchParams.get("q").toLowerCase()) ||
-          item.address
-            .toLowerCase()
-            .includes(searchParams.get("q").toLowerCase())
-        ) {
-          tempArray.push(item);
-        }
-      });
-      list = tempArray;
-    }
-    if (searchParams.get("priceFrom") && searchParams.get("priceTo")) {
-      let tempArray = [];
-      list.forEach((item) => {
-        if (
-          item.price >= searchParams.get("priceFrom") &&
-          item.price <= searchParams.get("priceTo")
-        ) {
-          tempArray.push(item);
-        }
-      });
-      list = tempArray;
-    }
-    if (searchParams.get("capacityFrom") && searchParams.get("capacityTo")) {
-      let tempArray = [];
-      list.forEach((item) => {
-        if (
-          item.unit >= searchParams.get("capacityFrom") &&
-          item.unit <= searchParams.get("capacityTo")
-        ) {
-          tempArray.push(item);
-        }
-      });
-      list = tempArray;
-    }
-
-    setListTower(list);
-  }, [searchParams]);
-
-  //Filter tower data
+    let tempList = filterBuilding();
+    const updateList = setTimeout(() => {
+      setFilteredBuildingList(tempList);
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(updateList);
+  }, [
+    searchQuery.type,
+    searchQuery.minPrice,
+    searchQuery.maxPrice,
+    searchQuery.minRating,
+    searchQuery.maxRating,
+  ]);
   useEffect(() => {
-    if (priceFrom === 0 && priceTo === 0) {
-      setResetPrice(false);
-      return;
-    }
-    if (priceFrom > priceTo) {
-      setValidatePrice(false);
-      setResetPrice(true);
-      return;
-    }
-    setValidatePrice(true);
-    setResetPrice(true);
-  }, [priceFrom, priceTo]);
-  useEffect(() => {
-    if (capacityFrom === 0 && capacityTo === 0) {
-      setResetCapacity(false);
-      return;
-    }
-    if (capacityFrom > capacityTo) {
-      setValidateCapacity(false);
-      setResetCapacity(true);
-      return;
-    }
-    setValidateCapacity(true);
-    setResetCapacity(true);
-  }, [capacityFrom, capacityTo]);
-
-  //Search bar
-  useEffect(() => {
-    if (inputSearch === "") {
-      setSearchParams(appendSearchParams({ q: "" }));
-      return;
-    }
-    setDebounceSearch(inputSearch);
-  }, [inputSearch]);
-  //Debounce search
-  useEffect(() => {
-    const debounce = setTimeout(() => {
-      if (debounceSearch !== "") {
-        setSearchParams(appendSearchParams({ q: debounceSearch }));
-        return;
+    const tempList = filterBuilding();
+    if (searchQuery.query.length === 0) {
+      setDebounceQuery("");
+      if (tempList.length > 0) {
+        setFilteredBuildingList(tempList);
+      } else {
+        setFilteredBuildingList([]);
       }
-      setDebounceSearch("");
-    }, 250);
+      return;
+    }
 
-    return () => {
-      clearTimeout(debounce);
-    };
-  }, [debounceSearch]);
+    setIsLoading(true);
+    const debounce = setTimeout(() => {
+      setDebounceQuery(searchQuery.query);
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(debounce);
+  }, [searchQuery.query]);
+  useEffect(() => {
+    const tempBuildingList =
+      filteredBuildingList.length > 0 ? filteredBuildingList : buildingList;
+    const filteredList = tempBuildingList.filter((building) => {
+      const { name, address } = building;
+      const isTowerName = name
+        .toLowerCase()
+        .includes(debounceQuery.toLowerCase());
+      const isAddress = address
+        .toLowerCase()
+        .includes(debounceQuery.toLowerCase());
+      return isTowerName || isAddress;
+    });
+    setFilteredBuildingList(filteredList);
+  }, [debounceQuery]);
+
+  // Validating
+  useEffect(() => {
+    if (searchQuery.minPrice > searchQuery.maxPrice) {
+      setIsButtonDisabled({ ...isButtonDisabled, price: true });
+      fnSetSearchQuery("maxPrice", searchQuery.minPrice);
+    } else {
+      setIsButtonDisabled({ ...isButtonDisabled, price: false });
+    }
+    if (searchQuery.minPrice > 0) {
+      setIsButtonDisabled({ ...isButtonDisabled, price: false });
+      setIsResetDisabled({ ...isResetDisabled, price: false });
+    } else {
+      setIsButtonDisabled({ ...isButtonDisabled, price: true });
+      setIsResetDisabled({ ...isResetDisabled, price: true });
+    }
+  }, [searchQuery.minPrice, searchQuery.maxPrice]);
+  useEffect(() => {
+    if (searchQuery.minRating > searchQuery.maxRating) {
+      setIsButtonDisabled({ ...isButtonDisabled, rating: true });
+      fnSetSearchQuery("maxRating", searchQuery.minRating);
+    } else {
+      setIsButtonDisabled({ ...isButtonDisabled, rating: false });
+    }
+    if (searchQuery.minRating > 0) {
+      setIsButtonDisabled({ ...isButtonDisabled, rating: false });
+      setIsResetDisabled({ ...isResetDisabled, rating: false });
+    } else {
+      setIsButtonDisabled({ ...isButtonDisabled, rating: true });
+      setIsResetDisabled({ ...isResetDisabled, rating: true });
+    }
+  }, [searchQuery.minRating, searchQuery.maxRating]);
 
   /**
    * Callback
    */
-  const appendSearchParams = (obj) => {
-    const sp = createSearchParams(searchParams);
-    Object.entries(obj).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        sp.delete(key);
-        value.forEach((v) => sp.append(key, v));
-      } else if (value === undefined || value === null || value === "") {
-        sp.delete(key);
-      } else {
-        sp.set(key, value);
-      }
-    });
-    return sp;
-  };
-
-  const handleFilterType = useCallback(
-    (checkedType) => {
-      setType(checkedType);
-      setSearchParams(appendSearchParams({ type: checkedType }));
-    },
-    [type]
-  );
-  const handleFilterPrice = useCallback(() => {
-    setSearchParams(
-      appendSearchParams({ priceFrom: priceFrom, priceTo: priceTo })
-    );
-  }, [priceFrom, priceTo]);
-  const handleResetPrice = useCallback(() => {
-    setPriceFrom(0);
-    setPriceTo(0);
-    setSearchParams(appendSearchParams({ priceFrom: null, priceTo: null }));
-  }, [priceFrom, priceTo]);
-
-  const handleFilterCapacity = useCallback(() => {
-    setSearchParams(
-      appendSearchParams({ capacityFrom: capacityFrom, capacityTo: capacityTo })
-    );
-  }, [capacityFrom, capacityTo]);
-  const handleResetCapacity = useCallback(() => {
-    setCapacityFrom(0);
-    setCapacityTo(0);
-    setSearchParams(
-      appendSearchParams({ capacityFrom: null, capacityTo: null })
-    );
-  }, [capacityFrom, capacityTo]);
-
-  const handleFilterDuration = useCallback(
+  const queryInputChange = useCallback(
     (e) => {
-      setDuration(e);
-      if (e === "") {
-        setSearchParams(appendSearchParams({ duration: null }));
-      } else {
-        setSearchParams(appendSearchParams({ duration: e }));
-      }
+      fnSetSearchQuery("query", e.target.value);
     },
-    [duration]
+    [searchQuery]
   );
+  const inputTypeChange = useCallback(
+    (e) => {
+      const stateValue = searchQuery.type
+        .split(",")
+        .filter((type) => type !== "");
+      if (stateValue.includes(e.target.value)) {
+        const index = stateValue.indexOf(e.target.value);
+        stateValue.splice(index, 1);
+      } else {
+        stateValue.push(e.target.value);
+      }
+      fnSetSearchQuery("type", stateValue.join(","));
+    },
+    [searchQuery]
+  );
+  const inputPriceChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      fnSetSearchQuery(name, value);
+    },
+    [searchQuery]
+  );
+  const resetPrice = useCallback(() => {
+    fnSetSearchQuery("minPrice", 0);
+    fnSetSearchQuery("maxPrice", 0);
+  }, [searchQuery]);
+
+  const inputRatingChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      fnSetSearchQuery(name, value);
+    },
+    [searchQuery]
+  );
+  const resetRating = useCallback(() => {
+    fnSetSearchQuery("minRating", 0);
+    fnSetSearchQuery("maxRating", 5);
+  }, [searchQuery]);
 
   return (
     <div
@@ -349,29 +330,38 @@ const SearchOffice = () => {
           <h3 className={`${style.filterText}`}>Filter</h3>
 
           {/* Category */}
-          <h4 className={`${style.filterCategoryText}`}>Categories</h4>
+          <h4 className={`${style.filterCategoryText}`}>Type</h4>
           <div className={`d-flex flex-column gap-2`}>
             {listCategory.map((category) => (
               <div
                 className={`d-flex align-items-center gap-3`}
                 key={category.name}
               >
+                {/*<input*/}
+                {/*  type={`radio`}*/}
+                {/*  className={`${style.filterCheckbox}`}*/}
+                {/*  name={`cb-type`}*/}
+                {/*  id={`cb-${category.value}`}*/}
+                {/*  checked={category.value === type}*/}
+                {/*  value={`${category.value}`}*/}
+                {/*  onChange={(e) => {*/}
+                {/*    handleFilterType(e.currentTarget.value);*/}
+                {/*  }}*/}
+                {/*  onClick={(e) => {*/}
+                {/*    e.stopPropagation();*/}
+                {/*    if (e.currentTarget.checked) {*/}
+                {/*      handleFilterType("");*/}
+                {/*    }*/}
+                {/*  }}*/}
+                {/*/>*/}
                 <input
-                  type={`radio`}
+                  type={"checkbox"}
                   className={`${style.filterCheckbox}`}
-                  name={`cb-type`}
+                  name={"cb-type"}
                   id={`cb-${category.value}`}
-                  checked={category.value === type}
+                  checked={searchQuery.type.split(",").includes(category.value)}
                   value={`${category.value}`}
-                  onChange={(e) => {
-                    handleFilterType(e.currentTarget.value);
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (e.currentTarget.checked) {
-                      handleFilterType("");
-                    }
-                  }}
+                  onChange={inputTypeChange}
                 />
                 <label htmlFor={`cb-${category.value}`}>{category.name}</label>
               </div>
@@ -384,99 +374,93 @@ const SearchOffice = () => {
             <div
               className={`d-flex gap-2 align-items-center justify-content-between w-100`}
             >
-              <label htmlFor={`price-from`}>From: </label>
+              <label htmlFor={`minPrice`}>From: </label>
               <input
                 className={`form-control`}
                 type={`number`}
-                name={`price-from`}
-                id={`price-from`}
+                name={`minPrice`}
+                id={`minPrice`}
                 min={0}
                 step={100000}
-                value={priceFrom}
-                onChange={(e) => {
-                  setPriceFrom(Number(e.target.value));
-                }}
+                value={searchQuery.minPrice}
+                onChange={inputPriceChange}
               />
             </div>
             <div
               className={`d-flex gap-2 align-items-center justify-content-between w-100`}
             >
-              <label htmlFor={`price-to`}>To: </label>
+              <label htmlFor={`maxPrice`}>To: </label>
               <input
                 className={`form-control`}
                 type={`number`}
-                name={`price-to`}
-                id={`price-to`}
+                name={`maxPrice`}
+                id={`maxPrice`}
                 min={0}
                 step={100000}
-                value={priceTo}
-                onChange={(e) => setPriceTo(Number(e.target.value))}
+                value={searchQuery.maxPrice}
+                onChange={inputPriceChange}
               />
             </div>
             <button
-              className={`btn btn-dark`}
-              disabled={!validatePrice}
-              onClick={handleFilterPrice}
+              className={`btn btn-dark d-none`}
+              disabled={isButtonDisabled.price}
             >
               Filter
             </button>
             <button
               className={`btn btn-danger`}
-              disabled={!resetPrice}
-              onClick={handleResetPrice}
+              disabled={isResetDisabled.price}
+              onClick={resetPrice}
             >
               Reset
             </button>
           </div>
 
-          {/* Capacity */}
-          <h4 className={`${style.filterCategoryText}`}>Capacity</h4>
+          {/* Rating */}
+          <h4 className={`${style.filterCategoryText}`}>Rating</h4>
           <div className={`d-flex flex-column gap-2 w-100 flex-wrap`}>
             <div
               className={`d-flex gap-2 align-items-center justify-content-between w-100`}
             >
-              <label htmlFor={`price-from`}>From: </label>
+              <label htmlFor={`minRating`}>From: </label>
               <input
                 className={`form-control`}
                 type={`number`}
-                name={`price-from`}
-                id={`price-from`}
+                name={`minRating`}
+                id={`minRating`}
                 min={0}
-                step={10}
-                value={capacityFrom}
-                onChange={(e) => {
-                  setCapacityFrom(Number(e.target.value));
-                }}
+                max={5}
+                step={0.5}
+                value={searchQuery.minRating}
+                onChange={inputRatingChange}
               />
             </div>
             <div
               className={`d-flex gap-2 align-items-center justify-content-between w-100`}
             >
-              <label htmlFor={`price-to`}>To: </label>
+              <label htmlFor={`maxRating`}>To: </label>
               <input
                 className={`form-control`}
                 type={`number`}
-                name={`price-to`}
-                id={`price-to`}
+                name={`maxRating`}
+                id={`maxRating`}
                 min={0}
-                step={10}
-                value={capacityTo}
-                onChange={(e) => {
-                  setCapacityTo(Number(e.target.value));
-                }}
+                max={5}
+                step={0.5}
+                value={searchQuery.maxRating}
+                onChange={inputRatingChange}
               />
             </div>
             <button
-              className={`btn btn-dark`}
-              disabled={!validateCapacity}
-              onClick={handleFilterCapacity}
+              className={`btn btn-dark d-none`}
+              disabled={isButtonDisabled.rating}
             >
               Filter
             </button>
             <button
               className={`btn btn-danger`}
-              disabled={!resetCapacity}
-              onClick={handleResetCapacity}
+              disabled={isResetDisabled.rating}
+              onClick={resetRating}
             >
               Reset
             </button>
@@ -497,22 +481,25 @@ const SearchOffice = () => {
               name={`search`}
               id={`search`}
               placeholder={`Search by name, city, or area`}
-              value={inputSearch}
+              value={searchQuery.query}
               autoComplete={"off"}
-              onChange={(e) => setInputSearch(e.target.value)}
+              onChange={queryInputChange}
             />
           </div>
           {/* Search Result */}
-          {inputSearch && (
+          {debounceQuery && (
             <div className={`fs-5 my-3`}>
-              Search result for "{debounceSearch.trim()}"
+              Search result for{" "}
+              <span className={`fw-bold`}>"{debounceQuery.trim()}"</span>{" "}
+              returned {filteredBuildingList.length} results.
             </div>
           )}
 
           {/* Duration */}
+          {/*}
           <div
             className={`d-flex align-items-center gap-3 ${
-              !inputSearch && "my-3"
+              !searchQuery.search && "my-3"
             }`}
           >
             <button
@@ -546,17 +533,57 @@ const SearchOffice = () => {
               Daily
             </button>
           </div>
+          {*/}
 
           {/* List */}
-          <div className={`${style.listCardContainer} my-3`}>
-            {listTower.length > 0 ? (
-              <>
-                {listTower?.map((building, index) => (
-                  <BuildingCard key={index} data={building} />
-                ))}
-              </>
+          <div className={`d-flex justify-content-center my-5 h-100`}>
+            {isLoading ? (
+              <div
+                className={`mx-auto fs-5 fw-bold d-flex h-100 align-items-start p-5 justify-content-center`}
+              >
+                <ReactLoading
+                  type={"spin"}
+                  color={"#242831"}
+                  width={32}
+                  height={32}
+                />
+              </div>
             ) : (
-              <div>No result</div>
+              <>
+                {isSearching ? (
+                  <>
+                    {filteredBuildingList.length > 0 ? (
+                      <div className={`${style.listCardContainer}`}>
+                        {filteredBuildingList.map((building, index) => (
+                          <BuildingCard key={index} data={building} />
+                        ))}
+                      </div>
+                    ) : (
+                      <div
+                        className={`mx-auto h-100 fs-5 fw-bold d-flex align-items-start p-5 justify-content-center`}
+                      >
+                        No result
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {buildingList.length > 0 ? (
+                      <div className={`${style.listCardContainer}`}>
+                        {buildingList?.map((building, index) => (
+                          <BuildingCard key={index} data={building} />
+                        ))}
+                      </div>
+                    ) : (
+                      <div
+                        className={`mx-auto h-100 fs-5 fw-bold d-flex align-items-start p-5 justify-content-center`}
+                      >
+                        No building data
+                      </div>
+                    )}
+                  </>
+                )}
+              </>
             )}
           </div>
         </div>

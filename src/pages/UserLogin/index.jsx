@@ -18,10 +18,6 @@ const UserRegis = () => {
     email: "",
     password: "",
   });
-  const [formError, setFormError] = useState({
-    email: "",
-    password: "",
-  });
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isLoginDisable, setIsLoginDisable] = useState(true);
   const [isLoginLoading, setIsLoginLoading] = useState(false);
@@ -34,7 +30,7 @@ const UserRegis = () => {
     } else {
       setIsLoginDisable(true);
     }
-  }, [formValue, formError]);
+  }, [formValue]);
 
   const handleInputChange = useCallback(
     (e) => {
@@ -52,65 +48,68 @@ const UserRegis = () => {
     },
     [isPasswordShown]
   );
-  const handleLogin = useCallback(async (e) => {
-    function capitalize(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
-    e.preventDefault();
-    setIsLoginLoading(true);
-    setIsLoginDisable(true);
-    try {
-      const bodyPayload = {
-        email: formValue.email,
-        password: formValue.password,
-      };
-      const data = await useFetch(
-        "/customer/auth/login",
-        {
-          data: bodyPayload,
-        },
-        "POST"
-      );
-
-      setIsLoginLoading(false);
-      setIsLoginDisable(false);
-      if (data.code === 200) {
-        Swal.fire({
-          title: "Success",
-          text: "Login success.\nRedirecting in 3 seconds",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-        }).then(() => {
-          const dataToEncrypt = {
-            fullName: `${capitalize(data.data.firstName)} ${capitalize(
-              data.data.lastName
-            )}`,
-            email: data.data.email,
-            password: formValue.password,
-            role: data.data.role,
-            token: data.data.token,
-          };
-          loginFunction(
-            encrypt(dataToEncrypt),
-            encrypt(data.data.role),
-            encrypt(data.data.token)
-          );
-          navigate(routes.home);
-        });
+  const handleLogin = useCallback(
+    async (e) => {
+      function capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
       }
-    } catch (error) {
-      await Swal.fire({
-        title: "Error",
-        text: error,
-        icon: "error",
-      });
-      setIsLoginLoading(false);
-      setIsLoginDisable(false);
-    }
-  });
+
+      e.preventDefault();
+      setIsLoginLoading(true);
+      setIsLoginDisable(true);
+      try {
+        const bodyPayload = {
+          email: formValue.email,
+          password: formValue.password,
+        };
+        const data = await useFetch(
+          "/customer/auth/login",
+          {
+            data: bodyPayload,
+          },
+          "POST"
+        );
+
+        setIsLoginLoading(false);
+        setIsLoginDisable(false);
+        if (data.code === 200) {
+          Swal.fire({
+            title: "Success",
+            text: "Login success.\nRedirecting in 3 seconds",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+          }).then(() => {
+            const dataToEncrypt = {
+              fullName: `${capitalize(data.data.firstName)} ${capitalize(
+                data.data.lastName
+              )}`,
+              email: data.data.email,
+              password: formValue.password,
+              role: data.data.role,
+              token: data.data.token,
+            };
+            loginFunction(
+              encrypt(dataToEncrypt),
+              encrypt(data.data.role),
+              encrypt(data.data.token)
+            );
+            navigate(routes.home);
+          });
+        }
+      } catch (error) {
+        await Swal.fire({
+          title: "Error",
+          text: error,
+          icon: "error",
+        });
+        setIsLoginLoading(false);
+        setIsLoginDisable(false);
+      }
+    },
+    [formValue, loginFunction]
+  );
 
   return (
     <div className={`${style.loginContainer} bg-skSmoke`}>

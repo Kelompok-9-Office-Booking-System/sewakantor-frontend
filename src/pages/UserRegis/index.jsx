@@ -180,7 +180,7 @@ const UserRegis = () => {
           firstName: capitalize(formValue.firstName),
           lastName: capitalize(formValue.lastName),
           email: formValue.email,
-          password: encrypt(formValue.password),
+          password: formValue.password,
         };
         const data = await useFetch(
           "/customer/auth/register",

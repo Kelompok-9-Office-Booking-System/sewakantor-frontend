@@ -80,9 +80,9 @@ const UserAbout = () => {
                 cy="244.5"
                 r="227"
                 stroke="black"
-                stroke-opacity="0.3"
+                strokeOpacity="0.3"
               />
-              <path d="M461 0L460 504.5" stroke="black" stroke-opacity="0.3" />
+              <path d="M461 0L460 504.5" stroke="black" strokeOpacity="0.3" />
             </svg>
           </div>
           <h1 className={`${style.heroText} text-skMidnight`}>
@@ -133,18 +133,18 @@ const UserAbout = () => {
                 cy="227.5"
                 r="227"
                 stroke="black"
-                stroke-opacity="0.3"
+                strokeOpacity="0.3"
               />
             </svg>
           </div>
           <div className={`d-flex flex-column ${style.whyText}`}>
-            <h3 className={`${style.whyTitleMuted}`}>Why SewaKantor?</h3>
+            <h3 className={`${style.whyTitleMuted}`}>Why Sewakantor?</h3>
             <h2 className={`${style.whyTitle}`}>
               We care for our customers as a family
             </h2>
             <p className={`${style.whyParagraph}`}>
               For more than 30 years, we've helped businesses find and create
-              the perfect workspace for their people. SewaKantor give your
+              the perfect workspace for their people. Sewakantor give your
               business the commercial office space solutions it needs without
               any headaches of upfront capital and lengthy leases. That's why
               more than 50% of Fortune 100 companies choose us.
@@ -218,7 +218,7 @@ const UserAbout = () => {
             <hr />
             <div className={`d-flex justify-content-between`}>
               {contactDetail.map((detail, index) => (
-                <div className={`d-flex gap-1 align-items-start`}>
+                <div className={`d-flex gap-1 align-items-start`} key={index}>
                   <div className={`${style.contactDetailIcon}`}>
                     {detail.icon}
                   </div>

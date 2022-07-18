@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import style from "./style.module.css";
 import logoIcon from "../../assets/img/logo/LogoIcon.svg";
+import style from "./style.module.css";
 
 const NotFound = () => {
   return (
@@ -9,7 +9,7 @@ const NotFound = () => {
       <div
         className={`d-flex gap-5 justify-content-center align-items-center ${style.errorContainer}`}
       >
-        <img src={logoIcon} alt={`sewaKantor`} className={style.logoImage} />
+        <img src={logoIcon} alt={`Sewakantor`} className={style.logoImage} />
         <div className={`${style.divider} bg-skMidnight`} />
         <div className={``}>
           <div className={`d-flex gap-2 align-items-center`}>

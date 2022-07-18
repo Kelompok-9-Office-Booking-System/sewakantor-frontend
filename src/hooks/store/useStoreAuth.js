@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 
 const useStoreAuth = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       authData: "",
       authRole: "",
       authToken: "",

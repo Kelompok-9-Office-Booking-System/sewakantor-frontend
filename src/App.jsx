@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
+import Swal from "sweetalert2";
 import UserFooter from "./components/UserFooter";
 import UserNavbar from "./components/UserNavbar";
 import useStoreAuth from "./hooks/store/useStoreAuth.js";
@@ -21,6 +22,7 @@ function App() {
   const [isRegisterLoginAllowed, setIsRegisterLoginAllowed] = useState(true);
 
   const authData = useStoreAuth((state) => state.authData);
+  const authToken = useStoreAuth((state) => state.authToken);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,7 +35,6 @@ function App() {
     }
   }, [authData]);
   useEffect(() => {
-    console.log(location.pathname);
     if (
       location.pathname.includes("register") ||
       location.pathname.includes("login")
@@ -42,6 +43,26 @@ function App() {
         return;
       } else {
         navigate(routes.home);
+      }
+    }
+    if (
+      location.pathname.includes("discover") ||
+      location.pathname.includes("details")
+    ) {
+      if (authToken.length > 0) {
+        return;
+      } else {
+        Swal.fire({
+          title: "Please login first",
+          text: "You need to login first to access this page",
+          toast: true,
+          position: "bottom",
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen(popup) {
+            navigate(routes.login);
+          },
+        });
       }
     }
   }, [location, isRegisterLoginAllowed]);
