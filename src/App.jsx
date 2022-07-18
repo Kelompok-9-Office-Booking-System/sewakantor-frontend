@@ -6,7 +6,6 @@ import AdminDataContainer from "./components/AdminDataContainer";
 import AdminDataTable from "./components/AdminDataTable";
 import AdminFooter from "./components/AdminFooter";
 import AdminSidebar from "./components/AdminSidebar";
-import ProtectedRoutes from "./components/ProtectedRoutes";
 
 const placeholderBuilding = [
   {
@@ -63,30 +62,16 @@ function App() {
   }, [location]);
 
   return (
-    <ProtectedRoutes adminRole={"admin"}>
       <div
         className={`bg-skSmoke position-relative`}
         style={{ height: "100%" }}
       >
         <AdminSidebar />
-        <AdminContentContainer title={"Lorem ipsum"} breadcrumb={true}>
-          <AdminDataContainer
-            title={"Lorem ipsum"}
-            buttons={[
-              { label: "Lorem ipsum", link: "#", callback: () => {} },
-              { label: "Lorem ipsum", callback: () => {} },
-            ]}
-          >
-            <AdminDataTable
-              data={placeholderBuilding}
-              head={["name", "price", "units", "address"]}
-              dataKeys={["towerName", "price", "units", "address"]}
-            />
-          </AdminDataContainer>
+        <AdminContentContainer title={"Add Schedule Booking"} breadcrumb={true}>
+
         </AdminContentContainer>
         <AdminFooter />
       </div>
-    </ProtectedRoutes>
   );
 }
 
