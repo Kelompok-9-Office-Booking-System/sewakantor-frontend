@@ -11,7 +11,7 @@ const routes = {
   discover: "/discover",
   details: "/details/:id",
   location: "/location",
-  contact: "/contact",
+  contact: "/contact", 
 
   profile: "/profile",
   booking: "/booking",
