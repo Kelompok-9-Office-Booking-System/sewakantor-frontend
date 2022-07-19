@@ -12,6 +12,7 @@ import SearchOffice from "./pages/SearchOffice";
 import UserAbout from "./pages/UserAbout";
 import UserLanding from "./pages/UserLanding";
 import UserLogin from "./pages/UserLogin";
+import UserProfile from "./pages/UserProfile/index.jsx";
 import UserRegis from "./pages/UserRegis";
 import routes from "./routes";
 import { decrypt } from "./utils/encryption.js";
@@ -80,6 +81,7 @@ function App() {
         <Route path={routes.discover} element={<SearchOffice />} />
         <Route path={routes.details} element={<DetailOffice />} />
 
+        <Route path={routes.profile} element={<UserProfile />} />
         <Route path={routes.chat} element={<LiveChat />} />
 
         <Route path={"*"} element={<NotFound />} />

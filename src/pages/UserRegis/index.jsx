@@ -8,7 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useFetch from "../../hooks/useFetch.js";
 import routes from "../../routes.js";
-import { encrypt } from "../../utils/encryption.js";
 
 import style from "./style.module.css";
 
