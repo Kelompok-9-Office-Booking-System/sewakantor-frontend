@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import "./App.css";
 import Swal from "sweetalert2";
+import "./App.css";
 import UserFooter from "./components/UserFooter";
 import UserNavbar from "./components/UserNavbar";
 import useStoreAuth from "./hooks/store/useStoreAuth.js";
@@ -15,7 +15,6 @@ import UserLogin from "./pages/UserLogin";
 import UserProfile from "./pages/UserProfile/index.jsx";
 import UserRegis from "./pages/UserRegis";
 import routes from "./routes";
-import { decrypt } from "./utils/encryption.js";
 
 function App() {
   const location = useLocation();
@@ -60,7 +59,7 @@ function App() {
           position: "bottom",
           timer: 1500,
           timerProgressBar: true,
-          didOpen(popup) {
+          didOpen() {
             navigate(routes.login);
           },
         });
