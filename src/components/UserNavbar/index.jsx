@@ -87,7 +87,13 @@ const UserNavbar = () => {
   ];
 
   return (
-    <Navbar bg="skSmoke" expand="lg" color="skBlack" sticky="top">
+    <Navbar
+      bg="skSmoke"
+      expand="lg"
+      color="skBlack"
+      sticky="top"
+      style={{ zIndex: 5 }}
+    >
       <Container>
         {/*
 					 Sewakantor Logo

@@ -1,0 +1,25 @@
+{
+	"data": [
+		{
+			"id": 1,
+			"space": "BCA Tower",
+			"unit": "Coworking space",
+			"review": "Lorem ipsum dolor sit amet",
+			"rating": 4
+		},
+		{
+			"id": 2,
+			"space": "DBS Bank Tower",
+			"unit": "Office room",
+			"review": "Lorem ipsum dolor sit amet",
+			"rating": 3
+		},
+		{
+			"id": 3,
+			"space": "Permata Tower",
+			"unit": "Virtual space",
+			"review": "Lorem ipsum dolor sit amet",
+			"rating": 5
+		}
+	]
+}
