@@ -47,7 +47,9 @@ function App() {
     }
     if (
       location.pathname.includes("discover") ||
-      location.pathname.includes("details")
+      location.pathname.includes("details") ||
+      location.pathname.includes("profile") ||
+      location.pathname.includes("chat")
     ) {
       if (authToken.length > 0) {
         return;

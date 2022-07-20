@@ -46,9 +46,9 @@ const UserRegis = () => {
   const [isSignupLoading, setIsSignupLoading] = useState(false);
 
   // Validation
-  const NAME_REGEX = /^[a-zA-Z]+$/;
+  const NAME_REGEX = /^[a-zA-Z-'\s]+$/;
   const EMAIL_REGEX =
-    /^[a-zA-Z\d.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z\d](?:[a-zA-Z\d-]{0,61}[a-zA-Z\d])?(?:\.[a-zA-Z\d](?:[a-zA-Z\d-]{0,61}[a-zA-Z\d])?)*$/;
+    /^[a-zA-Z\d.!#$%&*+/=?^_`{|}~]+@[a-zA-Z\d](?:[a-zA-Z\d-]{0,61}[a-zA-Z\d])?(?:\.[a-zA-Z\d](?:[a-zA-Z\d-]{0,61}[a-zA-Z\d])?)*$/;
   const PASSWORD_REGEX = /^(?=.*?[a-zA-Z])(?=.*?[\d#?!@$ %^&*-]).{8,}$/;
 
   useEffect(() => {
@@ -176,8 +176,8 @@ const UserRegis = () => {
       setIsSignupDisable(true);
       try {
         const bodyPayload = {
-          firstName: capitalize(formValue.firstName),
-          lastName: capitalize(formValue.lastName),
+          firstName: capitalize(formValue.firstName.trim()),
+          lastName: capitalize(formValue.lastName.trim()),
           email: formValue.email,
           password: formValue.password,
         };
