@@ -590,7 +590,7 @@ const UserProfile = () => {
                 }}
               />
             </div>
-            <h4>Albert Flores</h4>
+            <h4>{authData.fullName}</h4>
 
             <Col className={style.profile_button}>
               {menu.map((item) => (

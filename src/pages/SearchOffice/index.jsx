@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { BsSearch, BsStarFill } from "react-icons/bs";
 import { MdMapsHomeWork } from "react-icons/md";
 import ReactLoading from "react-loading";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import shallow from "zustand/shallow";
 import useStoreAuth from "../../hooks/store/useStoreAuth.js";
 import useStoreSearchQuery from "../../hooks/store/useStoreSearchQuery.js";
@@ -51,6 +51,7 @@ const BuildingCard = ({ data }) => {
 };
 
 const SearchOffice = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const listCategory = [
     { name: "Office Rooms", value: "office" },
@@ -98,6 +99,7 @@ const SearchOffice = () => {
     if (!authToken) {
       return navigate("/login");
     }
+
     const decryptedToken = decrypt(authToken);
     //  TODO: Fetch building from API
     fnResetSearchQuery();
@@ -110,6 +112,14 @@ const SearchOffice = () => {
       console.log(data);
       setBuildingList(data.data);
       setIsLoading(false);
+      const paramsQ = searchParams.get("q");
+      const paramsType = searchParams.get("type");
+      if (paramsQ && paramsType) {
+        fnSetSearchQuery("query", paramsQ);
+        fnSetSearchQuery("type", paramsType);
+        setIsSearching(true);
+        setSearchParams({});
+      }
     });
   }, []);
 

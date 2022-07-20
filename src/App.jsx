@@ -3,9 +3,15 @@ import { useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./App.css";
+import AdminContentContainer from "./components/AdminContentContainer/index.jsx";
+import AdminFooter from "./components/AdminFooter/index.jsx";
+import AdminSidebar from "./components/AdminSidebar/index.jsx";
+import ProtectedRoutes from "./components/ProtectedRoutes/index.jsx";
 import UserFooter from "./components/UserFooter";
 import UserNavbar from "./components/UserNavbar";
 import useStoreAuth from "./hooks/store/useStoreAuth.js";
+import AdminLivechat from "./pages/AdminLivechat/index.jsx";
+import AdminLogin from "./pages/AdminLogin/index.jsx";
 import DetailOffice from "./pages/DetailOffice";
 import LiveChat from "./pages/LiveChat";
 import NotFound from "./pages/NotFound";
@@ -22,6 +28,7 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isRegisterLoginAllowed, setIsRegisterLoginAllowed] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const authData = useStoreAuth((state) => state.authData);
   const authToken = useStoreAuth((state) => state.authToken);
@@ -37,9 +44,17 @@ function App() {
     }
   }, [authData]);
   useEffect(() => {
+    const adminRoute = location.pathname.includes("admin");
+    if (location.pathname.includes("admin")) {
+      setIsAdmin(adminRoute);
+    } else {
+      setIsAdmin(adminRoute);
+    }
+
     if (
-      location.pathname.includes("register") ||
-      location.pathname.includes("login")
+      (location.pathname.includes("register") ||
+        location.pathname.includes("login")) &&
+      !adminRoute
     ) {
       if (isRegisterLoginAllowed) {
         return;
@@ -48,11 +63,13 @@ function App() {
       }
     }
     if (
-      location.pathname.includes("discover") ||
-      location.pathname.includes("details") ||
-      location.pathname.includes("profile") ||
-      location.pathname.includes("chat")
+      (location.pathname.includes("discover") ||
+        location.pathname.includes("details") ||
+        location.pathname.includes("profile") ||
+        location.pathname.includes("chat")) &&
+      !adminRoute
     ) {
+      console.log("Admin should've not been able to access this page", isAdmin);
       if (authToken.length === 0) {
         Swal.fire({
           title: "Please login first",
@@ -67,12 +84,32 @@ function App() {
         });
       }
     }
-  }, [location, isRegisterLoginAllowed]);
+  }, [location, isRegisterLoginAllowed, isAdmin]);
+
+  const AdminRoutes = ({
+    children,
+    role = "admin",
+    title,
+    breadcrumb = true,
+  }) => (
+    <ProtectedRoutes adminRole={role}>
+      <div
+        className={`bg-skSmoke position-relative`}
+        style={{ height: "100%" }}
+      >
+        <AdminSidebar />
+        {/*<AdminContentContainer title={title} breadcrumb={breadcrumb}>*/}
+        {children}
+        {/*</AdminContentContainer>*/}
+        <AdminFooter />
+      </div>
+    </ProtectedRoutes>
+  );
 
   return (
     <ApolloProvider client={client()}>
       <div className={`bg-skSmoke text-skMidnight`}>
-        <UserNavbar />
+        {!isAdmin && <UserNavbar />}
         <Routes>
           <Route path={routes.home} element={<UserLanding />} />
           <Route path={routes.about} element={<UserAbout />} />
@@ -81,11 +118,28 @@ function App() {
           <Route path={routes.discover} element={<SearchOffice />} />
           <Route path={routes.details} element={<DetailOffice />} />
           <Route path={routes.profile} element={<UserProfile />} />
-          <Route path={routes.chat} element={<LiveChat />} />{" "}
+          <Route path={routes.chat} element={<LiveChat />} />
           <Route path={routes.chatID} element={<LiveChat />} />
+          <Route path={routes.adminLogin} element={<AdminLogin />} />
+          <Route
+            path={routes.adminLivechat}
+            element={
+              <AdminRoutes role={"super"} title={"Message"}>
+                <AdminLivechat />
+              </AdminRoutes>
+            }
+          />
+          <Route
+            path={routes.adminLivechatID}
+            element={
+              <AdminRoutes title={"Message"}>
+                <AdminLivechat />
+              </AdminRoutes>
+            }
+          />
           <Route path={"*"} element={<NotFound />} />
         </Routes>
-        <UserFooter />
+        {!isAdmin && <UserFooter />}
       </div>
     </ApolloProvider>
   );

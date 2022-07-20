@@ -2,6 +2,31 @@
 
 import { gql } from "@apollo/client";
 
+export const ADMIN_SUBS_LIVECHAT_ROOM = gql`
+  subscription AdminSubsLivechatRoom {
+    chatroom(order_by: { createdDate: desc }) {
+      id
+      buildingId
+      buildingName
+      buildingImg
+      customer
+      createdDate
+      updatedDate
+      chats(order_by: { sendAt: desc }, limit: 1) {
+        id
+        message
+        sender
+        sendAt
+        read
+      }
+      chats_aggregate(where: { readAdmin: { _eq: false } }) {
+        aggregate {
+          count
+        }
+      }
+    }
+  }
+`;
 export const SUBS_LIVECHAT_ROOM = gql`
   subscription SubsLivechatRoom($userEmail: String!) {
     chatroom(
@@ -61,6 +86,28 @@ export const FIND_LIVECHAT_ROOM = gql`
   }
 `;
 
+export const ADMIN_SUBSCRIBE_LIVECHAT = gql`
+  subscription SubscribeLivechat($id: uuid!) {
+    chatroom(where: { id: { _eq: $id } }) {
+      id
+      buildingId
+      buildingName
+      buildingImg
+      customer
+      createdDate
+      updatedDate
+      chats(order_by: { sendAt: asc }) {
+        id
+        message
+        read
+        readAdmin
+        sendAt
+        sender
+      }
+    }
+  }
+`;
+
 export const SUBSCRIBE_LIVECHAT = gql`
   subscription SubscribeLivechat($userEmail: String!, $buildingId: Int!) {
     chatroom(
@@ -97,6 +144,21 @@ export const CUST_READ_CHAT = gql`
     }
   }
 `;
+export const ADMIN_READ_CHAT = gql`
+  mutation AdminReadChat($chatId: uuid!) {
+    update_chat(
+      where: { chatroom: { _eq: $chatId } }
+      _set: { readAdmin: true }
+    ) {
+      returning {
+        id
+        message
+        read
+        chatroom
+      }
+    }
+  }
+`;
 
 export const CUST_SEND_CHAT = gql`
   mutation CustSendChat(
@@ -110,6 +172,24 @@ export const CUST_SEND_CHAT = gql`
         message: $message
         sender: $email
         read: true
+      }
+    ) {
+      returning {
+        id
+        chatroom
+        message
+      }
+    }
+  }
+`;
+export const ADMIN_SEND_CHAT = gql`
+  mutation AdminSendChat($chatroomId: uuid!, $message: String!) {
+    insert_chat(
+      objects: {
+        chatroom: $chatroomId
+        message: $message
+        sender: "admin"
+        readAdmin: true
       }
     ) {
       returning {
