@@ -490,7 +490,7 @@ const Reviews = () => {
 const UserProfile = () => {
   const navigate = useNavigate();
   const authData = decrypt(useStoreAuth((state) => state.authData));
-  const authAvatar = useStoreAuth((state) => state.authAvatar);
+  const authAvatar = decrypt(useStoreAuth((state) => state.authAvatar));
   const authLogout = useStoreAuth((state) => state.fnLogout);
   const avatarInputRef = useRef();
 
@@ -536,6 +536,7 @@ const UserProfile = () => {
                 src={avatar || "https://via.placeholder.com/150"}
                 alt={`${fullName}`}
                 className={`w-100 h-100`}
+                style={{ objectFit: "cover" }}
               />
               <div
                 className={`position-absolute ${style.profile_overlay} rounded-circle`}
@@ -552,6 +553,16 @@ const UserProfile = () => {
                 onChange={(e) => {
                   const files = e.target.files[0];
                   if (!files) return;
+                  // limit file size
+                  const MAXSIZE = 512 * 1024;
+                  if (files.size > MAXSIZE) {
+                    Swal.fire({
+                      title: "File too large",
+                      text: "File size must be less than 512KB",
+                      icon: "error",
+                    });
+                    return;
+                  }
                   //  Files to base64
                   const reader = new FileReader();
                   reader.readAsDataURL(files);
