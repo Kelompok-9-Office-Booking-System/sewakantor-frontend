@@ -134,7 +134,7 @@ const AdminDataTable = ({ data, head = [], dataKeys = [] }) => {
                   <div
                     className={`d-flex align-items-center justify-content-center gap-2`}
                   >
-                    <Button variant={"primary"} size={"sm"}>
+                    <Button variant={"primary"} size={"sm"} >
                       <FaEdit size={16} />
                     </Button>
                     <Button variant={"danger"} size={"sm"}>

@@ -39,41 +39,28 @@ const AdminAddSpaces = () => {
 
             <div className="d-flex justify-content-between">
               <div className={style.form_input}>
-                <label>Address</label>
+                <label>Email</label>
                 <input type="text"></input>
               </div>
-              <div className={style.form_input}>
-                <label>Email</label>
+              <div className={style.form_input_nearby}>
+                <div className={style.nearby_place_row}>
+                  <label>Nearby Places</label>
+                  <button className={style.add_nearby_button}>+ add</button>
+                </div>
                 <input type="text"></input>
               </div>
             </div>
 
             <div className="d-flex align-items-center justify-content-between">
               <div className={style.form_input}>
-                <label>Map</label>
-                <iframe
-                  src="https://www.google.com/maps/embed?"
-                  height="200"
-                  width="400"
-                  frameBorder="0"
-                  style={{ border: 0, borderRadius:10 }}
-                  allowFullScreen=""
-                  aria-hidden="false"
-                  tabIndex="0"
-                />
-              </div>
-              <div className={style.form_input_nearby}>
-                <div className={style.nearby_place_row}>
-                <label>Nearby Place</label>
-                <button className={style.add_nearby_button}>+ add</button>
-                </div>
-                <input type="number"></input>
+                <label>Address</label>
+                <textarea rows="4" cols="103"></textarea>
               </div>
             </div>
 
             <div className={style.form_input_address}>
               <label>Spaces Description</label>
-              <textarea rows="4" cols="100"></textarea>
+              <textarea rows="4" cols="103"></textarea>
             </div>
 
             <div className={style.form_input_address}>
