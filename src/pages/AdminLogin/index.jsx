@@ -3,12 +3,12 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 import style from "./style.module.css"
 import { Navigate } from "react-router-dom";
 import {  toast } from 'react-toastify';
-
-import apiCustomer from "../../api/apiCustomer";
+import useLocalstorage from '../../hooks/useLocalstorage';
+import apiAdmin from "../../api/apiAdmin";
 import setAuthorHeader from "../../configs/axios/setAuthorHeader";
 
-function UserLogin() {
-  const email = useFormInput('');
+function AdminLogin() {
+  const username = useFormInput('');
   const password = useFormInput('');
   const [data, setData] = useState("")
 
@@ -19,7 +19,7 @@ function UserLogin() {
       // const resAllPost = await apiCustomer.getAllPosts()
       // const resPost = await apiCustomer.getPostById(2)
       // const resComment = await apiCustomer.getCommentPostById(1)
-      const resComment = await apiCustomer.getCommentByPostId(1)
+      const resComment = await apiAdmin.getCommentByPostId(1)
       setData(resComment)
 
       
@@ -27,21 +27,23 @@ function UserLogin() {
       
     }
   }
-
+//bakal 1. sebelumnya bikin local buat nyimpen state dari user, 2. ketika submit dispatch si setuserinfo, 3. (pilih)mau manggil terus2an atau midlewhare routing. di dalem midlewhare diisi pengecekan apakah rolenya user == role yang kita tentuin dimasing2nya. 
   const handleSubmit = async () =>  {
     try {
       const payload = {
-        email : email.value,
+        username : username.value,
         password: password.value
       }
-      console.log("jalan", email.value, password.value);
+      console.log("jalan", username.value, password.value);
   
-      const responseLogin = await apiCustomer.login(payload)
+      const responseLogin = await apiAdmin.login(payload)
       if(responseLogin.code === 200) {
         // teruskan ke halaman landing page
         // <Navigate to="/" replace={true} />
         console.log("login",responseLogin)
         setAuthorHeader(responseLogin.data.token)
+        useLocalstorage.setLSValue('role', responseLogin.data.role)
+        useLocalstorage.setLSValue('idrole', responseLogin.data.roleId)
         toast(responseLogin.message)
       } else {
         //  <Navigate to="/" replace={true} />
@@ -67,7 +69,7 @@ function UserLogin() {
               Don't have any account?
             </Form.Text>
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" {...email} placeholder="Enter email" />
+            <Form.Control type="email" {...usernamegit} placeholder="Enter email" />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
@@ -103,4 +105,4 @@ const useFormInput = initialValue => {
   }
 }
 
-export default UserLogin;
+export default AdminLogin;
