@@ -50,7 +50,7 @@ const LiveChat = () => {
     if (id) {
       setSelectedRoom(id);
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (dataLivechatRoom && !loadingLivechatRoom) {
