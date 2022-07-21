@@ -40,6 +40,14 @@
     padding: 10px;
 }
 
+.form_input_nearby .input_place {
+    width: 70%;
+}
+
+.form_input_nearby .input_distance {
+    width: 18%;
+}
+
 .nearby_place_row {
     display: flex;
     align-items: center;
