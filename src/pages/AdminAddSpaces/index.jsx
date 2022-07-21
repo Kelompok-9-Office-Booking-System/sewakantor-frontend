@@ -75,13 +75,6 @@ const AdminAddSpaces = () => {
                   >
                     + add
                   </button>
-                  <div className={style.nearby_places_list}>
-                    {/* {nearplaces.map((x,i) => {
-                      <ul key={list.id}>
-                        {list.placeName} {list.distance}
-                      </ul>;
-                    })} */}
-                  </div>
                 </div>
                 {nearplaces.map((x, i) => {
                   return (
