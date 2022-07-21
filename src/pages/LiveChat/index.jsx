@@ -2,7 +2,13 @@ import { useMutation, useSubscription } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Image } from "react-bootstrap";
 import { AiOutlineSend } from "react-icons/ai";
-import { BsEmojiFrown, BsEmojiSmile } from "react-icons/bs";
+import {
+  BsCheck,
+  BsCheck2,
+  BsCheckAll,
+  BsEmojiFrown,
+  BsEmojiSmile,
+} from "react-icons/bs";
 import ReactLoading from "react-loading";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -38,8 +44,9 @@ const LiveChat = () => {
   } = useSubscription(SUBSCRIBE_LIVECHAT, {
     variables: {
       userEmail: authData.email,
-      buildingId: id ? id : 0,
+      buildingId: id,
     },
+    fetchPolicy: "no-cache",
     shouldResubscribe: true,
   });
   const [readChat, { data: dataReadChat }] = useMutation(CUST_READ_CHAT);
@@ -49,6 +56,8 @@ const LiveChat = () => {
   useEffect(() => {
     if (id) {
       setSelectedRoom(id);
+    } else {
+      setSelectedRoom(null);
     }
   }, [id]);
 
@@ -67,11 +76,11 @@ const LiveChat = () => {
     if (errorLivechat) {
       return console.log(errorLivechat);
     }
-    if (dataLivechat && !loadingLivechat && id) {
+    if (dataLivechat && !loadingLivechat && selectedRoom) {
       setCurrentRoom(dataLivechat.chatroom[0]);
       readChat({ variables: { chatId: dataLivechat.chatroom[0].id } });
     }
-  }, [dataLivechat, loadingLivechat, errorLivechat, selectedRoom]);
+  }, [dataLivechat, loadingLivechat, selectedRoom]);
 
   // Handler
   const handleSendChat = (e) => {
@@ -132,7 +141,11 @@ const LiveChat = () => {
               {messageArray.map((message) => (
                 <div
                   key={message.id}
-                  className={`d-flex w-100 my-2 flex-grow-1 gap-3 align-items-center justify-content-start w-100 p-2 bg-skMidnight text-skWhite`}
+                  className={`d-flex w-100 my-2 flex-grow-1 gap-3 align-items-center justify-content-start w-100 p-2 ${
+                    parseInt(selectedRoom) === message.buildingId
+                      ? "bg-skMischka text-skMidnight"
+                      : "bg-skMidnight text-skWhite"
+                  }`}
                   style={{
                     cursor:
                       parseInt(selectedRoom) === message.buildingId
@@ -195,7 +208,7 @@ const LiveChat = () => {
         {/*  Live chat */}
         {id ? (
           <Col
-            className={`d-flex flex-column justify-content-between p-3 bg-skMidnight text-skWhite  w-100 ${style.container50} ${style.chatContainer}`}
+            className={`d-flex flex-column justify-content-between p-3 bg-skMidnight text-skWhite w-100 ${style.container50} ${style.chatContainer}`}
             style={{ borderRadius: "10px" }}
           >
             {loadingLivechat ? (
@@ -324,10 +337,21 @@ const LiveChat = () => {
                             {chat.message}
                           </span>
                           <span className={`${style.chatTime}`}>
-                            {new Intl.DateTimeFormat("id-ID", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            }).format(new Date(chat.sendAt))}
+                            {chat.readAdmin ? (
+                              <BsCheckAll
+                                size={12}
+                                className={`text-primary`}
+                              />
+                            ) : (
+                              <BsCheck size={12} />
+                            )}
+                            {"・"}
+                            <span>
+                              {new Intl.DateTimeFormat("id-ID", {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              }).format(new Date(chat.sendAt))}
+                            </span>
                           </span>
                         </div>
                       )}

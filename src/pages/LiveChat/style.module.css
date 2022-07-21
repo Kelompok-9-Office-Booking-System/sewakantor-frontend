@@ -137,6 +137,7 @@
 	height: fit-content;
 	padding: 0.5rem 1rem;
 	position: relative;
+	margin-bottom: 2rem;
 }
 .chatFrom {
 	background: #e5e5e5;
@@ -150,6 +151,9 @@
 
 }
 .chatTime {
+	display: flex;
+	align-items: center;
+	gap: 2px;
 	font-size: 0.6rem;
 	opacity: 0.75;
 }

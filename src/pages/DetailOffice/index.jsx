@@ -1,21 +1,20 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Image, Row } from "react-bootstrap";
+import { Button, Image } from "react-bootstrap";
 import { BsFillStarFill } from "react-icons/bs";
 import { ImLocation } from "react-icons/im";
 import ReactLoading from "react-loading";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import useStoreAuth from "../../hooks/store/useStoreAuth.js";
-import useFetch from "../../hooks/useFetch.js";
-import routes from "../../routes.js";
-import { decrypt } from "../../utils/encryption.js";
-import style from "./style.module.css";
 import {
   CUST_SEND_CHAT,
   FIND_LIVECHAT_ROOM,
   MUTATION_CREATE_ROOM,
 } from "../../graphql/Livechat/index.js";
+import useStoreAuth from "../../hooks/store/useStoreAuth.js";
+import useFetch from "../../hooks/useFetch.js";
+import { decrypt } from "../../utils/encryption.js";
+import style from "./style.module.css";
 
 const RoomPlan = () => {
   return (
@@ -322,24 +321,34 @@ export default function DetailOffice() {
   });
   const [isChecked, setIsChecked] = useState(false);
   const [isCheckLoading, setIsCheckLoading] = useState(false);
+  const [isRoomExists, setIsRoomExists] = useState(false);
 
-  const { data: findChatRoom, loading: findChatRoomLoading } = useQuery(
-    FIND_LIVECHAT_ROOM,
-    {
+  const [findRoom, { data: dataFindRoom, loading: loadingFindRoom }] =
+    useLazyQuery(FIND_LIVECHAT_ROOM, {
       variables: {
         userEmail: decrypt(authToken).email,
         buildingId: id,
       },
-      fetchPolicy: "no-cache",
+      fetchPolicy: "network-only",
+      initialFetchPolicy: "cache-and-network",
+      notifyOnNetworkStatusChange: true,
       onCompleted: (data) => {
-        console.log(data);
+        console.log("Finding room done");
+        if (data.chatroom.length > 0) {
+          console.log("Room exists");
+          setIsRoomExists(true);
+          return;
+        }
+        console.log("Room not exists");
       },
-    }
-  );
-  const [createChatRoom, { loading: createChatRoomLoading }] =
-    useMutation(MUTATION_CREATE_ROOM);
-  const [sendMessage, { loading: sendMessageLoading }] =
-    useMutation(CUST_SEND_CHAT);
+    });
+  const [createChatRoom] = useMutation(MUTATION_CREATE_ROOM);
+  const [sendChatMessage] = useMutation(CUST_SEND_CHAT);
+
+  useEffect(() => {
+    console.log("Finding room");
+    findRoom();
+  }, []);
 
   useEffect(() => {
     setRentDate({
@@ -445,37 +454,51 @@ export default function DetailOffice() {
   const bookHandler = useCallback(
     async (e) => {
       e.preventDefault();
-      //  Get livechat room
-      const fetchLivechatRoom = findChatRoom.chatroom;
-      if (fetchLivechatRoom.length > 0) {
+
+      //  Check if room exists
+      if (isRoomExists) {
         return navigate(`/chat/${id}`);
       }
 
-      // Create livechat room
-      createChatRoom({
-        variables: {
+      //  If room doesn't exist, create one
+
+      try {
+        const chatroomPayload = {
           userEmail: decrypt(authToken).email,
           buildingId: id,
           buildingName: data.name,
           buildingImg: data.thumbnail,
-        },
-      }).then((res) => {
-        sendMessage({
+        };
+        const chatRoomData = await createChatRoom({
+          variables: chatroomPayload,
+        });
+        const chatroomId = chatRoomData.data.insert_chatroom.returning[0].id;
+        const sendChat = await sendChatMessage({
           variables: {
-            chatroomId: res.data.insert_chatroom.returning[0].id,
+            chatroomId: chatroomId,
             email: decrypt(authToken).email,
-            message: `Hallo, saya tertarik untuk menyewa ${quantity} unit di ${
+            message: `Halo! Saya tertarik untuk memesan ${quantity} unit di ${
               data.name
-            } untuk ${duration} ${
+            } selama ${duration} ${
               durationType === "monthly" ? "bulan" : "hari"
             }.`,
           },
-        }).then(() => {
-          navigate(`/chat/${id}`);
         });
-      });
+        navigate(`/chat/${id}`);
+      } catch (err) {
+        Swal.fire({
+          title: "Error",
+          text: err.message,
+          icon: "error",
+          toast: true,
+          position: "bottom",
+          timer: 1500,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        });
+      }
     },
-    [id, authToken, data, quantity, duration, durationType]
+    [isRoomExists, data, quantity, duration, durationType]
   );
 
   if (isLoading) {
@@ -717,13 +740,13 @@ export default function DetailOffice() {
                   variant={`dark`}
                   type="button"
                   className={`rounded-3`}
-                  disabled={createChatRoomLoading || sendMessageLoading}
                   onClick={bookHandler}
+                  disabled={loadingFindRoom}
                 >
-                  {createChatRoomLoading || sendMessageLoading ? (
+                  {loadingFindRoom ? (
                     <ReactLoading
                       type={"bubbles"}
-                      color={"#fff"}
+                      color={"#FFFFFF"}
                       height={24}
                       width={24}
                     />
@@ -742,6 +765,7 @@ export default function DetailOffice() {
               >
                 {mockReview.map((review) => (
                   <div
+                    key={review.id}
                     className={`p-2 d-flex align-items-center gap-3 bg-skWhisper rounded`}
                   >
                     <Image

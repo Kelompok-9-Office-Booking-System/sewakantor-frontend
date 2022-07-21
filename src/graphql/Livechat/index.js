@@ -46,7 +46,7 @@ export const GET_LIVECHAT_ROOM = gql`
 `;
 
 export const FIND_LIVECHAT_ROOM = gql`
-  query FindLivechatRoom($userEmail: String!, $buildingId: Int!) {
+  query FindLivechatRoom($userEmail: String!, $buildingId: Int) {
     chatroom(
       where: { customer: { _eq: $userEmail }, buildingId: { _eq: $buildingId } }
     ) {
