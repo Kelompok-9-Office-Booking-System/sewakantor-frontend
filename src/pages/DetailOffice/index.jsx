@@ -1,3 +1,4 @@
+import { useMutation, useQuery } from "@apollo/client";
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Image, Row } from "react-bootstrap";
 import { BsFillStarFill } from "react-icons/bs";
@@ -10,6 +11,11 @@ import useFetch from "../../hooks/useFetch.js";
 import routes from "../../routes.js";
 import { decrypt } from "../../utils/encryption.js";
 import style from "./style.module.css";
+import {
+  CUST_SEND_CHAT,
+  FIND_LIVECHAT_ROOM,
+  MUTATION_CREATE_ROOM,
+} from "../../graphql/Livechat/index.js";
 
 const RoomPlan = () => {
   return (
@@ -308,7 +314,7 @@ export default function DetailOffice() {
   const [availableTypes, setAvailableTypes] = useState([]);
   const [selectedType, setSelectedType] = useState("");
   const [durationType, setDurationType] = useState("monthly");
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [duration, setDuration] = useState(1);
   const [rentDate, setRentDate] = useState({
     start: new Date(),
@@ -316,6 +322,24 @@ export default function DetailOffice() {
   });
   const [isChecked, setIsChecked] = useState(false);
   const [isCheckLoading, setIsCheckLoading] = useState(false);
+
+  const { data: findChatRoom, loading: findChatRoomLoading } = useQuery(
+    FIND_LIVECHAT_ROOM,
+    {
+      variables: {
+        userEmail: decrypt(authToken).email,
+        buildingId: id,
+      },
+      fetchPolicy: "no-cache",
+      onCompleted: (data) => {
+        console.log(data);
+      },
+    }
+  );
+  const [createChatRoom, { loading: createChatRoomLoading }] =
+    useMutation(MUTATION_CREATE_ROOM);
+  const [sendMessage, { loading: sendMessageLoading }] =
+    useMutation(CUST_SEND_CHAT);
 
   useEffect(() => {
     setRentDate({
@@ -416,6 +440,42 @@ export default function DetailOffice() {
       }, 1500);
     },
     [isChecked, isCheckLoading]
+  );
+
+  const bookHandler = useCallback(
+    async (e) => {
+      e.preventDefault();
+      //  Get livechat room
+      const fetchLivechatRoom = findChatRoom.chatroom;
+      if (fetchLivechatRoom.length > 0) {
+        return navigate(`/chat/${id}`);
+      }
+
+      // Create livechat room
+      createChatRoom({
+        variables: {
+          userEmail: decrypt(authToken).email,
+          buildingId: id,
+          buildingName: data.name,
+          buildingImg: data.thumbnail,
+        },
+      }).then((res) => {
+        sendMessage({
+          variables: {
+            chatroomId: res.data.insert_chatroom.returning[0].id,
+            email: decrypt(authToken).email,
+            message: `Hallo, saya tertarik untuk menyewa ${quantity} unit di ${
+              data.name
+            } untuk ${duration} ${
+              durationType === "monthly" ? "bulan" : "hari"
+            }.`,
+          },
+        }).then(() => {
+          navigate(`/chat/${id}`);
+        });
+      });
+    },
+    [id, authToken, data, quantity, duration, durationType]
   );
 
   if (isLoading) {
@@ -657,11 +717,19 @@ export default function DetailOffice() {
                   variant={`dark`}
                   type="button"
                   className={`rounded-3`}
-                  onClick={() => {
-                    navigate(routes.chat);
-                  }}
+                  disabled={createChatRoomLoading || sendMessageLoading}
+                  onClick={bookHandler}
                 >
-                  Booking
+                  {createChatRoomLoading || sendMessageLoading ? (
+                    <ReactLoading
+                      type={"bubbles"}
+                      color={"#fff"}
+                      height={24}
+                      width={24}
+                    />
+                  ) : (
+                    "Booking"
+                  )}
                 </Button>
               </div>
             </div>
