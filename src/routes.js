@@ -15,6 +15,7 @@ const routes = {
   profile: "/profile",
   booking: "/booking",
   chat: "/chat",
+  chatID: "/chat/:id",
 };
 
 export default routes;

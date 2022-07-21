@@ -1,3 +1,4 @@
+import { ApolloProvider } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -15,6 +16,7 @@ import UserLogin from "./pages/UserLogin";
 import UserProfile from "./pages/UserProfile/index.jsx";
 import UserRegis from "./pages/UserRegis";
 import routes from "./routes";
+import client from "./utils/apolloClient.js";
 
 function App() {
   const location = useLocation();
@@ -51,9 +53,7 @@ function App() {
       location.pathname.includes("profile") ||
       location.pathname.includes("chat")
     ) {
-      if (authToken.length > 0) {
-        return;
-      } else {
+      if (authToken.length === 0) {
         Swal.fire({
           title: "Please login first",
           text: "You need to login first to access this page",
@@ -70,25 +70,24 @@ function App() {
   }, [location, isRegisterLoginAllowed]);
 
   return (
-    <div className={`bg-skSmoke text-skMidnight`}>
-      <UserNavbar />
-      <Routes>
-        <Route path={routes.home} element={<UserLanding />} />
-        <Route path={routes.about} element={<UserAbout />} />
-
-        <Route path={routes.register} element={<UserRegis />} />
-        <Route path={routes.login} element={<UserLogin />} />
-
-        <Route path={routes.discover} element={<SearchOffice />} />
-        <Route path={routes.details} element={<DetailOffice />} />
-
-        <Route path={routes.profile} element={<UserProfile />} />
-        <Route path={routes.chat} element={<LiveChat />} />
-
-        <Route path={"*"} element={<NotFound />} />
-      </Routes>
-      <UserFooter />
-    </div>
+    <ApolloProvider client={client()}>
+      <div className={`bg-skSmoke text-skMidnight`}>
+        <UserNavbar />
+        <Routes>
+          <Route path={routes.home} element={<UserLanding />} />
+          <Route path={routes.about} element={<UserAbout />} />
+          <Route path={routes.register} element={<UserRegis />} />
+          <Route path={routes.login} element={<UserLogin />} />
+          <Route path={routes.discover} element={<SearchOffice />} />
+          <Route path={routes.details} element={<DetailOffice />} />
+          <Route path={routes.profile} element={<UserProfile />} />
+          <Route path={routes.chat} element={<LiveChat />} />{" "}
+          <Route path={routes.chatID} element={<LiveChat />} />
+          <Route path={"*"} element={<NotFound />} />
+        </Routes>
+        <UserFooter />
+      </div>
+    </ApolloProvider>
   );
 }
 
