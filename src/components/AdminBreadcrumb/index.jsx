@@ -9,6 +9,9 @@ const AdminBreadcrumb = () => {
   ]);
 
   useEffect(() => {
+    if (!location.pathname) {
+      return;
+    }
     const pathArray = location.pathname.split("/");
     let baseRoute = {};
     switch (pathArray[2]) {
@@ -27,7 +30,7 @@ const AdminBreadcrumb = () => {
       case "managers":
         baseRoute = { name: "Admin office", link: routes.adminManagers };
         break;
-      case "livechat":
+      case "chat":
         baseRoute = { name: "Live chat", link: routes.adminLivechat };
         break;
     }
@@ -37,9 +40,10 @@ const AdminBreadcrumb = () => {
         name: `Add new ${baseRoute.name}`,
         link: `${baseRoute.link}/add`,
       };
-    }
-    if (pathArray[3] === "edit") {
+    } else if (pathArray[3] === "edit") {
       extraRoute = { name: `Edit ${baseRoute.name}`, link: `#` };
+    } else {
+      extraRoute = { name: `${pathArray[3]}`, link: `#` };
     }
 
     if (pathArray.length === 3) {
@@ -52,6 +56,7 @@ const AdminBreadcrumb = () => {
         ]);
       }
     }
+    console.log(baseRoute, extraRoute);
     if (pathArray.length >= 4) {
       setBreadcrumb([
         { name: "Home", link: routes.adminDashboard },
@@ -63,7 +68,8 @@ const AdminBreadcrumb = () => {
 
   return (
     <div
-      className={`bg-skBlack text-skWhite d-flex align-items-center gap-2 p-2 px-4 rounded-3`}
+      className={`bg-skBlack text-skWhite d-flex align-items-center gap-2 p-2 px-4 `}
+      style={{ borderRadius: "10px" }}
     >
       {breadcrumb.map((item, index) => {
         return (

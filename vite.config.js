@@ -9,6 +9,10 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
+    minify: "esbuild",
+  },
+  esbuild: {
+    drop: ["console", "debugger"],
   },
   css: {
     modules: {

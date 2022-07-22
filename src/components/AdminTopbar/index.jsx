@@ -1,16 +1,22 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { Image, Nav, Form } from "react-bootstrap";
 import { BsBellFill, BsEnvelopeFill, BsSearch } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "react-bootstrap";
+import Swal from "sweetalert2";
+import useStoreAuth from "../../hooks/store/useStoreAuth.js";
 import routes from "../../routes";
+import { decrypt } from "../../utils/encryption.js";
 import mockNotif from "../AdminContentContainer/mockNotif";
 import style from "./style.module.css";
 
 const AdminTopbar = () => {
+  const navigate = useNavigate();
   const mock = true;
   const maxNotification = 3;
   const maxMessage = 4;
+  const authData = decrypt(useStoreAuth((state) => state.authData));
+  const authLogout = useStoreAuth((state) => state.fnLogout);
 
   const [notificationList, setNotificationList] = useState([]);
   const [isNotificationMore, setIsNotificationMore] = useState(false);
@@ -20,25 +26,45 @@ const AdminTopbar = () => {
 
   //TODO: Fetch from localstorage
   const userAvatar = "https://avatar.oxro.io/avatar.svg?name=Lorem&length=1";
-  const userName = "Lorem ipsum";
 
-  const userMenu = [{ label: "logout", link: routes.adminLogout }];
+  const handleLogout = useCallback(async (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Logout",
+      text: "Are you sure want to logout?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.value) {
+        authLogout();
+        Swal.fire({
+          title: "Logout",
+          text: "You have been logged out",
+          icon: "success",
+          timer: 1000,
+          timerProgressBar: true,
+        });
+        navigate(routes.adminLogin);
+      }
+    });
+  }, []);
+
+  const userMenu = [{ label: "logout" }];
 
   useEffect(() => {
     if (mock) {
       const mockNotification = mockNotif;
       setNotificationList(mockNotification);
-      setMessageList(mockNotification);
+      // setMessageList(mockNotification);
     }
     if (notificationList.length > maxNotification) {
       setIsNotificationMore(true);
     } else {
       setIsNotificationMore(false);
-    }
-    if (messageList.length > maxMessage) {
-      setIsMessageMore(true);
-    } else {
-      setIsMessageMore(false);
     }
   }, []);
 
@@ -127,12 +153,16 @@ const AdminTopbar = () => {
             <ul className="navbar-nav">
               <li className="nav-item dropdown">
                 <a
-                  className="nav-link dropdown-toggle position-relative"
+                  className="nav-link position-relative"
                   href="#"
                   id="messageDropdownContent"
                   role="button"
-                  data-bs-toggle="dropdown"
+                  // data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(routes.adminLivechat);
+                  }}
                 >
                   <BsEnvelopeFill size={24} />
                   {messageList.length > 0 && (
@@ -214,12 +244,12 @@ const AdminTopbar = () => {
                   aria-expanded="false"
                 >
                   <Image
-                    src={userAvatar}
-                    alt={"Avatar"}
+                    src={authData.avatar || userAvatar}
+                    alt={authData.fullName}
                     roundedCircle
                     className={style.userAvatar}
                   />
-                  <span className={style.userName}>{userName}</span>
+                  <span className={style.userName}>{authData.fullName}</span>
                 </a>
 
                 <ul
@@ -228,9 +258,13 @@ const AdminTopbar = () => {
                 >
                   {userMenu.map((menu, index) => (
                     <li key={index}>
-                      <Link to={menu.link} className={`dropdown-item`}>
+                      <div
+                        className={`dropdown-item`}
+                        onClick={handleLogout}
+                        style={{ cursor: "pointer" }}
+                      >
                         {menu.label}
-                      </Link>
+                      </div>
                     </li>
                   ))}
                 </ul>

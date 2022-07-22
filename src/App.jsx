@@ -10,6 +10,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes/index.jsx";
 import UserFooter from "./components/UserFooter";
 import UserNavbar from "./components/UserNavbar";
 import useStoreAuth from "./hooks/store/useStoreAuth.js";
+import AdminDashboard from "./pages/AdminDashboard/index.jsx";
 import AdminLivechat from "./pages/AdminLivechat/index.jsx";
 import AdminLogin from "./pages/AdminLogin/index.jsx";
 import DetailOffice from "./pages/DetailOffice";
@@ -98,9 +99,9 @@ function App() {
         style={{ height: "100%" }}
       >
         <AdminSidebar />
-        {/*<AdminContentContainer title={title} breadcrumb={breadcrumb}>*/}
-        {children}
-        {/*</AdminContentContainer>*/}
+        <AdminContentContainer title={title} breadcrumb={breadcrumb}>
+          {children}
+        </AdminContentContainer>
         <AdminFooter />
       </div>
     </ProtectedRoutes>
@@ -121,6 +122,14 @@ function App() {
           <Route path={routes.chat} element={<LiveChat />} />
           <Route path={routes.chatID} element={<LiveChat />} />
           <Route path={routes.adminLogin} element={<AdminLogin />} />
+          <Route
+            path={routes.adminDashboard}
+            element={
+              <AdminRoutes title={"Dashboard"}>
+                <AdminDashboard />
+              </AdminRoutes>
+            }
+          />
           <Route
             path={routes.adminLivechat}
             element={
