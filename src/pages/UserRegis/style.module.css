@@ -1,0 +1,70 @@
+.registerContainer {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+
+.logoImage {
+    border: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+
+
+.loginForm h6 span {
+    font-weight: bold;
+}
+
+.loginForm h1 {
+    font-weight: bold;
+}
+
+.googleSignup {
+    width: 100%;
+}
+
+.googleBtn {
+    margin-right: 10px;
+}
+
+.signup {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.formSection {
+    margin: 0.25rem 0;
+    position: relative;
+}
+.formSection label {
+    margin-top: 0.5rem;
+}
+.formSection span {
+    color: red;
+    font-size: 0.75rem;
+}
+.errorShow {
+}
+.errorHide {
+}
+
+.inputPasswordWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.passwordField {
+    padding-right: 1.5rem;
+}
+
+.passwordBtn {
+    position: absolute;
+    right: 0.5rem;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}

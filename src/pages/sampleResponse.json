@@ -1,0 +1,334 @@
+{
+	"timestamp": 1657889807262,
+	"code": 200,
+	"status": "OK",
+	"message": "all space",
+	"data": [
+		{
+			"id": 1,
+			"name": "BCA Tower",
+			"thumbnail": "http://54.211.120.43:80/api/v1/resources/buildings/bca-tower-1.jpg",
+			"description": "Enjoy stunning views from the 50th floor of BCA Tower, located across the street from the famous Bundaran Hotel Indonesia (Bundaran HI). Widely regarded as the centre of Jakarta, the area offers excellent public transport and a supportive business environment.",
+			"address": "50/F, Menara BCA Grand Indonesia, Jakarta, 10310",
+			"types": [
+				{
+					"name": "Meeting Room",
+					"count": 2
+				},
+				{
+					"name": "Office Room",
+					"count": 1
+				}
+			],
+			"unit": 3,
+			"rating": 3.9,
+			"facilities": [
+				{
+					"id": 2,
+					"name": "Business Lounge",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/business-lounge.png"
+				},
+				{
+					"id": 3,
+					"name": "Parking Area",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/parking-area.png"
+				},
+				{
+					"id": 4,
+					"name": "Downtown",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/downtown.png"
+				},
+				{
+					"id": 1,
+					"name": "Free Snack",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/free-snack.png"
+				},
+				{
+					"id": 5,
+					"name": "Free Area",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/free-area.png"
+				}
+			],
+			"nearbyPlaces": [
+				{
+					"id": 1,
+					"name": "Gelora Bung Karno Stadium",
+					"distance": "0.1 km"
+				}
+			],
+			"price": 1500000
+		},
+		{
+			"id": 2,
+			"name": "Menara Astra",
+			"thumbnail": "http://54.211.120.43:80/api/v1/resources/buildings/menara-astra-1.jpg",
+			"description": "Enjoy the stunning view from from the 50th floor of BCA Tower, located across the street from the famous Bundaran Hotel Indonesia (Bundaran HI). Widely regarded as the center of Jakarta.",
+			"address": "Menara Astra, 37th Floor. Jl. Jend. Sudirman Kav. 5-6, Jakarta, 10220",
+			"types": [
+				{
+					"name": "Meeting Room",
+					"count": 2
+				}
+			],
+			"unit": 2,
+			"rating": 4.3,
+			"facilities": [
+				{
+					"id": 3,
+					"name": "Parking Area",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/parking-area.png"
+				},
+				{
+					"id": 1,
+					"name": "Free Snack",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/free-snack.png"
+				},
+				{
+					"id": 4,
+					"name": "Downtown",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/downtown.png"
+				},
+				{
+					"id": 2,
+					"name": "Business Lounge",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/business-lounge.png"
+				}
+			],
+			"nearbyPlaces": [
+				{
+					"id": 2,
+					"name": "Bundaran HI",
+					"distance": "0.5 km"
+				}
+			],
+			"price": 1500000
+		},
+		{
+			"id": 3,
+			"name": "Menara Lorem",
+			"thumbnail": "http://54.211.120.43:80/api/v1/resources/buildings/menara-astra-1.jpg",
+			"description": "Enjoy the stunning view from from the 50th floor of BCA Tower, located across the street from the famous Bundaran Hotel Indonesia (Bundaran HI). Widely regarded as the center of Jakarta.",
+			"address": "Menara Astra, 37th Floor. Jl. Jend. Sudirman Kav. 5-6, Bandung, 10220",
+			"types": [
+				{
+					"name": "Meeting Room",
+					"count": 2
+				}
+			],
+			"unit": 2,
+			"rating": 3,
+			"facilities": [
+				{
+					"id": 3,
+					"name": "Parking Area",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/parking-area.png"
+				},
+				{
+					"id": 1,
+					"name": "Free Snack",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/free-snack.png"
+				},
+				{
+					"id": 4,
+					"name": "Downtown",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/downtown.png"
+				},
+				{
+					"id": 2,
+					"name": "Business Lounge",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/business-lounge.png"
+				}
+			],
+			"nearbyPlaces": [
+				{
+					"id": 2,
+					"name": "Bundaran HI",
+					"distance": "0.5 km"
+				}
+			],
+			"price": 2500000
+		},
+		{
+			"id": 4,
+			"name": "Menara Ipsum",
+			"thumbnail": "http://54.211.120.43:80/api/v1/resources/buildings/menara-astra-1.jpg",
+			"description": "Enjoy the stunning view from from the 50th floor of BCA Tower, located across the street from the famous Bundaran Hotel Indonesia (Bundaran HI). Widely regarded as the center of Jakarta.",
+			"address": "Menara Astra, 37th Floor. Jl. Jend. Sudirman Kav. 5-6, Tangerang, 10220",
+			"types": [
+				{
+					"name": "Coworking",
+					"count": 2
+				}
+			],
+			"unit": 2,
+			"rating": 4,
+			"facilities": [
+				{
+					"id": 3,
+					"name": "Parking Area",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/parking-area.png"
+				},
+				{
+					"id": 1,
+					"name": "Free Snack",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/free-snack.png"
+				},
+				{
+					"id": 4,
+					"name": "Downtown",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/downtown.png"
+				},
+				{
+					"id": 2,
+					"name": "Business Lounge",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/business-lounge.png"
+				}
+			],
+			"nearbyPlaces": [
+				{
+					"id": 2,
+					"name": "Bundaran HI",
+					"distance": "0.5 km"
+				}
+			],
+			"price": 1250000
+		},
+		{
+			"id": 5,
+			"name": "Menara Dolor",
+			"thumbnail": "http://54.211.120.43:80/api/v1/resources/buildings/menara-astra-1.jpg",
+			"description": "Enjoy the stunning view from from the 50th floor of BCA Tower, located across the street from the famous Bundaran Hotel Indonesia (Bundaran HI). Widely regarded as the center of Jakarta.",
+			"address": "Menara Astra, 37th Floor. Jl. Jend. Sudirman Kav. 5-6, Jakarta, 10220",
+			"types": [
+				{
+					"name": "Virtual",
+					"count": 2
+				}
+			],
+			"unit": 2,
+			"rating": 2,
+			"facilities": [
+				{
+					"id": 3,
+					"name": "Parking Area",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/parking-area.png"
+				},
+				{
+					"id": 1,
+					"name": "Free Snack",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/free-snack.png"
+				},
+				{
+					"id": 4,
+					"name": "Downtown",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/downtown.png"
+				},
+				{
+					"id": 2,
+					"name": "Business Lounge",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/business-lounge.png"
+				}
+			],
+			"nearbyPlaces": [
+				{
+					"id": 2,
+					"name": "Bundaran HI",
+					"distance": "0.5 km"
+				}
+			],
+			"price": 700000
+		},
+		{
+			"id":6,
+			"name": "Menara Amet",
+			"thumbnail": "http://54.211.120.43:80/api/v1/resources/buildings/menara-astra-1.jpg",
+			"description": "Enjoy the stunning view from from the 50th floor of BCA Tower, located across the street from the famous Bundaran Hotel Indonesia (Bundaran HI). Widely regarded as the center of Jakarta.",
+			"address": "Menara Astra, 37th Floor. Jl. Jend. Sudirman Kav. 5-6, Jakarta, 10220",
+			"types": [
+				{
+					"name": "Meeting Room",
+					"count": 2
+				}
+			],
+			"unit": 2,
+			"rating": 3.5,
+			"facilities": [
+				{
+					"id": 3,
+					"name": "Parking Area",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/parking-area.png"
+				},
+				{
+					"id": 1,
+					"name": "Free Snack",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/free-snack.png"
+				},
+				{
+					"id": 4,
+					"name": "Downtown",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/downtown.png"
+				},
+				{
+					"id": 2,
+					"name": "Business Lounge",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/business-lounge.png"
+				}
+			],
+			"nearbyPlaces": [
+				{
+					"id": 2,
+					"name": "Bundaran HI",
+					"distance": "0.5 km"
+				}
+			],
+			"price": 1750000
+		},
+		{
+			"id": 7,
+			"name": "Menara Again",
+			"thumbnail": "http://54.211.120.43:80/api/v1/resources/buildings/menara-astra-1.jpg",
+			"description": "Enjoy the stunning view from from the 50th floor of BCA Tower, located across the street from the famous Bundaran Hotel Indonesia (Bundaran HI). Widely regarded as the center of Jakarta.",
+			"address": "Menara Astra, 37th Floor. Jl. Jend. Sudirman Kav. 5-6, Bekasi, 10220",
+			"types": [
+				{
+					"name": "Meeting Room",
+					"count": 2
+				}
+			],
+			"unit": 2,
+			"rating": 4.7,
+			"facilities": [
+				{
+					"id": 3,
+					"name": "Parking Area",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/parking-area.png"
+				},
+				{
+					"id": 1,
+					"name": "Free Snack",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/free-snack.png"
+				},
+				{
+					"id": 4,
+					"name": "Downtown",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/downtown.png"
+				},
+				{
+					"id": 2,
+					"name": "Business Lounge",
+					"icon": "http://54.211.120.43:80/api/v1/resources/facilities/business-lounge.png"
+				}
+			],
+			"nearbyPlaces": [
+				{
+					"id": 2,
+					"name": "Bundaran HI",
+					"distance": "0.5 km"
+				}
+			],
+			"price": 2250000
+		}
+	],
+	"errors": null,
+	"paging": null
+}
