@@ -11,6 +11,8 @@ const AdminAddBooking = () => {
     buildingName: "",
     email:"",
     noHandphone: "",
+    date:"",
+    time:"",
   }
 
   const baseError = {
@@ -79,7 +81,9 @@ const AdminAddBooking = () => {
                 <label className={`mb-3 ${style.label}`}>Company Name</label> 
                 <br/>
                 <input  type='text' 
-                        name="company"
+                        name="companyName"
+                        value={data.companyName}
+                        onChange={handleInputTodo}
                         required
                         />
               </div>
@@ -87,7 +91,9 @@ const AdminAddBooking = () => {
                 <label className={`mb-3 ${style.label}`}>Building Name</label> 
                 <br/>
                 <input  type='text' 
-                        name="building" 
+                        name="buildingName" 
+                        value={data.buildingName}
+                        onChange={handleInputTodo}
                         required/>
               </div>
           </div>
@@ -119,15 +125,22 @@ const AdminAddBooking = () => {
               <div className="col-6">
                 <label className={`mb-3 ${style.label}`}>Date</label> 
                 <br/>
-                <input type='date' name="date" required/>
+                <input  type='date' 
+                        name="date" 
+                        value={data.date}
+                        onChange={handleInputTodo}
+                        required/>
              </div>
               <div className="col-6">
                 <label className={`mb-3 ${style.label}`}>Time</label> 
                 <br/>
                 <input  type="time"
                         name="time"
+                        value={data.time}
+                        onChange={handleInputTodo}
                         className={style.time} 
                         required/>
+              <span className="ms-2 text-info">Example: 10:00 AM or 01:00 PM</span>
               </div>
             </div>
             <div className={`text-center mt-4 ${style.addSpace_form_button}`}>
