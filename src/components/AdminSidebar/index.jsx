@@ -5,7 +5,9 @@ import { GoChevronRight } from "react-icons/go";
 import { BiBuildingHouse } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/img/logo/LogoLong.svg";
+import useStoreAuth from "../../hooks/store/useStoreAuth.js";
 import routes from "../../routes";
+import { decrypt } from "../../utils/encryption.js";
 import style from "./style.module.css";
 
 const DropdownMenu = ({
@@ -68,6 +70,7 @@ const DropdownMenu = ({
 const AdminSidebar = () => {
   const location = useLocation();
   const [openMenu, setOpenMenu] = useState("dashboard");
+  const authData = decrypt(useStoreAuth((state) => state.authData));
   const menu = [
     {
       name: "Bookings",
@@ -93,13 +96,15 @@ const AdminSidebar = () => {
       routesView: routes.adminReviews,
       routesAdd: routes.adminReviewsAdd,
     },
-    {
+  ];
+  if (authData.role === "SUPERADMIN") {
+    menu.push({
       name: "Admin office",
       icon: <MdGroups className={style.icon} />,
       routesView: routes.adminManagers,
       routesAdd: routes.adminManagersAdd,
-    },
-  ];
+    });
+  }
   useEffect(() => {
     if (location.pathname.includes("admin/bookings")) {
       setOpenMenu("bookings");

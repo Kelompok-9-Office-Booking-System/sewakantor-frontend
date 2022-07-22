@@ -1,12 +1,12 @@
 import React from "react";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import AdminContentContainer from "../../components/AdminContentContainer";
-import AdminDataContainer from "../../components/AdminDataContainer";
-import AdminDataTable from "../../components/AdminDataTable";
-import AdminFooter from "../../components/AdminFooter";
-import AdminSidebar from "../../components/AdminSidebar";
-import routes from "../../routes";
+import AdminContentContainer from "../../../components/AdminContentContainer";
+import AdminDataContainer from "../../../components/AdminDataContainer";
+import AdminDataTable from "../../../components/AdminDataTable";
+import AdminFooter from "../../../components/AdminFooter";
+import AdminSidebar from "../../../components/AdminSidebar";
+import routes from "../../../routes";
 
 const users = [
   {
@@ -51,7 +51,13 @@ const AdminViewUsers = () => {
           <AdminDataTable
             data={users}
             head={["first name", "last name", "company", "country", "password"]}
-            dataKeys={["firstName", "lastName", "company", "country", "password"]}
+            dataKeys={[
+              "firstName",
+              "lastName",
+              "company",
+              "country",
+              "password",
+            ]}
           />
         </AdminDataContainer>
       </AdminContentContainer>

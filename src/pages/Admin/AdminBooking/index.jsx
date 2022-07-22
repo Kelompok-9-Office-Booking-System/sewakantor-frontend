@@ -1,9 +1,12 @@
-import AdminContentContainer from "..//../../components/AdminContentContainer";
+import React from "react";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import AdminContentContainer from "../../../components/AdminContentContainer";
 import AdminDataContainer from "../../../components/AdminDataContainer";
 import AdminDataTable from "../../../components/AdminDataTable";
 import AdminFooter from "../../../components/AdminFooter";
 import AdminSidebar from "../../../components/AdminSidebar";
-
+import routes from "../../../routes.js";
 
 const placeholderBooking = [
   {
@@ -35,32 +38,51 @@ const placeholderBooking = [
   },
 ];
 
-function AdminView() {
-
+function AdminViewBooking() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
-    <div
-      className={`bg-skSmoke position-relative`}
-      style={{ height: "100%" }}
-    >
+    <div className={`bg-skSmoke position-relative`} style={{ height: "100%" }}>
       <AdminSidebar />
       <AdminContentContainer title={"All Bookings"} breadcrumb={true}>
         <AdminDataContainer
           title={"All Schedule Bookings"}
           buttons={[
-            { label: "Add new", link: "#", callback: () => {} },
+            {
+              label: "Add new",
+              link: routes.adminBookingsAdd,
+              callback: () => {},
+            },
             { label: "Export", callback: () => {} },
           ]}
         >
           <AdminDataTable
             data={placeholderBooking}
-            head={["name company", "phone", "email", "arrive", "time", "building"]}
-            dataKeys={["nameCompany", "phone", "email", "date", "time", "building"]}
+            head={[
+              "name company",
+              "phone",
+              "email",
+              "arrive",
+              "time",
+              "building",
+            ]}
+            dataKeys={[
+              "nameCompany",
+              "phone",
+              "email",
+              "date",
+              "time",
+              "building",
+            ]}
           />
         </AdminDataContainer>
       </AdminContentContainer>
       <AdminFooter />
     </div>
-);
+  );
 }
 
-export default AdminView;
+export default AdminViewBooking;

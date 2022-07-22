@@ -10,6 +10,14 @@ import ProtectedRoutes from "./components/ProtectedRoutes/index.jsx";
 import UserFooter from "./components/UserFooter";
 import UserNavbar from "./components/UserNavbar";
 import useStoreAuth from "./hooks/store/useStoreAuth.js";
+import AdminBooking from "./pages/Admin/AdminBooking";
+import AdminAddBooking from "./pages/Admin/AdminBooking/Add";
+import AdminEditBooking from "./pages/Admin/AdminBooking/Edit";
+import AdminGuestReview from "./pages/Admin/AdminGuestReview";
+import AdminSpaces from "./pages/Admin/AdminSpaces";
+import AdminAddSpaces from "./pages/Admin/AdminSpaces/AddDetail";
+import AdminUser from "./pages/Admin/AdminUser";
+import AdminAddUser from "./pages/Admin/AdminUser/Add";
 import AdminDashboard from "./pages/AdminDashboard/index.jsx";
 import AdminLivechat from "./pages/AdminLivechat/index.jsx";
 import AdminLogin from "./pages/AdminLogin/index.jsx";
@@ -133,7 +141,7 @@ function App() {
           <Route
             path={routes.adminLivechat}
             element={
-              <AdminRoutes role={"super"} title={"Message"}>
+              <AdminRoutes title={"Message"}>
                 <AdminLivechat />
               </AdminRoutes>
             }
@@ -146,6 +154,123 @@ function App() {
               </AdminRoutes>
             }
           />
+
+          <Route
+            path={routes.adminBookings}
+            element={
+              <ProtectedRoutes adminRole={"admin"}>
+                <AdminBooking />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path={routes.adminBookingsAdd}
+            element={
+              <ProtectedRoutes adminRole={"admin"}>
+                <AdminAddBooking />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path={routes.adminBookings}
+            element={
+              <ProtectedRoutes adminRole={"admin"}>
+                <AdminEditBooking />
+              </ProtectedRoutes>
+            }
+          />
+
+          <Route
+            path={routes.adminReviews}
+            element={
+              <ProtectedRoutes adminRole={"admin"}>
+                <AdminGuestReview />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path={routes.adminReviewsAdd}
+            element={
+              <ProtectedRoutes adminRole={"admin"}>
+                <AdminGuestReview />
+              </ProtectedRoutes>
+            }
+          />
+
+          <Route
+            path={routes.adminSpaces}
+            element={
+              <ProtectedRoutes adminRole={"super"}>
+                <AdminSpaces />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path={routes.adminSpacesAdd}
+            element={
+              <ProtectedRoutes adminRole={"super"}>
+                <AdminAddSpaces />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path={routes.adminSpacesEdit}
+            element={
+              <ProtectedRoutes adminRole={"super"}>
+                <AdminAddSpaces />
+              </ProtectedRoutes>
+            }
+          />
+
+          <Route
+            path={routes.adminUsers}
+            element={
+              <ProtectedRoutes adminRole={"admin"}>
+                <AdminUser />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path={routes.adminUsersAdd}
+            element={
+              <ProtectedRoutes adminRole={"admin"}>
+                <AdminAddUser />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path={routes.adminUsersEdit}
+            element={
+              <ProtectedRoutes adminRole={"admin"}>
+                <AdminAddUser />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path={routes.adminManagers}
+            element={
+              <ProtectedRoutes adminRole={"admin"}>
+                <AdminUser />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path={routes.adminManagersAdd}
+            element={
+              <ProtectedRoutes adminRole={"admin"}>
+                <AdminAddUser />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path={routes.adminManagersEdit}
+            element={
+              <ProtectedRoutes adminRole={"admin"}>
+                <AdminAddUser />
+              </ProtectedRoutes>
+            }
+          />
+
           <Route path={"*"} element={<NotFound />} />
         </Routes>
         {!isAdmin && <UserFooter />}
