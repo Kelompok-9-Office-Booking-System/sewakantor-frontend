@@ -1,0 +1,47 @@
+.form_input input {
+    width: 90%;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.form_input {
+    width: 50%;
+}
+
+.form_input label {
+    width: 100%;
+}
+
+.addSpace_form_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.addSpace_form_button button {
+    margin-top: 20px;
+    background: #10141D;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+.addSpace_form_button button:hover {
+    background: #FEC901;
+    border: 1px solid #FEC901;
+}
+
+.cancel_button {
+    background: #9EA1AC !important;
+    border: 1px solid #9EA1AC;
+}
+
+.cancel_button:hover {
+    background: #FEC901 !important;
+    border: 1px solid #FEC901;
+}
