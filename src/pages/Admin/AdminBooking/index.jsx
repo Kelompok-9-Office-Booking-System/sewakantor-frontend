@@ -1,3 +1,6 @@
+import React from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import AdminContentContainer from "..//../../components/AdminContentContainer";
 import AdminDataContainer from "../../../components/AdminDataContainer";
 import AdminDataTable from "../../../components/AdminDataTable";
@@ -35,8 +38,11 @@ const placeholderBooking = [
   },
 ];
 
-function AdminView() {
-
+function AdminViewBooking() {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
     <div
       className={`bg-skSmoke position-relative`}
@@ -63,4 +69,4 @@ function AdminView() {
 );
 }
 
-export default AdminView;
+export default AdminViewBooking;
