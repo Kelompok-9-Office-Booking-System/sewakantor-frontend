@@ -18,6 +18,10 @@
     padding: 10px;
 }
 
+.time{
+    width: 15% !important;
+}
+
 .form_input_address select {
     width: 15%;
     border-radius: 5px;
