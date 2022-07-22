@@ -124,6 +124,10 @@ const AdminAddBooking = () => {
               <div className="col-6">
                 <label className={`mb-3 ${style.label}`}>Time</label> 
                 <br/>
+                <input  type="time"
+                        name="time"
+                        className={style.time} 
+                        required/>
               </div>
             </div>
             <div className={`text-center mt-4 ${style.addSpace_form_button}`}>
