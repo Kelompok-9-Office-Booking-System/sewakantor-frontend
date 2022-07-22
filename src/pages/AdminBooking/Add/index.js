@@ -1,11 +1,8 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import AdminContentContainer from "../../components/AdminContentContainer";
-import AdminDataContainer from "../../components/AdminDataContainer";
-import AdminFooter from "../../components/AdminFooter";
-import AdminSidebar from "../../components/AdminSidebar";
-import routes from "../../routes";
+import React, {useState} from "react";
+import AdminContentContainer from "../../../components/AdminContentContainer";
+import AdminDataContainer from "../../../components/AdminDataContainer";
+import AdminFooter from "../../../components/AdminFooter";
+import AdminSidebar from "../../../components/AdminSidebar";
 import style from "./style.module.css";
 
 const AdminAddBooking = () => {
